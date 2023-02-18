@@ -69,7 +69,7 @@ namespace BurrowsWheeler
             StringBuilder transformedString = new StringBuilder();
             for (int i = 0; i < startedString.Length; ++i)
             {
-                char lastPermutaionElement = startedString[(cyclicPermutations[i] + startedString.Length - 1) % inputString.Length];
+                char lastPermutaionElement = startedString[(cyclicPermutations[i] + startedString.Length - 1) % startedString.Length];
                 transformedString.Append(lastPermutaionElement);
 
                 if (cyclicPermutations[i] == 0)
