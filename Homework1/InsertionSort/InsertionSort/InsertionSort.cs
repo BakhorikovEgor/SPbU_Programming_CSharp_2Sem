@@ -5,6 +5,30 @@ namespace InsertionSort
 {
     class Program
     {
+        static void Swap(int[] array, int firstIndex, int secondIndex)
+        {
+            int tempValue = array[firstIndex];
+            array[firstIndex] = array[secondIndex];
+            array[secondIndex] = tempValue;
+        }
+
+
+        static int[] SortArrayByInsertionSort(int[] array)
+        {
+            for (int i = 1; i < array.Length; i++)
+            {
+                int j = i;
+                while (j > 0 && array[j - 1] > array[j])
+                {
+                    Swap(array, j - 1, j);
+                    j--;
+                }
+            }
+
+            return array;
+        }
+
+
         static void Main()
         {
             Write("Enter the size of array (positive number): ");
@@ -37,30 +61,6 @@ namespace InsertionSort
             {
                 Write($"{array[i]} ");
             }
-        }
-
-
-        static int[] SortArrayByInsertionSort(int[] array)
-        {
-            for (int i = 1; i < array.Length; i++)
-            {
-                int j = i;
-                while (j > 0 && array[j - 1] > array[j])
-                {
-                    Swap(array, j - 1, j);
-                    j--;
-                }
-            }
-
-            return array;
-        }
-
-
-        static void Swap(int[] array, int firstIndex, int secondIndex)
-        {
-            int tempValue = array[firstIndex];
-            array[firstIndex] = array[secondIndex];
-            array[secondIndex] = tempValue;
         }
     }
 }
