@@ -11,26 +11,30 @@ namespace BurrowsWheeler
         /// represented by an array of pointers to the beginning of strings.
         /// Sort by a given position in each line.
         /// </summary>
+        /// <param name="startedString"> String we use to take symbols from. </param>
+        /// <param name="position"> Place in string where must sort. </param>
+        /// <param name="permutations"> Pointers to the starts of cyclic permutations. </param>
+        /// <returns> Sorted array of pointers the beginning of the permutations.</returns>
         static int[] CountSort(string startedString, int position, int[] permutations)
         {
-            // List to mark which permutations contain that letter at a given position.
-            List<int>[] sameLetterPermutations = new List<int>[26];
-            for (int i = 0; i < 26; ++i)
+            // List to mark which permutations contain that symbol at a given position.
+            List<int>[] sameSymbolPermutations = new List<int>[128];
+            for (int i = 0; i < 128; ++i)
             {
-                sameLetterPermutations[i] = new List<int>();
+                sameSymbolPermutations[i] = new List<int>();
             }
 
-            foreach (int firstInd in permutations)
+            foreach (int firstIndex in permutations)
             {
-                sameLetterPermutations[startedString[(firstInd + position) % startedString.Length] - 'a'].Add(firstInd);
+                sameSymbolPermutations[startedString[(firstIndex + position) % startedString.Length]].Add(firstIndex);
             }
 
             int sortedPosition = 0;
-            for (int letterIndex = 0; letterIndex < 26; ++letterIndex)
+            for (int letterIndex = 0; letterIndex < 128; ++letterIndex)
             {
-                for (int count = 0; count < sameLetterPermutations[letterIndex].Count; count++)
+                for (int count = 0; count < sameSymbolPermutations[letterIndex].Count; count++)
                 {
-                    permutations[sortedPosition] = sameLetterPermutations[letterIndex][count];
+                    permutations[sortedPosition] = sameSymbolPermutations[letterIndex][count];
                     sortedPosition++;
                 }
             }
@@ -43,6 +47,9 @@ namespace BurrowsWheeler
         /// Sorts in alphabetical order the cyclic permutations of a string,
         /// represented as an array of pointers to the beginning of the permutation.
         /// </summary>
+        /// <param name="startedString"> String we use to take symbols from. </param>
+        /// <param name="permutations"> Pointers to the starts of cyclic permutations. </param>
+        /// <returns> Alphabetically sorted array of pointers to the beginning of the permutations.</returns>
         static int[] AlphabetSort(string startedString, int[] permutations)
         {
             for (int position = startedString.Length - 1; position >= 0; --position)
@@ -53,6 +60,11 @@ namespace BurrowsWheeler
         }
 
 
+        /// <summary>
+        /// Trasnforming string by using BWT without creating full transformation matrix.
+        /// </summary>
+        /// <param name="startedString"> String we want to transform. </param>
+        /// <returns> Transformed string and place of original string in transformation matrix.</returns>
         static (string, int) DirectTransformation(string startedString)
         {
             // Array of pointers to the first elements for all cyclic permutations.
@@ -62,7 +74,6 @@ namespace BurrowsWheeler
                 cyclicPermutations[i] = i;
             }
 
-            // Sort alphabetically cyclic permutation.
             AlphabetSort(startedString, cyclicPermutations);
 
             int endingPosition = 0;
@@ -84,19 +95,21 @@ namespace BurrowsWheeler
 
         /// <summary>
         /// Create an array of pointers to the elements of first column (first inclusions)
-        /// in tranformation matrix, without building this matrix.
+        /// in transformation matrix, without building this matrix.
         /// </summary>
+        /// <param name="transformedString"> String we use as a last column in transformation matrix. </param>
+        /// <returns> Array of pointers to the first inclusions of symblos in first column of transformation matrix. </returns>
         static int[] BuildFirstPermutaionColumn(string transformedString)
         {
-            // Build an array to mark the number of each letter inclusions.
-            int[] firstColumnPointers = new int[26];
+            // Build an array to mark the number of each symbol inclusions.
+            int[] firstColumnPointers = new int[128];
             for (int i = 0; i < transformedString.Length; ++i)
             {
-                firstColumnPointers[transformedString[i] - 'a']++;
+                firstColumnPointers[transformedString[i]]++;
             }
 
             // Change array. It will present pointers to each
-            // letter first inclusion in transformed matrix.
+            // symbol first inclusion in transformation matrix.
             int temporaryPointer = 0;
             for (int i = 0; i < firstColumnPointers.Length; ++i)
             {
@@ -107,6 +120,12 @@ namespace BurrowsWheeler
             return firstColumnPointers;
         }
 
+        /// <summary>
+        /// Building original string by using one of cycling permutations without creating full transformation matrix.
+        /// </summary>
+        /// <param name="transformedString"> String after BWT. </param>
+        /// <param name="originalStringPosition"> Position of string we want return in a transformation matrix </param>
+        /// <returns> Original string. </returns>
         static string ReverseTransformation(string transformedString, int originalStringPosition)
         {
 
@@ -117,7 +136,7 @@ namespace BurrowsWheeler
             int[] reverseVector = new int[transformedString.Length];
             for (int i = 0; i < transformedString.Length; ++i)
             {
-                reverseVector[firstColumnPointers[transformedString[i] - 'a']++] = i;
+                reverseVector[firstColumnPointers[transformedString[i]]++] = i;
             }
 
             StringBuilder originalString = new StringBuilder();
@@ -134,13 +153,13 @@ namespace BurrowsWheeler
 
         static void Main()
         {
-            WriteLine("Enter the string for transformation below (use only lower letters).");
+            WriteLine("Enter the string for transformation below (use symbols only from ascii table).");
 
             string? inputString = ReadLine();
-            while (inputString == null || inputString.All(Char.IsLower) == false)
+            while (inputString == null || inputString.All(char.IsAscii) == false)
             {
                 WriteLine("Wrong input.");
-                WriteLine("Enter the string for transformation below (use only lower letters).");
+                WriteLine("Enter the string for transformation below (use symbols only from ascii table).");
 
                 inputString = ReadLine();
             }
