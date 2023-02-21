@@ -10,7 +10,7 @@ namespace BurrowsWheelerTransform
             WriteLine("Enter the string for transformation below (use symbols only from ascii table).");
 
             string? inputString = ReadLine();
-            while (inputString == null || inputString.All(char.IsAscii) == false)
+            while (inputString == null || !inputString.All(char.IsAscii))
             {
                 WriteLine("Wrong input.");
                 WriteLine("Enter the string for transformation below (use symbols only from ascii table).");
