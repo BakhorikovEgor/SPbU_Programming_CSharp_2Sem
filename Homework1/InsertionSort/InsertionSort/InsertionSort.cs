@@ -11,7 +11,7 @@
             array[secondIndex] = tempValue;
         }
 
-        static int[] SortArrayByInsertionSort(int[] array)
+        static void SortArrayByInsertionSort(int[] array)
         {
             for (int i = 1; i < array.Length; i++)
             {
@@ -22,8 +22,6 @@
                     j--;
                 }
             }
-
-            return array;
         }
 
         static void Main()
