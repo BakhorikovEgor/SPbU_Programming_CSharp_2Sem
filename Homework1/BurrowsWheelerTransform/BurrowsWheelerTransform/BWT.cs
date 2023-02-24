@@ -1,7 +1,7 @@
-﻿namespace BurrowsWheelerTransform
-{
-    using System.Text;
+﻿using System.Text;
 
+namespace BurrowsWheelerTransform
+{
     internal static class BWT
     {
         /// <summary>

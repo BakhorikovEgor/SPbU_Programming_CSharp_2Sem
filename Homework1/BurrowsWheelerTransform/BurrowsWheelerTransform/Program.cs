@@ -1,7 +1,7 @@
-﻿namespace BurrowsWheelerTransform
-{
-    using static System.Console;
+﻿using static System.Console;
 
+namespace BurrowsWheelerTransform
+{
     class Program
     {
         static void Main()

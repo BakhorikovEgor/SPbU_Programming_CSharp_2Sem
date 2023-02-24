@@ -4,22 +4,22 @@
 
     class Program
     {
-        static void Swap(int[] array, int firstIndex, int secondIndex)
+        static void Swap(ref int firstElement, ref int secondElement)
         {
-            int tempValue = array[firstIndex];
-            array[firstIndex] = array[secondIndex];
-            array[secondIndex] = tempValue;
+            int tempElement = firstElement;
+            firstElement = secondElement;
+            secondElement = tempElement;
         }
 
         static void SortArrayByInsertionSort(int[] array)
         {
-            for (int i = 1; i < array.Length; i++)
+            for (int i = 1; i < array.Length; ++i)
             {
                 int j = i;
                 while (j > 0 && array[j - 1] > array[j])
                 {
-                    Swap(array, j - 1, j);
-                    j--;
+                    Swap(ref array[j - 1], ref array[j]);
+                    --j;
                 }
             }
         }
@@ -39,13 +39,10 @@
             int[] array = new int[size];
             for (int i = 0; i < size; ++i)
             {
-                int value;
-                while (!int.TryParse(ReadLine(), out value))
+                while (!int.TryParse(ReadLine(), out array[i]))
                 {
                     WriteLine("Wrong value");
                 }
-
-                array[i] = value;
             }
 
             SortArrayByInsertionSort(array);
