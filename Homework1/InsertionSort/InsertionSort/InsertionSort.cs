@@ -1,8 +1,7 @@
-﻿using static System.Console;
-
-
-namespace InsertionSort
+﻿namespace InsertionSort
 {
+    using static System.Console;
+
     class Program
     {
         static void Swap(int[] array, int firstIndex, int secondIndex)
@@ -11,7 +10,6 @@ namespace InsertionSort
             array[firstIndex] = array[secondIndex];
             array[secondIndex] = tempValue;
         }
-
 
         static int[] SortArrayByInsertionSort(int[] array)
         {
@@ -27,7 +25,6 @@ namespace InsertionSort
 
             return array;
         }
-
 
         static void Main()
         {

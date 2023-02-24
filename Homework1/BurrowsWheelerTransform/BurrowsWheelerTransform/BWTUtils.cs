@@ -37,7 +37,6 @@
             return permutations;
         }
 
-
         /// <summary>
         /// Sorts in alphabetical order the cyclic permutations of a string,
         /// represented as an array of pointers to the beginning of the permutation.
@@ -53,7 +52,6 @@
             }
             return permutations;
         }
-
 
         /// <summary>
         /// Create an array of pointers to the elements of first column (first inclusions)
