@@ -18,7 +18,7 @@ namespace BurrowsWheelerTransform
                 cyclicPermutations[i] = i;
             }
 
-            BWTUtils.AlphabetSort(startedString, cyclicPermutations);
+            BWTUtils.PermutationsAlphabetSort(startedString, cyclicPermutations);
 
             int endingPosition = 0;
             StringBuilder transformedString = new StringBuilder();

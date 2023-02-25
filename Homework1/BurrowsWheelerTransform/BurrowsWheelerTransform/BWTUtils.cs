@@ -10,7 +10,7 @@
         /// <param name="position"> Place in string where must sort. </param>
         /// <param name="permutations"> Pointers to the starts of cyclic permutations. </param>
         /// <returns> Sorted array of pointers the beginning of the permutations.</returns>
-        static void CountSort(string startedString, int position, int[] permutations)
+        static void PermutationsCountSort(string startedString, int position, int[] permutations)
         {
             // List to mark which permutations contain that symbol at a given position.
             List<int>[] sameSymbolPermutations = new List<int>[128];
@@ -42,11 +42,11 @@
         /// <param name="startedString"> String we use to take symbols from. </param>
         /// <param name="permutations"> Pointers to the starts of cyclic permutations. </param>
         /// <returns> Alphabetically sorted array of pointers to the beginning of the permutations.</returns>
-        internal static int[] AlphabetSort(string startedString, int[] permutations)
+        internal static int[] PermutationsAlphabetSort(string startedString, int[] permutations)
         {
             for (int position = startedString.Length - 1; position >= 0; --position)
             {
-                CountSort(startedString, position, permutations);
+                PermutationsCountSort(startedString, position, permutations);
             }
             return permutations;
         }

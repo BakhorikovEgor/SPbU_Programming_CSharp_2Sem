@@ -1,7 +1,7 @@
-﻿namespace InsertionSort
-{
-    using static System.Console;
+﻿using static System.Console;
 
+namespace InsertionSort
+{
     class Program
     {
         static void Swap(ref int firstElement, ref int secondElement)
