@@ -24,8 +24,8 @@ namespace BurrowsWheelerTransform
             StringBuilder transformedString = new StringBuilder();
             for (int i = 0; i < startedString.Length; ++i)
             {
-                char lastPermutaionElement = startedString[(cyclicPermutations[i] + startedString.Length - 1) % startedString.Length];
-                transformedString.Append(lastPermutaionElement);
+                char lastPermutationElement = startedString[(cyclicPermutations[i] + startedString.Length - 1) % startedString.Length];
+                transformedString.Append(lastPermutationElement);
 
                 if (cyclicPermutations[i] == 0)
                 {
@@ -45,7 +45,7 @@ namespace BurrowsWheelerTransform
         internal static string ReverseTransformation(string transformedString, int originalStringPosition)
         {
 
-            int[] firstColumnPointers = BWTUtils.BuildFirstPermutaionColumn(transformedString);
+            int[] firstColumnPointers = BWTUtils.BuildFirstPermutationColumn(transformedString);
 
             // Create an array of pointers which bind previous array and given string
             // this array helps builing old string step by step.

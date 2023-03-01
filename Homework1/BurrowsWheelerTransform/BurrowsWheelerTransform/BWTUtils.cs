@@ -57,7 +57,7 @@
         /// </summary>
         /// <param name="transformedString"> String we use as a last column in transformation matrix. </param>
         /// <returns> Array of pointers to the first inclusions of symblos in first column of transformation matrix. </returns>
-        internal static int[] BuildFirstPermutaionColumn(string transformedString)
+        internal static int[] BuildFirstPermutationColumn(string transformedString)
         {
             // Build an array to mark the number of each symbol inclusions.
             int[] firstColumnPointers = new int[128];
