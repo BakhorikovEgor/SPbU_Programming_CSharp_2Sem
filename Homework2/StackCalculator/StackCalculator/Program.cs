@@ -37,6 +37,7 @@ class Program
                     break;
             }
         }
+
         bool processing = true;
         while (processing)
         {
@@ -44,7 +45,6 @@ class Program
             WriteLine("\nEnter an expression(available operations: + - * /)\n");
 
             string? expression = ReadLine();
-
             if (expression == null)
             {
                 WriteLine("Null isn`t expression");

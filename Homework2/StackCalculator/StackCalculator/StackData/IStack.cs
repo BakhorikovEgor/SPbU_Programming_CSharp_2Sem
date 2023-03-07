@@ -1,5 +1,8 @@
 ﻿namespace Calculator.StackData
 {
+    /// <summary>
+    /// Stack implementation for stack calculator realization.
+    /// </summary>
     public interface IStack
     {
         public int Count { get;}

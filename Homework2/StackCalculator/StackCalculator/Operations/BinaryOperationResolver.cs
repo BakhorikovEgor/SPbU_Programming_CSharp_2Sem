@@ -1,5 +1,8 @@
 ﻿namespace Calculator.Operations
 {
+    /// <summary>
+    /// Binary operations handler.
+    /// </summary>
     internal static class BinaryOperationSolver
     {
 
@@ -24,6 +27,11 @@
             }
         }
 
+        /// <summary>
+        /// Checking whether a real number is equal to zero.
+        /// </summary>
+        /// <param name="number"> number we want to check.</param>
+        /// <returns> Zero or not (true / false).</returns>
         private static bool IsZero(double number) => Math.Abs(number) < 0.00001;
 
     }
