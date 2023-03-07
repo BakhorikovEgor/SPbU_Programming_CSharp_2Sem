@@ -1,31 +1,31 @@
 ﻿
-namespace StackCalculator
+namespace Calculator.StackData
 {
     internal class DynamicArrayStack : IStack
     {
-        private List<int> array;
+        private List<double> array;
 
         public int Count { get; private set; } = 0;
 
         public DynamicArrayStack()
         {
-            array = new List<int>();
+            array = new List<double>(90);
         }
 
-        public void Push(int value)
+        public void Push(double value)
         {
-            array.Add(value);
+            array.Insert(Count,value);
             Count++;
         }
 
-        public int Pop()
+        public double Pop()
         {
             if (IsEmpty())
             {
                 throw new InvalidOperationException("Stack is empty !");
             }
 
-            return array[--Count];
+            return array.ElementAt(--Count);
         }
 
 
