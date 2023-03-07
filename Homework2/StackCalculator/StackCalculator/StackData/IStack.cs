@@ -5,7 +5,7 @@
     /// </summary>
     public interface IStack
     {
-        public int Count { get;}
+        public int Count { get; }
         public void Push(double value);
 
         public double Pop();

@@ -19,7 +19,7 @@
 
         public void Push(double value)
         {
-            array.Insert(Count,value);
+            array.Insert(Count, value);
             Count++;
         }
 

@@ -28,8 +28,8 @@ namespace Calculator
                 throw new ArgumentNullException("Expression can`t be null");
             }
 
-            string[] expressionParts = expression.Split();       
-            foreach(string part in expressionParts)
+            string[] expressionParts = expression.Split();
+            foreach (string part in expressionParts)
             {
                 if (int.TryParse(part, out int value))
                 {

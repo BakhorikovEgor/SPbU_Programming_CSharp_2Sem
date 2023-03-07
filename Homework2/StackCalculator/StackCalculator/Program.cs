@@ -1,6 +1,6 @@
-﻿using static System.Console;
-using Calculator;
+﻿using Calculator;
 using Calculator.StackData;
+using static System.Console;
 
 class Program
 {
@@ -20,7 +20,7 @@ class Program
 
         bool choosing = true;
         string? stackType;
-        while (choosing) 
+        while (choosing)
         {
             stackType = ReadLine();
             switch (stackType)

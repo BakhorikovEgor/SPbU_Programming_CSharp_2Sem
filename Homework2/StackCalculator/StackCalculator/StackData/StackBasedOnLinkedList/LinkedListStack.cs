@@ -1,4 +1,5 @@
-﻿namespace Calculator.StackData {
+﻿namespace Calculator.StackData
+{
     /// <summary>
     /// Stack realization by using linked list structure.
     /// </summary>
@@ -11,14 +12,14 @@
         /// number of existing nodes.
         /// </summary>
         public int Count { get; private set; } = 0;
-        
+
         public void Push(double value)
         {
             Node newNode = new Node(value);
             if (Count == 0)
             {
                 head = newNode;
-            } 
+            }
             else if (Count == 1)
             {
                 head.Next = newNode;
@@ -43,7 +44,7 @@
             if (Count == 1)
             {
                 Count--;
-                return head.Value;       
+                return head.Value;
             }
 
             Node tempNode = head;
@@ -58,7 +59,7 @@
             tail = tempNode;
             Count--;
 
-            return returnValue;          
+            return returnValue;
         }
 
         public bool IsEmpty() => Count == 0;
