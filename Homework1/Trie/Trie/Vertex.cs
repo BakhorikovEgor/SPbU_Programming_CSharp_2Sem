@@ -3,9 +3,8 @@
     class Vertex
     {
         public Dictionary<char, Vertex> children;
-        public bool isTerminal = false;
-        public int wordsNumber;
-
+        public bool IsTerminal { get; set; } = false;
+        public int WordsNumber { get; set; } = 0;
 
         public Vertex()
         {

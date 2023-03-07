@@ -4,7 +4,7 @@
     {
         private readonly Vertex top;
 
-        public int Size { get; private set; } = 0;
+        public int Size { get; private set; } = 1;
 
         public Trie()
         {
@@ -20,7 +20,7 @@
 
             if (word.Equals(string.Empty))
             {
-                return true ;
+                return true;
             }
 
             Vertex currentVertex = top;
@@ -34,7 +34,7 @@
                 currentVertex = currentVertex.children[symbol];
             }
 
-            return currentVertex.isTerminal;
+            return currentVertex.IsTerminal;
         }
 
         public bool Add(string word)
@@ -52,18 +52,20 @@
             Vertex currentVertex = top;
             foreach(char symbol in word)
             {
-                ++currentVertex.wordsNumber;
+                currentVertex.WordsNumber++;
 
                 if (!currentVertex.children.ContainsKey(symbol))
                 {
-                    currentVertex.children.Add(symbol, currentVertex);
-                    ++Size;
+                    currentVertex.children.Add(symbol, new Vertex());
+                    Size++;
                 }
 
                 currentVertex = currentVertex.children[symbol];
             }
 
-            currentVertex.isTerminal = true;
+            currentVertex.WordsNumber++;
+            currentVertex.IsTerminal = true;
+
             return true;
         }
 
@@ -76,7 +78,7 @@
 
             if (word.Equals(string.Empty))
             {
-                throw new ArgumentException("Empty word can`t be romoved, it is always in trie !");
+                throw new ArgumentException("Empty word can`t be removed, it is always in trie !");
             }
 
             if (!Contains(word))
@@ -85,23 +87,29 @@
             }
 
             Vertex currentVertex = top;
-            foreach (char symbol in word)
+            for (int i = 0; i < word.Length; ++i)
             {
-                --currentVertex.wordsNumber;
-                currentVertex = currentVertex.children[symbol];
+                currentVertex.WordsNumber--;
+
+                if (currentVertex.children[word[i]].WordsNumber == 1)
+                {
+                    currentVertex.children.Remove(word[i]);
+                    int removedVertexsNumber = word.Length - i;
+                    Size -= removedVertexsNumber;
+
+                    return true;
+                }
+
+                currentVertex = currentVertex.children[word[i]];
             }
 
-            --currentVertex.wordsNumber;
-            currentVertex.isTerminal = false;
-            if (currentVertex.children.Count == 0)
-            {
-                Size -= word.Length;
-            }
+            currentVertex.WordsNumber--;
+            currentVertex.IsTerminal = false;
 
             return true;
         }
 
-        public int HowManyStartsWithPrefix(String prefix)
+        public int HowManyStartsWithPrefix(string prefix)
         {
             if (prefix == null)
             {
@@ -119,8 +127,7 @@
                 currentVertex = currentVertex.children[symbol];
             }
 
-            return currentVertex.wordsNumber;
+            return currentVertex.WordsNumber;
         }
-
     }
 }
