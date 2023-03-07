@@ -1,9 +1,14 @@
 ﻿namespace Trees
 {
+    /// <summary>
+    /// Trie data structure.
+    /// </summary>
     class Trie
     {
+        // "highest" vertex.
         private readonly Vertex top;
 
+        // the number of existing vertexes.
         public int Size { get; private set; } = 1;
 
         public Trie()
@@ -11,7 +16,13 @@
             top = new Vertex();
         }
 
-        public bool Contains (string word)
+        /// <summary>
+        /// Was the word previously saved ?
+        /// </summary>
+        /// <param name="word"> searching word.</param>
+        /// <returns> true / false </returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        public bool Contains(string word)
         {
             if (word == null)
             {
@@ -37,6 +48,12 @@
             return currentVertex.IsTerminal;
         }
 
+        /// <summary>
+        /// Adding new word.
+        /// </summary>
+        /// <param name="word"> word to add.</param>
+        /// <returns> did we added this word ? (or it is already exist) </returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public bool Add(string word)
         {
             if (word == null)
@@ -50,7 +67,7 @@
             }
 
             Vertex currentVertex = top;
-            foreach(char symbol in word)
+            foreach (char symbol in word)
             {
                 currentVertex.WordsNumber++;
 
@@ -69,6 +86,13 @@
             return true;
         }
 
+        /// <summary>
+        /// Delete word from data structure.
+        /// </summary>
+        /// <param name="word"> deleating word. </param>
+        /// <returns>  sucess of action. </returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public bool Remove(string word)
         {
             if (word == null)
@@ -94,8 +118,7 @@
                 if (currentVertex.children[word[i]].WordsNumber == 1)
                 {
                     currentVertex.children.Remove(word[i]);
-                    int removedVertexsNumber = word.Length - i;
-                    Size -= removedVertexsNumber;
+                    Size -= word.Length - i; ;
 
                     return true;
                 }
@@ -109,6 +132,12 @@
             return true;
         }
 
+        /// <summary>
+        /// How many words we recorded that contain this prefix.
+        /// </summary>
+        /// <param name="prefix"></param>
+        /// <returns> number of the words </returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public int HowManyStartsWithPrefix(string prefix)
         {
             if (prefix == null)

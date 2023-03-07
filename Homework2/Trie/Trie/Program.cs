@@ -1,5 +1,5 @@
-﻿using static System.Console;
-using Trees;
+﻿using Trees;
+using static System.Console;
 
 class Program
 {
