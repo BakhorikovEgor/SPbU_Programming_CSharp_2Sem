@@ -6,9 +6,8 @@ class Program
 {
     static void Main()
     {
-
         WriteLine("Hi, I`m calculator !");
-        WriteLine("Сhoose what the stack should be based on.");
+        WriteLine("Сhoose what the stack should be based on");
         WriteLine("""
 
                 1 - Dynamic Array
@@ -41,18 +40,19 @@ class Program
         bool processing = true;
         while (processing)
         {
-
             WriteLine("\nEnter an expression(available operations: + - * /)\n");
 
             string? expression = ReadLine();
-            if (expression == null)
-            {
-                WriteLine("Null isn`t expression");
-            }
-            else
+            try 
             {
                 double result = calculator.CalculateExpression(expression);
                 WriteLine($"The result is: {result}");
+            }
+            catch (Exception ex) when (ex is InvalidOperationException ||
+                                       ex is InvalidDataException     ||
+                                       ex is DivideByZeroException) 
+            {
+                WriteLine(ex.Message);
             }
 
             Write("\nEnter 0 to exit: ");

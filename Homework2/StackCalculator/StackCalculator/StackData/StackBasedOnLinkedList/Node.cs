@@ -13,10 +13,5 @@
         {
             Value = value;
         }
-
-        public void SetValue(double value)
-        {
-            Value = value;
-        }
     }
 }

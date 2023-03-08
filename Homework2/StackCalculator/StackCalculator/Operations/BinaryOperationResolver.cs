@@ -19,7 +19,7 @@
                 case "/":
                     if (IsZero(secondOperand))
                     {
-                        throw new DivideByZeroException("second operand can`t be zero");
+                        throw new DivideByZeroException("Second operand in division can`t be zero");
                     }
                     return firstOperand / secondOperand;
                 default:

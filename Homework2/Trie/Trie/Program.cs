@@ -29,67 +29,73 @@ class Program
                 case "0":
                     processing = false;
                     break;
+
                 case "1":
                     Write("Enter the word: ");
 
                     string? word = ReadLine();
-                    if (word != null)
+                    try
                     {
                         bool result = trie.Add(word);
                         WriteLine(word + (result ? " is " : " isn`t ") + "added");
                     }
-                    else
+                    catch (ArgumentNullException ex)
                     {
-                        WriteLine("word can`t be null");
+                        WriteLine(ex.Message);
                     }
-
                     break;
+
                 case "2":
                     Write("Enter the word: ");
 
                     word = ReadLine();
-                    if (word != null)
+                    try
                     {
                         bool result = trie.Contains(word);
                         WriteLine("trie " + (result ? "" : "doesn`t ") + " contains " + word);
                     }
-                    else
+                    catch(ArgumentNullException ex)
                     {
-                        WriteLine("word can`t be null");
+                        WriteLine(ex.Message);
                     }
-
                     break;
+
                 case "3":
                     Write("Enter the word: ");
 
                     word = ReadLine();
-                    if (word != null)
+                    try
                     {
                         bool result = trie.Remove(word);
                         WriteLine(word + (result ? " is " : " isn`t ") + "removed");
                     }
-                    else
+                    catch (Exception ex) when (ex is ArgumentException ||
+                                               ex is ArgumentNullException)
                     {
-                        WriteLine("word can`t be null");
+                        WriteLine(ex.Message);
                     }
-
                     break;
+
                 case "4":
                     Write("Enter the prefix: ");
 
                     string? prefix = ReadLine();
-                    WriteLine(prefix == null
-                        ? "prefix can`t be null"
-                        : $"{trie.HowManyStartsWithPrefix(prefix)} words start with {prefix}");
-
+                    try
+                    {
+                        WriteLine($"{trie.HowManyStartsWithPrefix(prefix)} words start with {prefix}");
+                    }
+                    catch(ArgumentNullException ex)
+                    {
+                        WriteLine(ex.Message);
+                    }
                     break;
+
                 case "5":
                     WriteLine($"trie size: {trie.Size}");
-
                     break;
+
                 default:
                     WriteLine("Incorrect input");
-
                     break;
             }
         }

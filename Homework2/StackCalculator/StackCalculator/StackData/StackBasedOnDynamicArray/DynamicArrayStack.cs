@@ -17,23 +17,18 @@
             array = new List<double>(90);
         }
 
-        public void Push(double value)
-        {
-            array.Insert(Count, value);
-            Count++;
-        }
-
         public double Pop()
         {
             if (IsEmpty())
             {
-                throw new InvalidOperationException("Stack is empty !");
+                throw new InvalidOperationException("Can`t pop from empty stack");
             }
 
             return array.ElementAt(--Count);
         }
 
+        public void Push(double value) => array.Insert(Count++, value);
 
-        public bool IsEmpty() => Count == 0;
+        private bool IsEmpty() => Count == 0;
     }
 }

@@ -38,7 +38,7 @@
         {
             if (IsEmpty())
             {
-                throw new InvalidOperationException("Stack is empty");
+                throw new InvalidOperationException("Can`t pop from empty stack");
             }
 
             if (Count == 1)
@@ -62,6 +62,6 @@
             return returnValue;
         }
 
-        public bool IsEmpty() => Count == 0;
+        private bool IsEmpty() => Count == 0;
     }
 }

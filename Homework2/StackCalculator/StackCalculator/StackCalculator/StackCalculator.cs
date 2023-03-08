@@ -42,12 +42,7 @@ namespace Calculator
                 }
             }
 
-            if (stack.Count != 1)
-            {
-                throw new InvalidDataException("Expression is unsolvable");
-            }
-
-            return stack.Pop();
+            return stack.Count == 1 ? stack.Pop() : throw new InvalidDataException("Expression is unsolvable");
         }
 
         /// <summary>
