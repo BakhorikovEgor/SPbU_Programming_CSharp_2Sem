@@ -8,9 +8,6 @@
         private Node? head;
         private Node? tail;
 
-        /// <summary>
-        /// number of existing nodes.
-        /// </summary>
         public int Count { get; private set; } = 0;
 
         public void Push(double value)

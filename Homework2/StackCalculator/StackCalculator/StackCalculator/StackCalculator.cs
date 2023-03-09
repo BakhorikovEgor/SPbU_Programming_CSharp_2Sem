@@ -19,8 +19,8 @@ namespace Calculator
         /// </summary>
         /// <param name="expression"> Expression in reverse Polish notation</param>
         /// <returns> Value of expression </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="InvalidDataException"></exception>
+        /// <exception cref="ArgumentNullException">null parametr</exception>
+        /// <exception cref="InvalidDataException">expression can`t be solved</exception>
         public double CalculateExpression(string expression)
         {
             if (expression == null)
@@ -50,7 +50,7 @@ namespace Calculator
         /// </summary>
         /// <param name="operation"> + - * / </param>
         /// <returns> Value after operation </returns>
-        /// <exception cref="InvalidDataException"></exception>
+        /// <exception cref="InvalidDataException">wrong data for binary operation</exception>
         private double CalculatePair(string operation)
         {
             if (stack.Count < 2)

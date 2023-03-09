@@ -21,7 +21,7 @@
         /// </summary>
         /// <param name="word"> searching word.</param>
         /// <returns> true / false </returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException">null paramenr</exception>
         public bool Contains(string word)
         {
             if (word == null)
@@ -53,7 +53,7 @@
         /// </summary>
         /// <param name="word"> word to add.</param>
         /// <returns> did we added this word ? (or it is already exist) </returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException">null parametr</exception>
         public bool Add(string word)
         {
             if (word == null)
@@ -61,7 +61,7 @@
                 throw new ArgumentNullException("Word can`t be null !");
             }
 
-            if (word.Equals(string.Empty) || Contains(word))
+            if (Contains(word))
             {
                 return false;
             }
@@ -89,10 +89,10 @@
         /// <summary>
         /// Delete word from data structure.
         /// </summary>
-        /// <param name="word"> deleating word. </param>
-        /// <returns>  sucess of action. </returns>
-        /// <exception cref="ArgumentNullException"></exception>
-        /// <exception cref="ArgumentException"></exception>
+        /// <param name="word"> deleting word. </param>
+        /// <returns>  success of action. </returns>
+        /// <exception cref="ArgumentNullException">null parametr</exception>
+        /// <exception cref="ArgumentException">empty parametr</exception>
         public bool Remove(string word)
         {
             if (word == null)
@@ -137,7 +137,7 @@
         /// </summary>
         /// <param name="prefix"></param>
         /// <returns> number of the words </returns>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException">null parametr</exception>
         public int HowManyStartsWithPrefix(string prefix)
         {
             if (prefix == null)

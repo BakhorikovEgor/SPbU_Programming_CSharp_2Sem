@@ -7,9 +7,6 @@
     {
         private List<double> array;
 
-        /// <summary>
-        /// number of filled cells in array.
-        /// </summary>
         public int Count { get; private set; } = 0;
 
         public DynamicArrayStack()
