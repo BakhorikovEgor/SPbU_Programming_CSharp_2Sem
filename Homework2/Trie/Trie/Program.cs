@@ -52,7 +52,7 @@ class Program
                     try
                     {
                         bool result = trie.Contains(word);
-                        WriteLine("trie " + (result ? "" : "doesn`t ") + " contains " + word);
+                        WriteLine(word + (result ? "" : " isn`t") + " in trie");
                     }
                     catch(ArgumentNullException ex)
                     {
@@ -69,8 +69,7 @@ class Program
                         bool result = trie.Remove(word);
                         WriteLine(word + (result ? " is " : " isn`t ") + "removed");
                     }
-                    catch (Exception ex) when (ex is ArgumentException ||
-                                               ex is ArgumentNullException)
+                    catch (ArgumentNullException ex)
                     {
                         WriteLine(ex.Message);
                     }

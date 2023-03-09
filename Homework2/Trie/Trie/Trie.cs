@@ -6,15 +6,12 @@
     class Trie
     {
         // "highest" vertex.
-        private readonly Vertex top;
+        private readonly Vertex top = new Vertex();
 
         // the number of existing vertexes.
-        public int Size { get; private set; } = 1;
+        public int Size { get; private set; } = 0;
 
-        public Trie()
-        {
-            top = new Vertex();
-        }
+        private bool isEmptyStringInTrie = false;
 
         /// <summary>
         /// Was the word previously saved ?
@@ -22,7 +19,7 @@
         /// <param name="word"> searching word.</param>
         /// <returns> true / false </returns>
         /// <exception cref="ArgumentNullException">null paramenr</exception>
-        public bool Contains(string word)
+        public bool Contains(string? word)
         {
             if (word == null)
             {
@@ -31,7 +28,7 @@
 
             if (word.Equals(string.Empty))
             {
-                return true;
+                return isEmptyStringInTrie;
             }
 
             Vertex currentVertex = top;
@@ -54,7 +51,7 @@
         /// <param name="word"> word to add.</param>
         /// <returns> did we added this word ? (or it is already exist) </returns>
         /// <exception cref="ArgumentNullException">null parametr</exception>
-        public bool Add(string word)
+        public bool Add(string? word)
         {
             if (word == null)
             {
@@ -66,6 +63,13 @@
                 return false;
             }
 
+            if (word.Equals(String.Empty))
+            {
+                Size++;
+                isEmptyStringInTrie = true;
+                return true;
+            }
+
             Vertex currentVertex = top;
             foreach (char symbol in word)
             {
@@ -74,12 +78,12 @@
                 if (!currentVertex.children.ContainsKey(symbol))
                 {
                     currentVertex.children.Add(symbol, new Vertex());
-                    Size++;
                 }
 
                 currentVertex = currentVertex.children[symbol];
             }
 
+            Size++;
             currentVertex.WordsNumber++;
             currentVertex.IsTerminal = true;
 
@@ -92,17 +96,11 @@
         /// <param name="word"> deleting word. </param>
         /// <returns>  success of action. </returns>
         /// <exception cref="ArgumentNullException">null parametr</exception>
-        /// <exception cref="ArgumentException">empty parametr</exception>
-        public bool Remove(string word)
+        public bool Remove(string? word)
         {
             if (word == null)
             {
                 throw new ArgumentNullException("Word can`t be null !");
-            }
-
-            if (word.Equals(string.Empty))
-            {
-                throw new ArgumentException("Empty word can`t be removed, it is always in trie !");
             }
 
             if (!Contains(word))
@@ -110,22 +108,21 @@
                 return false;
             }
 
-            Vertex currentVertex = top;
-            for (int i = 0; i < word.Length; ++i)
+            if (word.Equals(string.Empty))
             {
-                currentVertex.WordsNumber--;
-
-                if (currentVertex.children[word[i]].WordsNumber == 1)
-                {
-                    currentVertex.children.Remove(word[i]);
-                    Size -= word.Length - i; ;
-
-                    return true;
-                }
-
-                currentVertex = currentVertex.children[word[i]];
+                Size--;
+                isEmptyStringInTrie = false;
+                return true;
             }
 
+            Vertex currentVertex = top;
+            foreach(char symbol in word)
+            {
+                currentVertex.WordsNumber--;              
+                currentVertex = currentVertex.children[symbol];
+            }
+
+            Size--;
             currentVertex.WordsNumber--;
             currentVertex.IsTerminal = false;
 
@@ -138,11 +135,16 @@
         /// <param name="prefix"></param>
         /// <returns> number of the words </returns>
         /// <exception cref="ArgumentNullException">null parametr</exception>
-        public int HowManyStartsWithPrefix(string prefix)
+        public int HowManyStartsWithPrefix(string? prefix)
         {
             if (prefix == null)
             {
                 throw new ArgumentNullException("Prefix can`t be null !");
+            }
+
+            if (prefix.Equals(String.Empty))
+            {
+                return Size;
             }
 
             Vertex currentVertex = top;
