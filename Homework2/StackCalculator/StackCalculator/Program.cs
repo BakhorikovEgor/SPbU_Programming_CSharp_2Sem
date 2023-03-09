@@ -6,21 +6,21 @@ class Program
 {
     static void Main()
     {
-        WriteLine("Hi, I`m calculator !");
-        WriteLine("Сhoose what the stack should be based on");
-        WriteLine("""
-
-                1 - Dynamic Array
-                2 - Linked List
-
-                """);
-
         StackCalculator calculator = new StackCalculator(new DynamicArrayStack());
 
         bool choosing = true;
         string? stackType;
         while (choosing)
         {
+            WriteLine("Hi, I`m calculator !");
+            WriteLine("Сhoose what the stack should be based on");
+            WriteLine("""
+
+                1 - Dynamic Array
+                2 - Linked List
+
+                """);
+
             stackType = ReadLine();
             switch (stackType)
             {

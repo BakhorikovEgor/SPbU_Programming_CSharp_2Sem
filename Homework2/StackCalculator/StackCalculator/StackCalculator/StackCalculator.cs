@@ -21,7 +21,7 @@ namespace Calculator
         /// <returns> Value of expression </returns>
         /// <exception cref="ArgumentNullException">null parametr</exception>
         /// <exception cref="InvalidDataException">expression can`t be solved</exception>
-        public double CalculateExpression(string expression)
+        public double CalculateExpression(string? expression)
         {
             if (expression == null)
             {
