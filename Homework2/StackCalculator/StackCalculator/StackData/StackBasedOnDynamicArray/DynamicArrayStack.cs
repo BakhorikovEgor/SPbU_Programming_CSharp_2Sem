@@ -1,4 +1,4 @@
-﻿namespace Calculator.StackData
+﻿namespace StackData.DynamicArray
 {
     /// <summary>
     /// Stack realization by using dynamic array.
@@ -6,14 +6,18 @@
     internal class DynamicArrayStack : IStack
     {
         private List<double> array;
-
-        public int Count { get; private set; } = 0;
+        private int count;
 
         public DynamicArrayStack()
         {
-            array = new List<double>(90);
+            array = new List<double>();
         }
 
+        /// <inheritdoc/>
+        public void Push(double value) 
+            => array.Insert(count++, value);
+
+        /// <inheritdoc/>
         public double Pop()
         {
             if (IsEmpty())
@@ -21,11 +25,11 @@
                 throw new InvalidOperationException("Can`t pop from empty stack");
             }
 
-            return array.ElementAt(--Count);
+            return array.ElementAt(--count);
         }
 
-        public void Push(double value) => array.Insert(Count++, value);
-
-        private bool IsEmpty() => Count == 0;
+        /// <inheritdoc/>
+        public bool IsEmpty() 
+            => count == 0;
     }
 }

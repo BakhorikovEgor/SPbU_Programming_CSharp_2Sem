@@ -1,4 +1,4 @@
-﻿namespace Calculator.Operations
+﻿namespace Operations
 {
     /// <summary>
     /// Binary operations handler.

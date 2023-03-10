@@ -1,23 +1,26 @@
-﻿namespace Calculator.StackData
+﻿namespace StackData
 {
     /// <summary>
-    /// Stack implementation for stack calculator realization.
+    /// Last in First out data structe.
     /// </summary>
     public interface IStack
     {
-        ///number of existing elements in stack
-        public int Count { get; }
-
         /// <summary>
-        /// add element in stack
+        /// Add element in stack.
         /// </summary>
-        /// <param name="value"> value to add</param>
+        /// <param name="value"> Value to add.</param>
         public void Push(double value);
 
         /// <summary>
-        /// delete element from stack (LIFO rule) if stack isn`t empty.
+        /// Delete element from stack (LIFO rule) if stack isn`t empty.
         /// </summary>
-        /// <returns> dealeating value </returns>
+        /// <returns> Dealeating value. </returns>
+        /// <exception cref="InvalidOperationException"> Try to pop from empty stack. </exception>
         public double Pop();
+
+        /// <summary>
+        /// Check if stack is empty.
+        /// </summary>
+        public bool IsEmpty();
     }
 }

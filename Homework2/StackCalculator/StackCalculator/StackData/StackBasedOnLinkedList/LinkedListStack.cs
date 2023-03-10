@@ -1,30 +1,19 @@
-﻿namespace Calculator.StackData
+﻿namespace StackData.LinkedList
 {
     /// <summary>
-    /// Stack realization by using linked list structure.
+    /// Stack realization by using LinkedList structure.
     /// </summary>
     internal class LinkedListStack : IStack
     {
         private Node? head;
 
-        public int Count { get; private set; } = 0;
-
+        /// <inheritdoc/>
         public void Push(double value)
-        {
-            Node newNode = new Node(value);
-            if (Count == 0)
-            {
-                head = newNode;
-            }
-            else
-            {
-                newNode.Next = head;
-                head = newNode;
-            }
+            => head = head == null 
+                    ? new Node(value) 
+                    : new Node(value, head);
 
-            Count++;
-        }
-
+        /// <inheritdoc/>
         public double Pop()
         {
             if (IsEmpty())
@@ -33,13 +22,14 @@
             }
 
             double returnValue = head.Value;
-            head = head.Next;
-            Count--;
-            
+            head = head.Next == head ? null : head.Next;
 
             return returnValue;
         }
 
-        private bool IsEmpty() => Count == 0;
+        /// <inheritdoc/>
+        public bool IsEmpty() 
+            => head == null;
+
     }
 }

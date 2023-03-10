@@ -1,5 +1,6 @@
-﻿using Calculator;
-using Calculator.StackData;
+﻿using StackData.DynamicArray;
+using StackData.LinkedList;
+using Calculator;
 using static System.Console;
 
 class Program
@@ -48,9 +49,8 @@ class Program
                 double result = calculator.CalculateExpression(expression);
                 WriteLine($"The result is: {result}");
             }
-            catch (Exception ex) when (ex is InvalidOperationException ||
-                                       ex is InvalidDataException     ||
-                                       ex is DivideByZeroException) 
+            catch (Exception ex) when (ex is InvalidDataException ||
+                                       ex is ArgumentNullException)
             {
                 WriteLine(ex.Message);
             }
