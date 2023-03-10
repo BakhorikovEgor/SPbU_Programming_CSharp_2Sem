@@ -1,10 +1,32 @@
-﻿namespace Trees
+﻿namespace Trees.Trie
 {
     /// <summary>
     /// Trie data structure.
     /// </summary>
     class Trie
     {
+
+        /// <summary>
+        /// Representation of a vertex and additional information about it.
+        /// </summary>
+        private class Vertex
+        {
+            /// <summary>
+            /// Vertex children.
+            /// </summary>
+            public Dictionary<char, Vertex> children { get; set; } = new Dictionary<char, Vertex>();
+
+            /// <summary>
+            /// Is there a word ending at this vertex.
+            /// </summary>
+            public bool IsTerminal { get; set; } = false;
+
+            /// <summary>
+            /// The number of words containing this vertex as its part.
+            /// </summary>
+            public int WordsNumber { get; set; } = 0;
+        }
+
         // "highest" vertex.
         private readonly Vertex top = new Vertex();
 

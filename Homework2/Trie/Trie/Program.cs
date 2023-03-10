@@ -1,4 +1,4 @@
-﻿using Trees;
+﻿using Trees.Trie;
 using static System.Console;
 
 class Program
