@@ -19,13 +19,17 @@ namespace Calculator
         /// </summary>
         /// <param name="expression"> Expression in reverse Polish notation. </param>
         /// <returns> Value of expression. </returns>
-        /// <exception cref="ArgumentNullException"> Null parametr. </exception>
         /// <exception cref="InvalidDataException"> Expression can`t be solved. </exception>
         public double CalculateExpression(string? expression)
         {
             if (expression == null)
             {
-                throw new ArgumentNullException("Expression can`t be null");
+                throw new InvalidDataException("Expression can`t be null");
+            }
+
+            if (expression.Equals(String.Empty))
+            {
+                throw new InvalidDataException("Expression can`t be empty");
             }
 
             string[] expressionParts = expression.Split();
