@@ -5,13 +5,19 @@
     /// </summary>
     public interface IStack
     {
-        //number of existing elements in stack
+        ///number of existing elements in stack
         public int Count { get; }
 
-        //add element in stack
+        /// <summary>
+        /// add element in stack
+        /// </summary>
+        /// <param name="value"> value to add</param>
         public void Push(double value);
 
-        //delete element from stack (LIFO rule) if stack isn`t empty.
+        /// <summary>
+        /// delete element from stack (LIFO rule) if stack isn`t empty.
+        /// </summary>
+        /// <returns> dealeating value </returns>
         public double Pop();
     }
 }
