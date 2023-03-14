@@ -33,7 +33,6 @@
         // the number of existing vertexes.
         public int Size { get; private set; } = 0;
 
-        private bool isEmptyStringInTrie = false;
 
         /// <summary>
         /// Was the word previously saved ?
@@ -46,11 +45,6 @@
             if (word == null)
             {
                 throw new ArgumentNullException("Word can`t be null !");
-            }
-
-            if (word.Equals(string.Empty))
-            {
-                return isEmptyStringInTrie;
             }
 
             Vertex currentVertex = top;
@@ -83,13 +77,6 @@
             if (Contains(word))
             {
                 return false;
-            }
-
-            if (word.Equals(String.Empty))
-            {
-                Size++;
-                isEmptyStringInTrie = true;
-                return true;
             }
 
             Vertex currentVertex = top;
@@ -130,13 +117,6 @@
                 return false;
             }
 
-            if (word.Equals(string.Empty))
-            {
-                Size--;
-                isEmptyStringInTrie = false;
-                return true;
-            }
-
             Vertex currentVertex = top;
             foreach(char symbol in word)
             {
@@ -162,11 +142,6 @@
             if (prefix == null)
             {
                 throw new ArgumentNullException("Prefix can`t be null !");
-            }
-
-            if (prefix.Equals(String.Empty))
-            {
-                return Size;
             }
 
             Vertex currentVertex = top;
