@@ -19,17 +19,20 @@ namespace Calculator
         /// </summary>
         /// <param name="expression"> Expression in reverse Polish notation. </param>
         /// <returns> Value of expression. </returns>
-        /// <exception cref="InvalidDataException"> Expression can`t be solved. </exception>
+        /// <exception cref="ArgumentException"> Expression can`t be solved. </exception>
+        /// <exception cref="InvalidOperationException"> Stack is empty or unknown operation. </exception>
+        /// <exception cref="ArgumentNullException"> Argument can`t be null. </exception>
+        /// <exception cref="DivideByZeroException"> Second operand can`t be zero. </exception>
         public double CalculateExpression(string? expression)
         {
             if (expression == null)
             {
-                throw new InvalidDataException("Expression can`t be null");
+                throw new ArgumentNullException("Expression can`t be null");
             }
 
             if (expression.Equals(String.Empty))
             {
-                throw new InvalidDataException("Expression can`t be empty");
+                throw new ArgumentException("Expression can`t be empty");
             }
 
             string[] expressionParts = expression.Split();
@@ -49,29 +52,14 @@ namespace Calculator
             double result = stack.Pop();
             return stack.IsEmpty() 
                         ? result
-                        : throw new InvalidDataException("Expression is unsolvable");
+                        : throw new ArgumentException("Expression is unsolvable");
         }
 
-        /// <summary>
-        /// A method that performs a binary operation on operands.
-        /// </summary>
-        /// <param name="operation"> + - * / . </param>
-        /// <returns> Value after operation. </returns>
-        /// <exception cref="InvalidDataException"> Impossible to do operation. </exception>
         private double CalculatePair(string operation)
         {
-            try
-            {
-                double secondOperand = stack.Pop();
-                double firstOperand = stack.Pop();
-                return BinaryOperationSolver.Solve(operation, firstOperand, secondOperand);
-            }
-            catch (Exception ex) when (ex is InvalidOperationException ||
-                                       ex is DivideByZeroException)
-
-            {
-                throw new InvalidDataException(ex.Message);
-            }
+            double secondOperand = stack.Pop();
+            double firstOperand = stack.Pop();
+            return BinaryOperationSolver.Solve(operation, firstOperand, secondOperand);
         }
     }
 }

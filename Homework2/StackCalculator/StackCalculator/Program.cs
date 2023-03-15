@@ -49,7 +49,11 @@ class Program
                 double result = calculator.CalculateExpression(expression);
                 WriteLine($"The result is: {result}");
             }
-            catch (InvalidDataException ex)
+            catch (Exception ex) when (ex is ArgumentException ||
+                                       ex is ArgumentNullException ||
+                                       ex is InvalidOperationException ||
+                                       ex is DivideByZeroException)
+
             {
                 WriteLine(ex.Message);
             }

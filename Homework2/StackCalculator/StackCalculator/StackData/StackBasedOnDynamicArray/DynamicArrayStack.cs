@@ -3,7 +3,7 @@
     /// <summary>
     /// Stack realization by using dynamic array.
     /// </summary>
-    internal class DynamicArrayStack : IStack
+    public class DynamicArrayStack : IStack
     {
         private List<double> array;
         private int count;

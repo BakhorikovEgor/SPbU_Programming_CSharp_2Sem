@@ -3,7 +3,7 @@
     /// <summary>
     /// Stack realization by using LinkedList structure.
     /// </summary>
-    internal class LinkedListStack : IStack
+    public class LinkedListStack : IStack
     {
         private Node? head;
 
