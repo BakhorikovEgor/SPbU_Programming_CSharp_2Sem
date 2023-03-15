@@ -1,6 +1,6 @@
-﻿using StackData.DynamicArray;
+﻿using Calculator;
+using StackData.DynamicArray;
 using StackData.LinkedList;
-using Calculator;
 using static System.Console;
 
 class Program
@@ -44,7 +44,7 @@ class Program
             WriteLine("\nEnter an expression(available operations: + - * /)\n");
 
             string? expression = ReadLine();
-            try 
+            try
             {
                 double result = calculator.CalculateExpression(expression);
                 WriteLine($"The result is: {result}");

@@ -14,7 +14,7 @@
         }
 
         /// <inheritdoc/>
-        public void Push(double value) 
+        public void Push(double value)
             => array.Insert(count++, value);
 
         /// <inheritdoc/>
@@ -29,7 +29,7 @@
         }
 
         /// <inheritdoc/>
-        public bool IsEmpty() 
+        public bool IsEmpty()
             => count == 0;
     }
 }

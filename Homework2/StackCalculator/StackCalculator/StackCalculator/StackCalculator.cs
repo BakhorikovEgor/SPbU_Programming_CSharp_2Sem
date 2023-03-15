@@ -50,7 +50,7 @@ namespace Calculator
             }
 
             double result = stack.Pop();
-            return stack.IsEmpty() 
+            return stack.IsEmpty()
                         ? result
                         : throw new ArgumentException("Expression is unsolvable");
         }

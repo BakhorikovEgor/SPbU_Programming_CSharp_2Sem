@@ -9,8 +9,8 @@
 
         /// <inheritdoc/>
         public void Push(double value)
-            => head = head == null 
-                    ? new Node(value) 
+            => head = head == null
+                    ? new Node(value)
                     : new Node(value, head);
 
         /// <inheritdoc/>
@@ -28,7 +28,7 @@
         }
 
         /// <inheritdoc/>
-        public bool IsEmpty() 
+        public bool IsEmpty()
             => head == null;
 
     }
