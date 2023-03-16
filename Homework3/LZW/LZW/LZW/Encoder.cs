@@ -2,18 +2,35 @@
 
 using LZW.Utils;
 
-internal class Encoder
+internal static class Encoder
 {
-    public static List<uint> Encode(byte[] bytes)
+    public static byte[] Encode(byte[] bytes)
     {
-        Trie trie = new Trie();
-        List<uint> result = new List<uint>();
 
+        Trie trie = new Trie();
+        ByteBuffer buffer = new ByteBuffer();
+
+        uint newBitsSizeFlag = 512;
         for (uint i = 0; i < bytes.Length; i++)
         {
-            result.Add(trie.Add(i, bytes));
+            if (trie.Size >= 65536)
+            {
+                trie = new Trie();
+                buffer.CurrentNumberBitLength = 9;
+                newBitsSizeFlag = 512;
+            }
+
+            uint number = trie.Add(i, bytes);
+            if (trie.Size >= newBitsSizeFlag)
+            {
+                buffer.CurrentNumberBitLength++;
+                newBitsSizeFlag <<= 1;
+            }
+
+            buffer.Add(number);   
         }
 
-        return result;
+        buffer.AddToBufer();
+        return buffer.Bytes.ToArray();
     }
 }
