@@ -1,6 +1,5 @@
 ﻿using Calculator;
-using StackData.DynamicArray;
-using StackData.LinkedList;
+using StackData;
 using static System.Console;
 
 class Program
@@ -9,7 +8,7 @@ class Program
     {
         StackCalculator calculator = new StackCalculator(new DynamicArrayStack());
 
-        bool choosing = true;
+        var choosing = true;
         string? stackType;
         while (choosing)
         {
@@ -38,7 +37,7 @@ class Program
             }
         }
 
-        bool processing = true;
+        var processing = true;
         while (processing)
         {
             WriteLine("\nEnter an expression(available operations: + - * /)\n");

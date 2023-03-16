@@ -1,35 +1,34 @@
-﻿namespace StackData.LinkedList
+﻿namespace StackData;
+
+/// <summary>
+/// Stack realization by using LinkedList structure.
+/// </summary>
+public class LinkedListStack : IStack
 {
-    /// <summary>
-    /// Stack realization by using LinkedList structure.
-    /// </summary>
-    public class LinkedListStack : IStack
+    private Node? head;
+
+    /// <inheritdoc/>
+    public void Push(double value)
+        => head = head == null
+                ? new Node(value)
+                : new Node(value, head);
+
+    /// <inheritdoc/>
+    public double Pop()
     {
-        private Node? head;
-
-        /// <inheritdoc/>
-        public void Push(double value)
-            => head = head == null
-                    ? new Node(value)
-                    : new Node(value, head);
-
-        /// <inheritdoc/>
-        public double Pop()
+        if (IsEmpty())
         {
-            if (IsEmpty())
-            {
-                throw new InvalidOperationException("Can`t pop from empty stack");
-            }
-
-            double returnValue = head.Value;
-            head = head.Next == head ? null : head.Next;
-
-            return returnValue;
+            throw new InvalidOperationException("Can`t pop from empty stack");
         }
 
-        /// <inheritdoc/>
-        public bool IsEmpty()
-            => head == null;
+        double returnValue = head.Value;
+        head = head.Next == head ? null : head.Next;
 
+        return returnValue;
     }
+
+    /// <inheritdoc/>
+    public bool IsEmpty()
+        => head == null;
+
 }

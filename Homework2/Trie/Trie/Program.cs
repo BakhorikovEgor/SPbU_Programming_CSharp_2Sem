@@ -24,6 +24,7 @@ class Program
                 """);
 
             string? choice = ReadLine();
+            string? word;
             switch (choice)
             {
                 case "0":
@@ -33,7 +34,7 @@ class Program
                 case "1":
                     Write("Enter the word: ");
 
-                    string? word = ReadLine();
+                    word = ReadLine();
                     try
                     {
                         bool result = trie.Add(word);
