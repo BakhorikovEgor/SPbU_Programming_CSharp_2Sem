@@ -17,9 +17,7 @@ namespace BurrowsWheelerTransform
                 inputString = ReadLine();
             }
 
-            (string, int) transformationInfo = BWT.DirectTransformation(inputString);
-            string transformedString = transformationInfo.Item1;
-            int oldStringPosition = transformationInfo.Item2;
+            (string transformedString, int oldStringPosition) = BWT.DirectTransformation(inputString);
 
             WriteLine($"Transformed string: {transformedString}");
 

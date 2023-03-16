@@ -14,7 +14,7 @@
         {
             // List to mark which permutations contain that symbol at a given position.
             List<int>[] sameSymbolPermutations = new List<int>[128];
-            for (int i = 0; i < 128; ++i)
+            for (var i = 0; i < 128; ++i)
             {
                 sameSymbolPermutations[i] = new List<int>();
             }
@@ -24,10 +24,10 @@
                 sameSymbolPermutations[startedString[(firstIndex + position) % startedString.Length]].Add(firstIndex);
             }
 
-            int sortedPosition = 0;
-            for (int letterIndex = 0; letterIndex < 128; ++letterIndex)
+            var sortedPosition = 0;
+            for (var letterIndex = 0; letterIndex < 128; ++letterIndex)
             {
-                for (int count = 0; count < sameSymbolPermutations[letterIndex].Count; count++)
+                for (var count = 0; count < sameSymbolPermutations[letterIndex].Count; count++)
                 {
                     permutations[sortedPosition] = sameSymbolPermutations[letterIndex][count];
                     sortedPosition++;
@@ -44,7 +44,7 @@
         /// <returns> Alphabetically sorted array of pointers to the beginning of the permutations.</returns>
         internal static int[] PermutationsAlphabetSort(string startedString, int[] permutations)
         {
-            for (int position = startedString.Length - 1; position >= 0; --position)
+            for (var position = startedString.Length - 1; position >= 0; --position)
             {
                 PermutationsCountSort(startedString, position, permutations);
             }
@@ -60,7 +60,7 @@
         internal static int[] BuildFirstPermutationColumn(string transformedString)
         {
             // Build an array to mark the number of each symbol inclusions.
-            int[] firstColumnPointers = new int[128];
+            var firstColumnPointers = new int[128];
             for (int i = 0; i < transformedString.Length; ++i)
             {
                 firstColumnPointers[transformedString[i]]++;
@@ -68,8 +68,8 @@
 
             // Change array. It will present pointers to each
             // symbol first inclusion in transformation matrix.
-            int temporaryPointer = 0;
-            for (int i = 0; i < firstColumnPointers.Length; ++i)
+            var temporaryPointer = 0;
+            for (var i = 0; i < firstColumnPointers.Length; ++i)
             {
                 temporaryPointer += firstColumnPointers[i];
                 firstColumnPointers[i] = temporaryPointer - firstColumnPointers[i];

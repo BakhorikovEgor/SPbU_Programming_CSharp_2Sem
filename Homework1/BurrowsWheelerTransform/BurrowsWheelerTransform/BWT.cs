@@ -12,17 +12,17 @@ namespace BurrowsWheelerTransform
         internal static (string, int) DirectTransformation(string startedString)
         {
             // Array of pointers to the first elements for all cyclic permutations.
-            int[] cyclicPermutations = new int[startedString.Length];
-            for (int i = 0; i < startedString.Length; ++i)
+            var cyclicPermutations = new int[startedString.Length];
+            for (var i = 0; i < startedString.Length; ++i)
             {
                 cyclicPermutations[i] = i;
             }
 
             BWTUtils.PermutationsAlphabetSort(startedString, cyclicPermutations);
 
-            int endingPosition = 0;
-            StringBuilder transformedString = new StringBuilder();
-            for (int i = 0; i < startedString.Length; ++i)
+            var endingPosition = 0;
+            var transformedString = new StringBuilder();
+            for (var i = 0; i < startedString.Length; ++i)
             {
                 char lastPermutationElement = startedString[(cyclicPermutations[i] + startedString.Length - 1) % startedString.Length];
                 transformedString.Append(lastPermutationElement);
@@ -45,19 +45,19 @@ namespace BurrowsWheelerTransform
         internal static string ReverseTransformation(string transformedString, int originalStringPosition)
         {
 
-            int[] firstColumnPointers = BWTUtils.BuildFirstPermutationColumn(transformedString);
+            var firstColumnPointers = BWTUtils.BuildFirstPermutationColumn(transformedString);
 
             // Create an array of pointers which bind previous array and given string
             // this array helps builing old string step by step.
-            int[] reverseVector = new int[transformedString.Length];
-            for (int i = 0; i < transformedString.Length; ++i)
+            var reverseVector = new int[transformedString.Length];
+            for (var i = 0; i < transformedString.Length; ++i)
             {
                 reverseVector[firstColumnPointers[transformedString[i]]++] = i;
             }
 
             StringBuilder originalString = new StringBuilder();
             originalStringPosition = reverseVector[originalStringPosition];
-            for (int i = 0; i < transformedString.Length; ++i)
+            for (var i = 0; i < transformedString.Length; ++i)
             {
                 originalString.Append(transformedString[originalStringPosition]);
                 originalStringPosition = reverseVector[originalStringPosition];
