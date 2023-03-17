@@ -4,59 +4,63 @@ namespace LZW;
 
 internal static class Decoder
 {
-    public static byte[] Decode(byte[] bytes,bool isLast)
+    public static byte[] Decode(byte[] bytes, bool isLast)
     {
         List<byte> result = new List<byte>();
         Dictionary<uint, List<byte>> table = InitTable();
-        ByteBuffer buffer = new ByteBuffer();
 
-        uint[] numbers = buffer.TableNumbers(bytes,isLast);
-        uint currentTableSize = 256;
+        uint[] tableKeys = GetTableKeys(bytes, isLast);
+        uint tableSize = 256;
+        uint tablePointer = 256;
         List<byte> newPrefix;
-        for(uint i = 0; i < numbers.Length;++i)
+        for (uint i = 0; i < tableKeys.Length; ++i)
         {
-            uint number = numbers[i];
-            if (table.ContainsKey(number))
+            uint key = tableKeys[i];
+            if (tableSize == 65536)
             {
-                if (i  > 0)
+                table = InitTable();
+                tableSize = 256;
+            }
+
+            if (table.ContainsKey(key))
+            {
+                if (tableSize > 256)
                 {
-                    newPrefix = new List<byte>(table[numbers[i - 1]])
+                    newPrefix = new List<byte>(table[tableKeys[i - 1]])
                     {
-                        table[number][0]
+                        table[key][0]
                     };
 
-                    while (table.ContainsKey(currentTableSize))
+                    while (table.ContainsKey(tablePointer))
                     {
-                        currentTableSize++;
+                        tablePointer++;
                     }
-                    table.Add(currentTableSize++, newPrefix);
+
+                    table.Add(tablePointer++, newPrefix);
                 }
-                result.AddRange(table[number]);
+
+                result.AddRange(table[key]);
             }
             else
             {
-                newPrefix = new List<byte>(table[numbers[i - 1]])
+                newPrefix = new List<byte>(table[tableKeys[i - 1]])
                 {
-                    table[numbers[i - 1]][0]
+                    table[tableKeys[i - 1]][0]
                 };
-                table.Add(number, newPrefix);
+
+                table.Add(key, newPrefix);
                 result.AddRange(newPrefix);
             }
 
-            if(currentTableSize == 65536)
-            {
-                currentTableSize = 256;
-                InitTable();
-            }
-
-        }   
+            tableSize++;
+        }
 
         return result.ToArray();
     }
 
     private static Dictionary<uint, List<byte>> InitTable()
     {
-        Dictionary<uint, List<byte>>  table = new Dictionary<uint, List<byte>>();
+        Dictionary<uint, List<byte>> table = new Dictionary<uint, List<byte>>();
         for (uint i = 0; i < 256; ++i)
         {
             table[i] = new List<byte>()
@@ -68,5 +72,35 @@ internal static class Decoder
         return table;
     }
 
+    private static uint[] GetTableKeys(byte[] bytes, bool isLast)
+    {
+        TableNumberBuffer buffer = new TableNumberBuffer();
 
+        uint tableSize = 256;
+        uint newBitsSizeFlag = 512;
+        for (int i = 0; i < bytes.Length; ++i)
+        {
+            byte oneByte = bytes[i];
+            if (tableSize == newBitsSizeFlag)
+            {
+                newBitsSizeFlag <<= 1;
+                buffer.CurrentNumberBitCount++;
+            }
+
+            if (tableSize == 65536)
+            {
+                tableSize = 256;
+                newBitsSizeFlag = 512;
+                buffer.CurrentNumberBitCount = 9;
+            }
+
+            bool newNumber = buffer.Add(oneByte, i == bytes.Length - 1 ? isLast : false);
+            if (newNumber)
+            {
+                tableSize++;
+            }
+        }
+
+        return buffer.Numbers.ToArray();
+    }
 }

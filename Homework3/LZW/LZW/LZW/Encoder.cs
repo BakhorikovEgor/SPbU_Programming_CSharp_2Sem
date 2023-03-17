@@ -11,8 +11,14 @@ internal static class Encoder
         ByteBuffer buffer = new ByteBuffer();
 
         uint newBitsSizeFlag = 512;
-        for (int i = 0; i < bytes.Length; i++)
+        for (int i = 0; i < bytes.Length;i++)
         {
+            if (trie.Size == newBitsSizeFlag)
+            {
+                buffer.NumberBitLength++;
+                newBitsSizeFlag <<= 1;
+            }
+
             if (trie.Size == 65536)
             {
                 newBitsSizeFlag = 512;
@@ -21,21 +27,16 @@ internal static class Encoder
             }
 
             uint number = trie.Add(ref i, bytes);
-            if (trie.Size == newBitsSizeFlag)
-            {
-                buffer.NumberBitLength++;
-                newBitsSizeFlag <<= 1;
-            }
 
             buffer.AddToEncode(number);   
         }
 
-        if(buffer.currentByte != 0)
+        if(buffer.CurrentByte != 0)
         {
-            buffer.AddToBufer();
+            buffer.AddByteToBuffer();
             return (buffer.Bytes.ToArray(), true);
         }
-        buffer.AddToBufer();
-        return (buffer.Bytes.ToArray(),true);
+        buffer.AddByteToBuffer();
+        return (buffer.Bytes.ToArray(),false);
     }
 }
