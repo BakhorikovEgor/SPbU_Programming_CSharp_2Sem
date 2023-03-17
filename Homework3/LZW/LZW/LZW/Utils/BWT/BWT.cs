@@ -1,26 +1,21 @@
-﻿using System.Text;
+﻿namespace LZW.Utils;
 
-
-namespace LZW.Utils;
 
 internal static class BWT
 {
-    internal static (byte[], int) DirectTransformation(byte[] bytes)
+    public static (byte[], int) DirectTransformation(byte[] bytes)
     {
-        int[] cyclicPermutations = new int[bytes.Length];
-        for (int i = 0; i < bytes.Length; ++i)
+        var cyclicPermutations = new int[bytes.Length];
+        for (var i = 0; i < bytes.Length; ++i)
         {
             cyclicPermutations[i] = i;
         }
 
-
-        int endingPosition = BWTUtils.DirectBWTSort(bytes, cyclicPermutations);
-
-        List<byte> transformedBytes = new List<byte>();
-        for (int i = 0; i < bytes.Length; ++i)
+        var endingPosition = BWTUtils.BWTShellSort(bytes, cyclicPermutations);
+        List<byte> transformedBytes = new();
+        for (var i = 0; i < bytes.Length; ++i)
         {
             transformedBytes.Add(bytes[(cyclicPermutations[i] + bytes.Length - 1) % bytes.Length]);
-
             if (cyclicPermutations[i] == 0)
             {
                 endingPosition = i;
@@ -30,4 +25,24 @@ internal static class BWT
         return (transformedBytes.ToArray(), endingPosition);
     }
 
+    public static byte[] ReverseTransformation(byte[] transformedBytes, int originalPosition)
+    {
+        var firstColumnPointers = BWTUtils.BuildFirstPermutationColumn(transformedBytes);
+
+        var reverseVector = new int[transformedBytes.Length];
+        for (var i = 0; i < transformedBytes.Length; ++i)
+        {
+            reverseVector[firstColumnPointers[transformedBytes[i]]++] = i;
+        }
+
+        var originalBytes = new byte[transformedBytes.Length];
+        originalPosition = reverseVector[originalPosition];
+        for (var i = 0; i < transformedBytes.Length; ++i)
+        {
+            originalBytes[i] = transformedBytes[originalPosition];
+            originalPosition = reverseVector[originalPosition];
+        }
+
+        return originalBytes;
+    }
 }

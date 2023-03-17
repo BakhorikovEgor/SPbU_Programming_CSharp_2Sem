@@ -1,51 +1,52 @@
 ﻿namespace LZW.Utils;
 
+
 internal class Trie
 {
     private class Vertex
     {
-        public Dictionary<byte, Vertex> Children { get; set; } = new Dictionary<byte, Vertex>();
+        public Dictionary<byte, Vertex> Children { get; set; } = new();
 
-        public uint Number { get; set; }
+        public int Number { get; set; }
 
-        public Vertex(uint number) 
+        public Vertex(int number) 
         {
             Number = number;
         }
 
         public Vertex() { }
-
     }
 
-    private readonly Vertex top = new Vertex();
+    public int Size { get; private set; } = 0;
 
-    public uint Size { get; private set; } = 0;
+    private readonly Vertex top = new();
 
     public Trie()
     {
-        for (int i = 0; i < 256; ++i)
+        for (var i = 0; i < 256; ++i)
         {
             top.Children.Add((byte)i, new Vertex(Size++));
         }
     }
 
-    public uint Add(ref int startIndex, params byte[] bytes)
+    public int Add(ref int startIndex, params byte[] bytes)
     {
-
-        Vertex currentVertex = top;
-        int shift = -1;
-        for(int i = startIndex; i < bytes.Length; ++i)
+        var currentVertex = top;
+        var shift = -1;
+        for(var i = startIndex; i < bytes.Length; ++i)
         {
-            byte oneByte = bytes[i];
+            var oneByte = bytes[i];
             if (!currentVertex.Children.ContainsKey(oneByte)) 
             {
                 startIndex += shift;
                 currentVertex.Children.Add(oneByte, new Vertex(Size++));
+
                 return currentVertex.Number;
             }
             shift++;
             currentVertex = currentVertex.Children[oneByte];
         }
+
         startIndex += shift;
         return currentVertex.Number;
     }

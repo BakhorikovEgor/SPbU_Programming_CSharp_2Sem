@@ -1,22 +1,30 @@
 ﻿namespace LZW.Utils;
 
+
 internal class ByteBuffer
 {
-    static private readonly byte BITS_IN_BYTE = 8;
-    public List<byte> Bytes { get; private set; } = new List<byte>();
-    public uint NumberBitLength { get; set; } = 9;
+    public List<byte> Bytes { get; private set; } = new ();
+
+    public int NumberBitLength { get; set; } = 9;
+
     public byte CurrentByte { get; private set; } = 0;
-    private uint currentByteLength = 0;
 
+    static private readonly byte BITS_IN_BYTE = 8;
+    private int currentByteLength = 0;
 
-    public void AddToEncode(uint number)
+    public void SetBWTPosition(int position)
     {
-        byte[] bits = BitsOfUint(number);
-        for (int i = 0; i < bits.Length; ++i)
+        Bytes.Add(0);
+        var positionBytes = BitConverter.GetBytes(position);
+        Bytes.AddRange(positionBytes);
+    }
+    public void AddNumber(int number)
+    {
+        var bits = BitsOfUint(number);
+        foreach(var bit in bits)
         {
-            CurrentByte = (byte)((CurrentByte << 1) + bits[i]);
+            CurrentByte = (byte)((CurrentByte << 1) + bit);
             currentByteLength++;
-
             if (currentByteLength == BITS_IN_BYTE)
             {
                 AddByteToBuffer();
@@ -31,11 +39,11 @@ internal class ByteBuffer
         currentByteLength = 0;
     }
 
-    private byte[] BitsOfUint(uint number)
+    private byte[] BitsOfUint(int number)
     {
-        List<byte> bits = new List<byte>();
+        List<byte> bits = new();
 
-        int bitsLength = 0;
+        var bitsLength = 0;
         while (number > 0)
         {
             bitsLength++;
@@ -43,7 +51,7 @@ internal class ByteBuffer
             number >>= 1;
         }
 
-        for (int i = 0; i < NumberBitLength - bitsLength; ++i)
+        for (var i = 0; i < NumberBitLength - bitsLength; ++i)
         {
             bits.Add(0);
         }
@@ -51,5 +59,4 @@ internal class ByteBuffer
         bits.Reverse();
         return bits.ToArray();
     }
-
 }

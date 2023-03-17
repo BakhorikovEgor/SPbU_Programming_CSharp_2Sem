@@ -1,8 +1,8 @@
 ﻿namespace LZW.Utils;
 
+
 internal class BWTUtils
 {
-
     private static void Swap(ref int first, ref int second)
     {
         (first, second) = (second, first);
@@ -10,8 +10,7 @@ internal class BWTUtils
 
     private static bool IsSuffixMore(byte[] bytes, int firstSuffixIndex, int secondSuffixIndex)
     {
-
-        for (int i = 0; i < bytes.Length; ++i)
+        for (var i = 0; i < bytes.Length; ++i)
         {
             if (bytes[(firstSuffixIndex + i) % bytes.Length] != bytes[(secondSuffixIndex + i) % bytes.Length])
             {
@@ -22,12 +21,10 @@ internal class BWTUtils
         return false;
     }
 
-
-    public static int DirectBWTSort(in byte[] bytes, int[] array)
+    public static int BWTShellSort(byte[] bytes, int[] array)
     {
-
-        int lastElement = 0;
-        int partition = 1;
+        var lastElement = 0;
+        var partition = 1;
 
         while (partition < array.Length)
         {
@@ -35,10 +32,9 @@ internal class BWTUtils
         }
 
         partition /= 3;
-
         while (partition > 0)
         {
-            for (int i = partition; i < array.Length; ++i)
+            for (var i = partition; i < array.Length; ++i)
             {
                 for (var j = i; j - partition >= 0 && IsSuffixMore(bytes, array[j - partition], array[j]); j -= partition)
                 {
@@ -55,5 +51,23 @@ internal class BWTUtils
         }
 
         return lastElement;
+    }
+
+    public static int[] BuildFirstPermutationColumn(byte[] transformedBytes)
+    {
+        var firstColumnPointers = new int[256];
+        for (var i = 0; i < transformedBytes.Length; ++i)
+        {
+            firstColumnPointers[transformedBytes[i]]++;
+        }
+
+        var temporaryPointer = 0;
+        for (var i = 0; i < firstColumnPointers.Length; ++i)
+        {
+            temporaryPointer += firstColumnPointers[i];
+            firstColumnPointers[i] = temporaryPointer - firstColumnPointers[i];
+        }
+
+        return firstColumnPointers;
     }
 }
