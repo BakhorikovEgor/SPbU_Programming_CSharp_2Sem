@@ -1,15 +1,24 @@
 ﻿using LZW.Utils;
+using System;
 
 namespace LZW;
 
 internal static class Decoder
 {
-    public static byte[] Decode(byte[] bytes, bool isLast)
+    public static byte[] Decode(byte[] bytes, bool isLast, uint[] data)
     {
         List<byte> result = new List<byte>();
         Dictionary<uint, List<byte>> table = InitTable();
 
         uint[] tableKeys = GetTableKeys(bytes, isLast);
+        for (int i = 0; i < tableKeys.Length; ++i)
+        {
+            if (data[i] != tableKeys[i])
+            {
+                Console.WriteLine(i);
+                break;
+            }
+        }
         uint tableSize = 256;
         uint tablePointer = 256;
         List<byte> newPrefix;
@@ -20,6 +29,7 @@ internal static class Decoder
             {
                 table = InitTable();
                 tableSize = 256;
+                tablePointer = 256;
             }
 
             if (table.ContainsKey(key))
@@ -78,6 +88,7 @@ internal static class Decoder
 
         uint tableSize = 256;
         uint newBitsSizeFlag = 512;
+        int pointer = 0;
         for (int i = 0; i < bytes.Length; ++i)
         {
             byte oneByte = bytes[i];

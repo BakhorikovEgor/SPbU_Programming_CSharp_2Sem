@@ -4,37 +4,29 @@ internal class Trie
 {
     private class Vertex
     {
-        public Dictionary<byte, Vertex> Children { get; set; }
+        public Dictionary<byte, Vertex> Children { get; set; } = new Dictionary<byte, Vertex>();
 
         public uint Number { get; set; }
 
         public Vertex(uint number) 
         {
             Number = number;
-            Children = new Dictionary<byte, Vertex>();
         }
 
-        public Vertex() 
-        {
-            Children = new Dictionary<byte, Vertex>();
-        }
+        public Vertex() { }
 
     }
 
-    private readonly Vertex top;
+    private readonly Vertex top = new Vertex();
 
-    public uint Size { get; private set; }
+    public uint Size { get; private set; } = 0;
 
     public Trie()
     {
-        Size = 0;
-        top = new Vertex();
-
         for (int i = 0; i < 256; ++i)
         {
             top.Children.Add((byte)i, new Vertex(Size++));
         }
-
     }
 
     public uint Add(ref int startIndex, params byte[] bytes)

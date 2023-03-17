@@ -12,9 +12,9 @@ internal class ByteBuffer
     public void AddToEncode(uint number)
     {
         byte[] bits = BitsOfUint(number);
-        foreach(byte bit in bits)
+        for (int i = 0; i < bits.Length; ++i)
         {
-            CurrentByte = (byte)((CurrentByte << 1) + bit);
+            CurrentByte = (byte)((CurrentByte << 1) + bits[i]);
             currentByteLength++;
 
             if (currentByteLength == BITS_IN_BYTE)

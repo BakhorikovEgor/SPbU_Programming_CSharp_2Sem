@@ -11,7 +11,7 @@ internal class TableNumberBuffer
     public bool Add(byte oneByte, bool isLast)
     {
         bool newNumber = false;
-        byte[] bits = isLast ? BitsOfByteWithoutZeros(oneByte) : BitsOfByte(oneByte);
+        byte[] bits = isLast ? BitsOfByteWithZeros(oneByte) : BitsOfByte(oneByte);
         foreach (byte bit in bits)
         {
             currentNumber = (currentNumber << 1) + bit;
@@ -45,7 +45,7 @@ internal class TableNumberBuffer
         return bites;
     }
 
-    private byte[] BitsOfByteWithoutZeros(byte oneByte)
+    private byte[] BitsOfByteWithZeros(byte oneByte)
     {
         List<byte> bites = new List<byte>();
         while (oneByte > 0)
