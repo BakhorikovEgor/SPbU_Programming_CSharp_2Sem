@@ -5,20 +5,12 @@ namespace LZW;
 
 internal static class Decoder
 {
-    public static byte[] Decode(byte[] bytes, bool isLast, uint[] data)
+    public static byte[] Decode(byte[] bytes, bool isLast)
     {
         List<byte> result = new List<byte>();
         Dictionary<uint, List<byte>> table = InitTable();
 
         uint[] tableKeys = GetTableKeys(bytes, isLast);
-        for (int i = 0; i < tableKeys.Length; ++i)
-        {
-            if (data[i] != tableKeys[i])
-            {
-                Console.WriteLine(i);
-                break;
-            }
-        }
         uint tableSize = 256;
         uint tablePointer = 256;
         List<byte> newPrefix;
@@ -88,7 +80,6 @@ internal static class Decoder
 
         uint tableSize = 256;
         uint newBitsSizeFlag = 512;
-        int pointer = 0;
         for (int i = 0; i < bytes.Length; ++i)
         {
             byte oneByte = bytes[i];

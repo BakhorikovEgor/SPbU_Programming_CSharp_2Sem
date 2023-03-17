@@ -7,7 +7,7 @@ internal class ByteBuffer
     public uint NumberBitLength { get; set; } = 9;
     public byte CurrentByte { get; private set; } = 0;
     private uint currentByteLength = 0;
-     
+
 
     public void AddToEncode(uint number)
     {
@@ -42,7 +42,7 @@ internal class ByteBuffer
             bits.Add((byte)(number % 2));
             number >>= 1;
         }
-        
+
         for (int i = 0; i < NumberBitLength - bitsLength; ++i)
         {
             bits.Add(0);
