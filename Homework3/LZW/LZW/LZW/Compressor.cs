@@ -10,6 +10,7 @@ internal static class Compressor
         var buffer = new ByteBuffer();
         var trie = new Trie();
 
+        buffer.Bytes.Add(0);
         buffer.SetBWTPosition(BWTPosition);
 
         var newBitsSizeFlag = 512;
@@ -17,14 +18,14 @@ internal static class Compressor
         {
             if (trie.Size == newBitsSizeFlag)
             {
-                buffer.NumberBitLength++;
+                buffer.CurrentBitLength++;
                 newBitsSizeFlag <<= 1;
             }
 
             if (trie.Size == 65536)
             {
                 newBitsSizeFlag = 512;
-                buffer.NumberBitLength = 9;
+                buffer.CurrentBitLength = 9;
                 trie = new();
             }
 

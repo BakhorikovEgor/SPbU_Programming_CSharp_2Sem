@@ -1,16 +1,33 @@
 ﻿namespace LZW.Utils;
 
 
+/// <summary>
+/// A buffer for generating from a byte sequence,
+/// key numbers of the table for decompressing information.
+/// </summary>
 internal class TableNumberBuffer
 {
+    /// <summary>
+    /// The generated key numbers of decompression table.
+    /// </summary>
     public List<int> Numbers { get; private set; } = new();
 
-    public int CurrentNumberBitCount { get; set; } = 9;
+    /// <summary>
+    /// The length of bits to read, before converting to number.
+    /// </summary>
+    public int CurrentBitCount { get; set; } = 9;
 
     public static readonly int BITS_IN_BYTE = 8;
+
     private int currentNumber = 0;
     private int currentNumberLength = 0;
 
+    /// <summary>
+    /// Add to the current number, a new byte, before filling.
+    /// </summary>
+    /// <param name="oneByte"> Byte to add. </param>
+    /// <param name="isLast"> If this byte is the last in streaming sequence, than add additional zeros.</param>
+    /// <returns> Has a new number been added. </returns>
     public bool AddByte(byte oneByte, bool isLast)
     {
         var newNumber = false;
@@ -18,7 +35,7 @@ internal class TableNumberBuffer
         foreach (var bit in bits)
         {
             currentNumber = (currentNumber << 1) + bit;
-            if (++currentNumberLength == CurrentNumberBitCount)
+            if (++currentNumberLength == CurrentBitCount)
             {
                 AddToBuffer();
                 newNumber = true;
@@ -49,14 +66,14 @@ internal class TableNumberBuffer
 
     private byte[] BitsOfLastByte(byte oneByte)
     {
-        List<byte> bites = new();
+        var bites = new List<byte>();
         while (oneByte > 0)
         {
             bites.Add((byte)(oneByte % 2));
             oneByte >>= 1;
         }
 
-        while (bites.Count + currentNumberLength < CurrentNumberBitCount)
+        while (bites.Count + currentNumberLength < CurrentBitCount)
         {
             bites.Add(0);
         }

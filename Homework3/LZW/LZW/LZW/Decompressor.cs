@@ -86,14 +86,14 @@ internal static class Decompressor
             if (tableSize == newBitsSizeFlag)
             {
                 newBitsSizeFlag <<= 1;
-                buffer.CurrentNumberBitCount++;
+                buffer.CurrentBitCount++;
             }
 
             if (tableSize == 65536)
             {
                 tableSize = 256;
                 newBitsSizeFlag = 512;
-                buffer.CurrentNumberBitCount = 9;
+                buffer.CurrentBitCount = 9;
             }
 
             var newNumber = buffer.AddByte(oneByte, i == bytes.Length - 1 && isLast);

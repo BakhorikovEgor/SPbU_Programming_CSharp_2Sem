@@ -1,26 +1,46 @@
 ﻿namespace LZW.Utils;
 
-
+/// <summary>
+/// Byte buffer, for generating byte sequences of variable length.
+/// </summary>
 internal class ByteBuffer
 {
+    /// <summary>
+    /// The generated sequence of bytes.
+    /// </summary>
     public List<byte> Bytes { get; private set; } = new ();
 
-    public int NumberBitLength { get; set; } = 9;
+    /// <summary>
+    /// The length of the current, stored byte.
+    /// </summary>
+    public int CurrentBitLength { get; set; } = 9;
 
+    /// <summary>
+    /// The byte currently being generated.
+    /// </summary>
     public byte CurrentByte { get; private set; } = 0;
 
     static private readonly byte BITS_IN_BYTE = 8;
     private int currentByteLength = 0;
 
+    /// <summary>
+    /// Add the first four bytes, to further determine
+    /// the position of the byte, for the reverse BWT.
+    /// </summary>
+    /// <param name="position"> Position to do reverse BWT. </param>
     public void SetBWTPosition(int position)
     {
-        Bytes.Add(0);
         var positionBytes = BitConverter.GetBytes(position);
         Bytes.AddRange(positionBytes);
     }
+
+    /// <summary>
+    /// Add a number to the byte stream.
+    /// </summary>
+    /// <param name="number"> Number to add. </param>
     public void AddNumber(int number)
     {
-        var bits = BitsOfUint(number);
+        var bits = BitsOfInt(number);
         foreach(var bit in bits)
         {
             CurrentByte = (byte)((CurrentByte << 1) + bit);
@@ -32,6 +52,9 @@ internal class ByteBuffer
         }
     }
 
+    /// <summary>
+    /// Add the current byte to the byte stream.
+    /// </summary>
     public void AddByteToBuffer()
     {
         Bytes.Add(CurrentByte);
@@ -39,24 +62,15 @@ internal class ByteBuffer
         currentByteLength = 0;
     }
 
-    private byte[] BitsOfUint(int number)
+    private byte[] BitsOfInt(int number)
     {
-        List<byte> bits = new();
-
-        var bitsLength = 0;
-        while (number > 0)
+        var bits = new byte[CurrentBitLength];
+        for (var i = CurrentBitLength - 1; i >= 0; i--)
         {
-            bitsLength++;
-            bits.Add((byte)(number % 2));
+            bits[i] = (byte)(number % 2);
             number >>= 1;
         }
 
-        for (var i = 0; i < NumberBitLength - bitsLength; ++i)
-        {
-            bits.Add(0);
-        }
-
-        bits.Reverse();
-        return bits.ToArray();
+        return bits;
     }
 }

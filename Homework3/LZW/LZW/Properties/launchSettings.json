@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LZW": {
+      "commandName": "Project",
+      "commandLineArgs": "D:\\ProgrammingWay\\Spbu_programming\\SPbU_Programming_2Sem_CSharp\\SPbU_Programming_CSharp_2Sem\\Homework3\\LZW\\LZW\\TestFiles\\video.mp4 -c"
+    }
+  }
+}
