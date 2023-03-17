@@ -29,7 +29,7 @@ internal class Trie
         }
     }
 
-    public int Add(ref int startIndex, params byte[] bytes)
+    public int Add(ref int startIndex, byte[] bytes)
     {
         var currentVertex = top;
         var shift = -1;

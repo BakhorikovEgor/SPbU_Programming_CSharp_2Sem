@@ -16,6 +16,7 @@ else
     {
         throw new FileNotFoundException("File doesn`t exist");
     }
+
     else if (args[1] == "-c")
     {
         var inputFileBytes = File.ReadAllBytes(path);
@@ -49,6 +50,11 @@ else
 
         File.Create(decompressedFilePath).Close();
         File.WriteAllBytes(decompressedFilePath, decompressedBytes);
+    }
+
+    else
+    {
+        throw new IOException("Second argument isn`t correct !");
     }
 
 }
