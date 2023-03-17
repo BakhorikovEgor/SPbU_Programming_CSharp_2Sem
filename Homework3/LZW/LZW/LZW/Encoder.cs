@@ -4,14 +4,14 @@ using LZW.Utils;
 
 internal static class Encoder
 {
-    public static (byte[],bool) Encode(byte[] bytes)
+    public static (byte[], bool) Encode(byte[] bytes)
     {
 
         Trie trie = new Trie();
         ByteBuffer buffer = new ByteBuffer();
 
         uint newBitsSizeFlag = 512;
-        for (int i = 0; i < bytes.Length;i++)
+        for (int i = 0; i < bytes.Length; i++)
         {
             if (trie.Size == newBitsSizeFlag)
             {
@@ -28,15 +28,15 @@ internal static class Encoder
 
             uint number = trie.Add(ref i, bytes);
 
-            buffer.AddToEncode(number);   
+            buffer.AddToEncode(number);
         }
 
-        if(buffer.CurrentByte != 0)
+        if (buffer.CurrentByte != 0)
         {
             buffer.AddByteToBuffer();
             return (buffer.Bytes.ToArray(), true);
         }
         buffer.AddByteToBuffer();
-        return (buffer.Bytes.ToArray(),false);
+        return (buffer.Bytes.ToArray(), false);
     }
 }
