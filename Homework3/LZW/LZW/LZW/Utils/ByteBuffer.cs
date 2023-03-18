@@ -8,7 +8,7 @@ internal class ByteBuffer
     /// <summary>
     /// The generated sequence of bytes.
     /// </summary>
-    public List<byte> Bytes { get; private set; } = new ();
+    public List<byte> Bytes { get; private set; } = new();
 
     /// <summary>
     /// The length of the current, stored byte.
@@ -41,7 +41,7 @@ internal class ByteBuffer
     public void AddNumber(int number)
     {
         var bits = BitsOfInt(number);
-        foreach(var bit in bits)
+        foreach (var bit in bits)
         {
             CurrentByte = (byte)((CurrentByte << 1) + bit);
             currentByteLength++;

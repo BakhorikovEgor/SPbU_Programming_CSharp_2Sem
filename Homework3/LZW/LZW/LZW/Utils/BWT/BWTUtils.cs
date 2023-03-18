@@ -1,6 +1,8 @@
 ﻿namespace LZW.Utils;
 
-
+/// <summary>
+/// A set of methods for direct and inverse Burrows-Wheeler transformations.
+/// </summary>
 internal class BWTUtils
 {
     private static void Swap(ref int first, ref int second)
@@ -21,6 +23,12 @@ internal class BWTUtils
         return false;
     }
 
+    /// <summary>
+    /// Sorting cyclic permutations of bytes represented by first element.
+    /// </summary>
+    /// <param name="bytes"> Initial sequence of bytes. </param>
+    /// <param name="array"> First elements of cyclic permutations. </param>
+    /// <returns> Ending position in cyclic permutation table (without building it). </returns>
     public static int BWTShellSort(byte[] bytes, int[] array)
     {
         var lastElement = 0;
@@ -28,7 +36,7 @@ internal class BWTUtils
 
         while (partition < array.Length)
         {
-            partition = partition * 3 + 1;
+            partition = (partition * 3) + 1;
         }
 
         partition /= 3;
@@ -53,6 +61,11 @@ internal class BWTUtils
         return lastElement;
     }
 
+    /// <summary>
+    /// Create first column of cyclic permutations table, without building this table.
+    /// </summary>
+    /// <param name="transformedBytes"> Sequence of bytes after reverse transformation. </param>
+    /// <returns> First column of transformation table (without building it). </returns>
     public static int[] BuildFirstPermutationColumn(byte[] transformedBytes)
     {
         var firstColumnPointers = new int[256];

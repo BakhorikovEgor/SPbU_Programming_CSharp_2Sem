@@ -2,13 +2,26 @@
 
 namespace LZW;
 
+/// <summary>
+/// A class for decompressing a sequence of bytes compressed 
+/// using LZW (and possibly BWT) into the original sequence.
+/// </summary>
 internal static class Decompressor
 {
-    public static (byte[],int) Decompress(byte[] bytes)
+    /// <summary>
+    /// Decompresses a sequence of bytes.
+    /// </summary>
+    /// <returns> Decompressed sequence and position for a possible reverse BWT. </returns>
+    public static (byte[], int) Decompress(byte[] bytes)
     {
+        if (bytes.Length == 0)
+        {
+            throw new ArgumentException("Can`t decompress empty sequence of bytes.");
+        }
+
         var result = new List<byte>();
         var table = InitializeTable();
-        (var tableKeys,var positionBWT) = GetTableKeysAndBWTPosition(bytes);
+        (var tableKeys, var positionBWT) = GetTableKeysAndBWTPosition(bytes);
 
         var tableSize = 256;
         var tablePointer = 256;
@@ -73,7 +86,7 @@ internal static class Decompressor
 
     private static (int[], int) GetTableKeysAndBWTPosition(byte[] bytes)
     {
-        var positionBWT = BitConverter.ToInt32(new byte[] {bytes[1], bytes[2], bytes[3], bytes[4]});
+        var positionBWT = BitConverter.ToInt32(new byte[] { bytes[1], bytes[2], bytes[3], bytes[4] });
 
         var isLast = bytes[0] == 1;
         var buffer = new TableNumberBuffer();
@@ -103,6 +116,6 @@ internal static class Decompressor
             }
         }
 
-        return (buffer.Numbers.ToArray(),positionBWT);
+        return (buffer.Numbers.ToArray(), positionBWT);
     }
 }

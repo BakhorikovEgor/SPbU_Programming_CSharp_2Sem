@@ -2,10 +2,24 @@
 
 namespace LZW;
 
+/// <summary>
+/// A class with functionality for compressing byte sequence using the LZW algorithm,
+/// the TrIe data structure and (possibly) BWT.
+/// </summary>
 internal static class Compressor
 {
-    public static byte[] Compress(byte[] bytes,int BWTPosition = -1)
+    /// <summary>
+    /// Сompresses a sequence of bytes.
+    /// </summary>
+    /// <param name="BWTPosition"> Position for reverse BWT in future for decompress.
+    /// Add it in the beggining of new sequence. Standard value means lack of BWT.</param>
+    /// <returns> Compressed byte sequence. </returns>
+    public static byte[] Compress(byte[] bytes, int BWTPosition = -1)
     {
+        if (bytes.Length == 0)
+        {
+            throw new ArgumentException("Can`t compress empty sequence of bytes.");
+        }
 
         var buffer = new ByteBuffer();
         var trie = new Trie();
