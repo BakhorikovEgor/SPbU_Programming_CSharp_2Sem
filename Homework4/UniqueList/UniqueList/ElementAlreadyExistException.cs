@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace List;
 
-namespace UniqueList
+internal class ElementAlreadyExistException: Exception
 {
-    internal class AlreadyExistExeption
-    {
-    }
+    public ElementAlreadyExistException() { }
+
+    public ElementAlreadyExistException(string message) : base(message) { }
+
+    public ElementAlreadyExistException(string message, Exception innerException) : base(message, innerException) { }
+
 }

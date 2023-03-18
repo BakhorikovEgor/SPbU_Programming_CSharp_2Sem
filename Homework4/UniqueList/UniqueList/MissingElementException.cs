@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace List;
 
-namespace UniqueList
+internal class MissingElementException: Exception
 {
-    internal class MissingElementException
-    {
-    }
+    public MissingElementException() { }
+
+    public MissingElementException(string message) : base(message) { }
+
+    public MissingElementException(string message, Exception innerException) : base(message, innerException) { }
 }
