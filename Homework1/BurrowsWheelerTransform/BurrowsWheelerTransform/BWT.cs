@@ -18,7 +18,7 @@ namespace BurrowsWheelerTransform
                 cyclicPermutations[i] = i;
             }
 
-            BWTUtils.PermutationsAlphabetSort(startedString, cyclicPermutations);
+            Array.Sort(cyclicPermutations, new BWTUtils.PermutationComparer(startedString));
 
             var endingPosition = 0;
             var transformedString = new StringBuilder();
@@ -55,7 +55,7 @@ namespace BurrowsWheelerTransform
                 reverseVector[firstColumnPointers[transformedString[i]]++] = i;
             }
 
-            StringBuilder originalString = new StringBuilder();
+            var originalString = new StringBuilder();
             originalStringPosition = reverseVector[originalStringPosition];
             for (var i = 0; i < transformedString.Length; ++i)
             {

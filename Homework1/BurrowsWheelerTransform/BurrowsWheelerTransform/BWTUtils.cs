@@ -2,53 +2,28 @@
 {
     internal class BWTUtils
     {
-        /// <summary>
-        /// Sorts by counting the cyclic permutations of a string,
-        /// represented by an array of pointers to the beginning of strings.
-        /// </summary>
-        /// <param name="startedString"> String we use to take symbols from. </param>
-        /// <param name="position"> Place in string where must sort. </param>
-        /// <param name="permutations"> Pointers to the starts of cyclic permutations. </param>
-        /// <returns> Sorted array of pointers the beginning of the permutations.</returns>
-        static void PermutationsCountSort(string startedString, int position, int[] permutations)
+        internal class PermutationComparer : IComparer<int>
         {
-            // List to mark which permutations contain that symbol at a given position.
-            List<int>[] sameSymbolPermutations = new List<int>[128];
-            for (var i = 0; i < 128; ++i)
+            private string comparingPermutation;
+
+            public PermutationComparer(string comparingPermutation)
             {
-                sameSymbolPermutations[i] = new List<int>();
+                this.comparingPermutation = comparingPermutation;
             }
 
-            foreach (int firstIndex in permutations)
+            public int Compare(int firstPointer, int secondPointer)
             {
-                sameSymbolPermutations[startedString[(firstIndex + position) % startedString.Length]].Add(firstIndex);
-            }
-
-            var sortedPosition = 0;
-            for (var letterIndex = 0; letterIndex < 128; ++letterIndex)
-            {
-                for (var count = 0; count < sameSymbolPermutations[letterIndex].Count; count++)
+                for (int i = 0; i < comparingPermutation.Length; ++i)
                 {
-                    permutations[sortedPosition] = sameSymbolPermutations[letterIndex][count];
-                    sortedPosition++;
+                    int innerComparison = comparingPermutation[(firstPointer + i) % comparingPermutation.Length]
+                                         .CompareTo(comparingPermutation[(secondPointer + i) % comparingPermutation.Length]);
+                    if (innerComparison != 0)
+                    {
+                        return innerComparison;
+                    }
                 }
+                return 0;
             }
-        }
-
-        /// <summary>
-        /// Sorts in alphabetical order the cyclic permutations of a string,
-        /// represented as an array of pointers to the beginning of the permutation.
-        /// </summary>
-        /// <param name="startedString"> String we use to take symbols from. </param>
-        /// <param name="permutations"> Pointers to the starts of cyclic permutations. </param>
-        /// <returns> Alphabetically sorted array of pointers to the beginning of the permutations.</returns>
-        internal static int[] PermutationsAlphabetSort(string startedString, int[] permutations)
-        {
-            for (var position = startedString.Length - 1; position >= 0; --position)
-            {
-                PermutationsCountSort(startedString, position, permutations);
-            }
-            return permutations;
         }
 
         /// <summary>
