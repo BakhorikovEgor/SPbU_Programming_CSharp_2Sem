@@ -2,6 +2,10 @@
 {
     internal class BWTUtils
     {
+
+        /// <summary>
+        /// Comparer for permutation in alphabet order.
+        /// </summary>
         internal class PermutationComparer : IComparer<int>
         {
             private string comparingPermutation;
@@ -11,6 +15,11 @@
                 this.comparingPermutation = comparingPermutation;
             }
 
+            /// <summary>
+            /// Comparing two permutations using comparing every char of this permutation.
+            /// </summary>
+            /// <param name="firstPointer"> Pointer to first element of permutation. </param>
+            /// <param name="secondPointer"> Pointer to first element of permutation. </param>
             public int Compare(int firstPointer, int secondPointer)
             {
                 for (int i = 0; i < comparingPermutation.Length; ++i)
