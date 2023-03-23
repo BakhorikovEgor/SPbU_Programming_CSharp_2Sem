@@ -13,7 +13,7 @@ internal class ByteBuffer
     /// <summary>
     /// The length of the current, stored byte.
     /// </summary>
-    public int CurrentBitLength { get; set; } = 9;
+    public int CurrentBitCount { get; set; } = 9;
 
     /// <summary>
     /// The byte currently being generated.
@@ -64,8 +64,8 @@ internal class ByteBuffer
 
     private byte[] BitsOfInt(int number)
     {
-        var bits = new byte[CurrentBitLength];
-        for (var i = CurrentBitLength - 1; i >= 0; i--)
+        var bits = new byte[CurrentBitCount];
+        for (var i = CurrentBitCount - 1; i >= 0; i--)
         {
             bits[i] = (byte)(number % 2);
             number >>= 1;

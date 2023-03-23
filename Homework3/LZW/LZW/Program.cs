@@ -3,7 +3,7 @@
 
 if (args.Length < 2)
 {
-    throw new IOException("Less than 2 arguments");
+    Console.WriteLine("Less than 2 arguments");
 }
 else if (args[1] == "-c")
 {
@@ -15,5 +15,5 @@ else if (args[1] == "-u")
 }
 else
 {
-    throw new IOException("Second argument isn`t correct !");
+    Console.WriteLine("Second argument isn`t correct !");
 }

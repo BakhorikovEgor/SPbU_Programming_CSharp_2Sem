@@ -32,14 +32,14 @@ internal static class Compressor
         {
             if (trie.Size == newBitsSizeFlag)
             {
-                buffer.CurrentBitLength++;
+                buffer.CurrentBitCount++;
                 newBitsSizeFlag <<= 1;
             }
 
             if (trie.Size == 65536)
             {
                 newBitsSizeFlag = 512;
-                buffer.CurrentBitLength = 9;
+                buffer.CurrentBitCount = 9;
                 trie = new();
             }
 
