@@ -51,7 +51,7 @@ public class List
             return true;
         }
 
-        ListElement previousElement = head;
+        var previousElement = head;
         ListElement? currentElement = head.Next;
         while (currentElement != null)
         {
@@ -74,7 +74,7 @@ public class List
     public virtual bool Replace(int value, int position)
     {
         ListElement? currentElement = head;
-        for (int i = 0; i <= position; ++i)
+        for (var i = 0; i <= position; ++i)
         {
             if (currentElement == null)
             {
