@@ -1,10 +1,9 @@
 ﻿namespace List;
 
 /// <summary>
-/// A class that is a singly linked list.
+/// Collection of elements.
 /// </summary>
-/// <typeparam name="T"> Value of list elements. </typeparam>
-public class LinkedList<T> where T : IEquatable<T>
+public class List
 {
     /// <summary>
     /// A part of list.
@@ -16,18 +15,10 @@ public class LinkedList<T> where T : IEquatable<T>
         /// </summary>
         public ListElement? Next { get; set; }
 
-        public T Value { get; set; }
+        public int Value { get; set; }
 
-        /// <summary> 
-        /// Constructor. 
-        /// </summary>
-        /// <exception cref="ArgumentNullException">Can`t create element with null value.</exception>
-        public ListElement (T value, ListElement? next)
+        public ListElement (int value, ListElement? next)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException ("Value can`t be null.");
-            }
             Value = value;
             Next = next;
         }
@@ -36,56 +27,28 @@ public class LinkedList<T> where T : IEquatable<T>
     /// <summary>
     /// Recently added item.
     /// </summary>
-    protected ListElement? head;
-
-    /// <summary>
-    /// Check if element is in list.
-    /// </summary>
-    /// <param name="value"> Element value. </param>
-    /// <returns> Position is contains else -1</returns>
-    protected int Contains(T value)
-    {
-        var currentElement = head;
-        var position = 0;
-        while (currentElement != null)
-        {
-            if (currentElement.Value.Equals(value))
-            {
-                return position;
-            }
-            currentElement = currentElement.Next;
-            position++;
-        }
-
-        return -1;
-    }
+    protected ListElement? head = null;
 
     /// <summary>
     /// Add new element in list.
     /// </summary>
-    public virtual void Add(T value) => head = new ListElement(value, head);
+    public virtual void Add(int value) => head = new ListElement(value, head);
 
     /// <summary>
     /// Remove element from list by value (first found element).
     /// </summary>
-    /// <returns> True if the element was deleted. </returns>
-    /// <exception cref="MissingElementException"> Can`t find element. </exception>
-    public virtual void Remove(T value)
+    /// <returns> True if the element was removed. Else false. </returns>
+    public virtual bool Remove(int value)
     {
         if (head == null)
         {
-            throw new MissingElementException("LinkedList is empty.");
+            return false;
         }
 
-        if (Contains(value) != -1)
-        {
-            throw new MissingElementException($"LinkedList does`nt contains element with value {value}.");
-        }
-
-        if (head.Value.Equals(value))
+        if (head.Value == value)
         {
             head = head.Next;
-            return;
+            return true;
         }
 
         ListElement previousElement = head;
@@ -95,31 +58,23 @@ public class LinkedList<T> where T : IEquatable<T>
             if (currentElement.Value.Equals(value))
             {
                 previousElement.Next = currentElement.Next;
-                return;
+                return true;
             }
             previousElement = currentElement;
             currentElement = currentElement.Next;
         }
+
+        return false;
     }
     
     /// <summary>
     /// Replace element in list by position to another value (first found element).
     /// </summary>
-    /// <returns> True if element was replaced. </returns>
-    public virtual bool Replace(T value, int position)
+    /// <returns> True if element was replaced. Else false. </returns>
+    public virtual bool Replace(int value, int position)
     {
-        if (head == null)
-        {
-            if (position == 0)
-            {
-                head = new ListElement(value, null);
-                return true;
-            }
-            return false;
-        }
-
-        ListElement? currentElement = head.Next;
-        for (int i = 1; i < position; ++i)
+        ListElement? currentElement = head;
+        for (int i = 0; i <= position; ++i)
         {
             if (currentElement == null)
             {
@@ -131,10 +86,8 @@ public class LinkedList<T> where T : IEquatable<T>
                 currentElement.Value = value;
                 return true;
             }
-
             currentElement = currentElement.Next;
         }
-
         return false;
     }
 }
