@@ -1,34 +1,56 @@
 ﻿namespace List;
 
 /// <summary>
-/// Data structure based on a singly linked list with no duplicate elements.
+/// Data structure based on a list with no duplicate elements.
 /// </summary>
-/// <typeparam name="T"> Type of element value. </typeparam>
-public class UniqueList<T> : LinkedList<T> where T : IEquatable<T>
+public class UniqueList : List
 {
-    /// <inheritdoc/>
-    /// <exception cref="ElementAlreadyExistException"> </exception>
-    public override void Add(T value)
+    private int Contains(int value)
     {
-        if (!Contains(value))
+        int position = -1;
+        ListElement? currentElement = head;
+        while (currentElement != null)
+        {
+            position++;
+            if (currentElement.Value == value)
+            {
+                return position;
+            }
+            currentElement = currentElement.Next;
+        }
+
+        return position;
+    }
+
+    /// <inheritdoc/>
+    /// <exception cref="ElementAlreadyExistException"> This list doesn`t support repeat values. </exception>
+    public override void Add(int value)
+    {
+        if (Contains(value) != -1)
         {
             base.Add(value);
         }
         throw new ElementAlreadyExistException("Can`t add repeat element in UniqueList");
     }
 
-    /// <summary>
-    /// Replace element by position.
-    /// </summary>
-    /// <returns> False if element with this value already exist</returns>
-    public override bool Replace(T value, int position)
+    /// <inheritdoc/>
+    /// <exception cref="ElementAlreadyExistException"> 
+    /// Value we want to add is already in UniqueList. 
+    /// And its position is not equal to replace position.
+    /// </exception>
+    public override bool Replace(int value, int position)
     {
-        if (!Contains(value))
+        int positionOfValue = Contains(value);
+        if (positionOfValue == -1)
         { 
             return base.Replace(value, position);
         }
+        
+        if (positionOfValue == position) 
+        {
+            return true;
+        }
 
-        if ()
-        return false;
+        throw new ElementAlreadyExistException("This element is already in UniqueList");
     }
 }
