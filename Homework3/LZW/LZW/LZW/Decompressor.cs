@@ -8,6 +8,7 @@ namespace LZW;
 /// </summary>
 internal static class Decompressor
 {
+    private static readonly int maxTableSize = 65536;
     /// <summary>
     /// Decompresses a sequence of bytes.
     /// </summary>
@@ -30,7 +31,7 @@ internal static class Decompressor
         for (var i = 0; i < tableKeys.Length; ++i)
         {
             var key = tableKeys[i];
-            if (tableSize == 65536)
+            if (tableSize == maxTableSize)
             {
                 table = InitializeTable();
                 tableSize = 256;
@@ -87,12 +88,11 @@ internal static class Decompressor
     private static (int[], int) GetTableKeysAndBWTPosition(byte[] bytes)
     {
         var positionBWT = BitConverter.ToInt32(new byte[] { bytes[1], bytes[2], bytes[3], bytes[4] });
-
         var isLast = bytes[0] == 1;
+
         var buffer = new TableNumberBuffer();
         var tableSize = 256;
         var newBitsSizeFlag = 512;
-
         for (var i = 5; i < bytes.Length; ++i)
         {
             var oneByte = bytes[i];
@@ -102,16 +102,15 @@ internal static class Decompressor
                 buffer.CurrentBitCount++;
             }
 
-            if (tableSize == 65536)
+            if (tableSize == maxTableSize)
             {
                 tableSize = 256;
                 newBitsSizeFlag = 512;
                 buffer.CurrentBitCount = 9;
             }
 
-            var newNumber = buffer.AddByte(oneByte, i == bytes.Length - 1 && isLast);
-            if (newNumber)
-            {
+            if(buffer.AddByte(oneByte, i == bytes.Length - 1 && isLast))
+            {     
                 tableSize++;
             }
         }

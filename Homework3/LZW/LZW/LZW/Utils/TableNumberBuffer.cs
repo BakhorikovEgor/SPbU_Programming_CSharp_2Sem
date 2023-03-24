@@ -54,31 +54,31 @@ internal class TableNumberBuffer
 
     private byte[] BitsOfByte(byte oneByte)
     {
-        var bites = new byte[BITS_IN_BYTE];
+        var bits = new byte[BITS_IN_BYTE];
         for (var i = BITS_IN_BYTE - 1; i >= 0; --i)
         {
-            bites[i] = (byte)(oneByte % 2);
+            bits[i] = (byte)(oneByte % 2);
             oneByte >>= 1;
         }
 
-        return bites;
+        return bits;
     }
 
     private byte[] BitsOfLastByte(byte oneByte)
     {
-        var bites = new List<byte>();
+        var bits = new List<byte>();
         while (oneByte > 0)
         {
-            bites.Add((byte)(oneByte % 2));
+            bits.Add((byte)(oneByte % 2));
             oneByte >>= 1;
         }
 
-        while (bites.Count + currentNumberLength < CurrentBitCount)
+        while (bits.Count + currentNumberLength < CurrentBitCount)
         {
-            bites.Add(0);
+            bits.Add(0);
         }
 
-        bites.Reverse();
-        return bites.ToArray();
+        bits.Reverse();
+        return bits.ToArray();
     }
 }

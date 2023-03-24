@@ -8,6 +8,8 @@ namespace LZW;
 /// </summary>
 internal static class Compressor
 {
+    private static readonly int maxTrieSize = 65536;
+
     /// <summary>
     /// Сompresses a sequence of bytes.
     /// </summary>
@@ -27,6 +29,7 @@ internal static class Compressor
         buffer.Bytes.Add(0);
         buffer.SetBWTPosition(BWTPosition);
 
+
         var newBitsSizeFlag = 512;
         for (var i = 0; i < bytes.Length; ++i)
         {
@@ -36,7 +39,7 @@ internal static class Compressor
                 newBitsSizeFlag <<= 1;
             }
 
-            if (trie.Size == 65536)
+            if (trie.Size == maxTrieSize)
             {
                 newBitsSizeFlag = 512;
                 buffer.CurrentBitCount = 9;
