@@ -3,7 +3,7 @@
 /// <summary>
 /// Exception for collections with unique elements.
 /// </summary>
-internal class ElementAlreadyExistException: Exception
+public class ElementAlreadyExistException: Exception
 {
     public ElementAlreadyExistException() { }
 

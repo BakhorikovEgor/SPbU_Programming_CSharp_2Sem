@@ -56,12 +56,7 @@ public class UniqueList : List
         { 
             return base.Replace(value, position);
         }
-        
-        if (positionOfValue == position) 
-        {
-            return true;
-        }
 
-        return false;
+        return positionOfValue == position;
     }
 }
