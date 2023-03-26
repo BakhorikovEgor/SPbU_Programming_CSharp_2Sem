@@ -8,17 +8,17 @@ internal class Tree
 {
     private readonly IParsingTreeElement top;
 
-    public Tree(string data)
+    public Tree(string expression)
     {
-        var dataArguments = data.Replace(")", "").Replace("(", "").Split(" ");
-        int pointer = 0;
+        var expressionParts = expression.Replace(")", "").Replace("(", "").Split(" ");
+        var pointer = 0;
 
-        top = GetTreeElement(dataArguments[pointer++]);  
+        top = GetTreeElement(expressionParts[pointer++]);  
         if (top is OperationElement)
         {
-            BuildTree(top, dataArguments, ref pointer);
+            BuildTree(top, expressionParts, ref pointer);
         }
-        else if (dataArguments.Length > 1)
+        else if (expressionParts.Length > 1)
         {
             throw new InvalidDataException();
         }
@@ -26,36 +26,37 @@ internal class Tree
 
     private IParsingTreeElement GetTreeElement(string value)
     {
-        if (int.TryParse(value, out int number))
+        if (int.TryParse(value, out var number))
         {
             return new NumberElement(number);
         }
         return new OperationElement(value);
     }
-    private void BuildTree(IParsingTreeElement currentVertex, string[] dataArguments,ref int pointer)
+
+    private void BuildTree(IParsingTreeElement currentVertex, string[] expressionParts, ref int pointer)
     {
         if (currentVertex is NumberElement)
         {
             return;
         }
 
-        if (pointer >= dataArguments.Length)
+        if (pointer >= expressionParts.Length)
         {
             throw new InvalidDataException();
         }
         OperationElement operation = currentVertex as OperationElement ?? throw new ArgumentException();
 
-        IParsingTreeElement firstChild = GetTreeElement(dataArguments[pointer++]);
+        IParsingTreeElement firstChild = GetTreeElement(expressionParts[pointer++]);
         if (firstChild is OperationElement)
         {
-            BuildTree(firstChild, dataArguments, ref pointer);
+            BuildTree(firstChild, expressionParts, ref pointer);
         }
         operation.FirstOperand = firstChild;
 
-        IParsingTreeElement secondChild = GetTreeElement(dataArguments[pointer++]);
+        IParsingTreeElement secondChild = GetTreeElement(expressionParts[pointer++]);
         if (secondChild is OperationElement)
         {
-            BuildTree(secondChild, dataArguments, ref pointer);
+            BuildTree(secondChild, expressionParts, ref pointer);
         }
         operation.SecondOperand = secondChild;
     }

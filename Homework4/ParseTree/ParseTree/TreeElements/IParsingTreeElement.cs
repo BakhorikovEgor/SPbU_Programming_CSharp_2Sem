@@ -4,5 +4,5 @@ internal interface IParsingTreeElement
 {
     double Calculate();
 
-    public string ToString();
+    string ToString();
 }

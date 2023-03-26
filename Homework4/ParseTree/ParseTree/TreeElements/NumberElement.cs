@@ -1,5 +1,6 @@
 ﻿namespace ParsingTree.Utils;
 
+
 internal class NumberElement: IParsingTreeElement
 {
     public int Value { get; private set; }

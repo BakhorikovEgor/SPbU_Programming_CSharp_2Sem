@@ -1,5 +1,6 @@
 ﻿namespace ParsingTree.Utils;
 
+
 internal static class BinaryOperation
 {
     internal static double Solve(string operation, double firstOperand, double secondOperand)
