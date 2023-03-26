@@ -1,0 +1,52 @@
+name: C# Programs CI
+on: 
+  push:
+    paths-ignore:
+      '.github/workflows/**'
+  pull_request:
+    paths-ignore:
+      '.github/workflows/**'
+
+jobs:
+  build_ubuntu:  
+    strategy:
+        matrix:
+          dotnet-version: [ '6.x', '7.x', '8.x' ]
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2.7.0
+      
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      
+      - name: Lint
+        run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet format $file.FullName}
+        
+      - name: Build Solutions
+        run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet build $file.FullName}
+        
+      - name: Run Tests
+        run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet test $file.FullName}
+  
+  build_windows:
+    strategy:
+          matrix:
+            dotnet-version: [ '6.x', '7.x', '8.x' ]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2.7.0
+      
+      - uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ matrix.dotnet-version }}
+      
+      - name: Lint
+        run: for file in $(find . -name "*.sln"); do dotnet format $file; done
+        
+      - name: Build Solutions
+        run: for file in $(find . -name "*.sln"); do dotnet build $file; done
+        
+      - name: Run Tests
+        run: for file in $(find . -name "*.sln"); do dotnet test $file; done
