@@ -1,30 +1,46 @@
 ﻿using ParsingTree.Utils;
+using System.Linq.Expressions;
+using System.Reflection;
 
 
 namespace ParsingTree;
 
 
+/// <summary>
+/// Data structure for storing, representing,
+/// and evaluating an expression in prefix notation.
+/// </summary>
 internal class Tree
 {
     private readonly IParsingTreeElement top;
 
+    /// <summary>
+    /// Constructor that converts the prefix expression and populates the tree.
+    /// </summary>
+    /// <exception cref="InvalidDataException"> Expression has invalid format. </exception>
+    /// <exception cref="ArgumentException"> Wrong symbol in expression. </exception>
+    /// <exception cref="DivideByZeroException"> Expression contains division by zero. </exception>
     public Tree(string expression)
     {
+        if (expression == string.Empty)
+        {
+            throw new InvalidDataException("Expression can`t be empty");
+        }
+
         var expressionParts = expression.Replace(")", "").Replace("(", "").Split(" ");
         var pointer = 0;
 
-        top = GetTreeElement(expressionParts[pointer++]);  
-        if (top is OperationElement)
+        top = GetTreeElement(expressionParts[pointer++]);
+        BuildTree(top, expressionParts, ref pointer);
+
+        if (top is NumberElement && expressionParts.Length > 1)
         {
-            BuildTree(top, expressionParts, ref pointer);
-        }
-        else if (expressionParts.Length > 1)
-        {
-            throw new InvalidDataException();
+            throw new InvalidDataException("If the first expression element is number," +
+                                           " then expression must contain one element.");
         }
     }
 
-    private IParsingTreeElement GetTreeElement(string value)
+    private static IParsingTreeElement GetTreeElement(string value)
     {
         if (int.TryParse(value, out var number))
         {
@@ -40,25 +56,33 @@ internal class Tree
             return;
         }
 
-        if (pointer >= expressionParts.Length)
-        {
-            throw new InvalidDataException();
-        }
-        OperationElement operation = currentVertex as OperationElement ?? throw new ArgumentException();
+        IParsingTreeElement firstOperand = GetTreeElement(expressionParts[pointer++]);
+        FillOperand((OperationElement)currentVertex, firstOperand, 1, expressionParts, ref pointer);
 
-        IParsingTreeElement firstChild = GetTreeElement(expressionParts[pointer++]);
-        if (firstChild is OperationElement)
-        {
-            BuildTree(firstChild, expressionParts, ref pointer);
-        }
-        operation.FirstOperand = firstChild;
+        IParsingTreeElement secondOperand = GetTreeElement(expressionParts[pointer++]);
+        FillOperand((OperationElement)currentVertex, secondOperand, 2, expressionParts, ref pointer);
+    }
 
-        IParsingTreeElement secondChild = GetTreeElement(expressionParts[pointer++]);
-        if (secondChild is OperationElement)
+    private void FillOperand(OperationElement operation, IParsingTreeElement operand, int operandNumber, string[] expressionParts, ref int pointer)
+    {
+        if (pointer > expressionParts.Length)
         {
-            BuildTree(secondChild, expressionParts, ref pointer);
+            throw new InvalidDataException("This is not a prefix expression");
         }
-        operation.SecondOperand = secondChild;
+
+        if (operand is OperationElement)
+        {
+            BuildTree(operand, expressionParts, ref pointer);
+        }
+
+        if (operandNumber == 1)
+        {
+            operation.FirstOperand = operand;
+        }
+        else
+        {
+            operation.SecondOperand = operand;
+        }
     }
 
     public override string ToString() => top.ToString();

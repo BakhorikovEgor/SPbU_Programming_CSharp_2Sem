@@ -28,11 +28,18 @@ while (processing)
         pathChecking = false;
     }
 
-    var parsingTree = new Tree(expression);
-
-    WriteLine($"\nRepresentation: {parsingTree})");
-    WriteLine($"\nExpression value: {parsingTree.Calculate()}");
-
+    try
+    {
+        var parsingTree = new Tree(expression);
+        WriteLine($"\nRepresentation: {parsingTree}");
+        WriteLine($"\nExpression value: {parsingTree.Calculate()}");
+    }
+    catch (Exception ex) when (ex is InvalidDataException ||
+                               ex is ArgumentException ||
+                               ex is DivideByZeroException)
+    {
+        WriteLine(ex.Message);
+    }
 
     Write("\nWrite 0 to exit: ");
     if (int.TryParse(ReadLine(), out var value) && value == 0)
@@ -40,8 +47,3 @@ while (processing)
         processing = false;
     }
 }
-
-
-
-
-
