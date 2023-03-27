@@ -8,12 +8,12 @@ on:
       '.github/workflows/**'
 
 jobs:
-  build_ubuntu:  
+  build-Windows:  
     strategy:
         matrix:
           dotnet-version: [ '6.x', '7.x', '8.x' ]
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2.7.0
       
@@ -30,11 +30,11 @@ jobs:
       - name: Run Tests
         run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet test $file.FullName}
   
-  build_windows:
+  build-Ubuntu:
     strategy:
           matrix:
             dotnet-version: [ '6.x', '7.x', '8.x' ]
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.7.0
       
