@@ -8,7 +8,7 @@ on:
       '.github/workflows/**'
 
 jobs:
-  build-Windows:  
+  test-Windows:  
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2.7.0
@@ -19,6 +19,9 @@ jobs:
       
       - name: Lint
         run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet format $file.FullName}
+      
+      - name: Run Codacy Analysis CLI
+        uses: codacy/codacy-analysis-cli-action@master
         
       - name: Build Solutions
         run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet build $file.FullName}
