@@ -1,2 +1,10 @@
-# SPbU_Programming_CSharp_2Sem
-  Materials of the second semester on programming in c# at St. Petersburg State University.
+## SPbU 2nd term, C#
+### This repository contains solutions to problems from homework on the course of <a href="https://github.com/Lozov-Petr" target="_blank" rel="noreferrer">Peter Lozov</a>.
+____
+### [Conditions](https://github.com/yurii-litvinov/courses/blob/master/programming-2nd-semester/homeworks.md)
+____
+## Homeworks
+
+### Solutions will appear as they are checked by the teacher.
+
+
