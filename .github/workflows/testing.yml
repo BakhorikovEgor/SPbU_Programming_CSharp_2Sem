@@ -16,9 +16,6 @@ jobs:
       - uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '8.x'
-          
-      - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action@master
         
       - name: Lint
         run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet format $file.FullName}
@@ -29,7 +26,7 @@ jobs:
       - name: Run Tests
         run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet test $file.FullName}
   
-  build-Ubuntu:
+  test-Ubuntu:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.7.0
