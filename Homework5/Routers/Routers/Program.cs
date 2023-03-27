@@ -1,2 +1,5 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using Routers;
+
+string a = "1: 2 (10), 3 (15)\n2: 3 (16)";
+Routers.RouterNetBuilder.CreateConfiguration(a);
+Console.WriteLine(1);
