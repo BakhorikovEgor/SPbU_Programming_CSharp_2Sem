@@ -9,17 +9,13 @@ on:
 
 jobs:
   build-Windows:  
-    strategy:
-        matrix:
-          dotnet-version: [ '6.x', '7.x', '8.x' ]
-
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2.7.0
       
       - uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: '8.x'
       
       - name: Lint
         run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet format $file.FullName}
@@ -31,16 +27,13 @@ jobs:
         run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet test $file.FullName}
   
   build-Ubuntu:
-    strategy:
-          matrix:
-            dotnet-version: [ '6.x', '7.x', '8.x' ]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2.7.0
       
       - uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: ${{ matrix.dotnet-version }}
+          dotnet-version: '8.x'
       
       - name: Lint
         run: for file in $(find . -name "*.sln"); do dotnet format $file; done
