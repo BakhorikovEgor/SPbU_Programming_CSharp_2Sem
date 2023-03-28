@@ -3,7 +3,7 @@
 /// <summary>
 /// Byte buffer, for generating byte sequences of variable length.
 /// </summary>
-internal class ByteBuffer
+public class ByteBuffer
 {
     /// <summary>
     /// The generated sequence of bytes.

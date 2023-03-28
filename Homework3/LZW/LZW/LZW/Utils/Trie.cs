@@ -47,7 +47,7 @@ internal class Trie
         }
         var currentVertex = top;
         var shift = -1;
-        
+
         for (var i = startIndex; i < bytes.Length; ++i)
         {
             var oneByte = bytes[i];

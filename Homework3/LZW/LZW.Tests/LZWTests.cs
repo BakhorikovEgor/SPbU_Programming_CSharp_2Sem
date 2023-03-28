@@ -1,5 +1,3 @@
-using System.IO;
-
 namespace LZW.Tests;
 
 public class Tests
@@ -12,7 +10,6 @@ public class Tests
     public void CompressAndDecompress_ShouldNotChangeTheFile(string path)
     {
         var expected = File.ReadAllBytes(path);
-
         CompressHandler.Compress(path);
         CompressHandler.Decompress(path + ".zipped");
 

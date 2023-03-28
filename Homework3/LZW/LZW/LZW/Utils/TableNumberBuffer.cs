@@ -5,7 +5,7 @@
 /// A buffer for generating from a byte sequence,
 /// key numbers of the table for decompressing information.
 /// </summary>
-internal class TableNumberBuffer
+public class TableNumberBuffer
 {
     /// <summary>
     /// The generated key numbers of decompression table.

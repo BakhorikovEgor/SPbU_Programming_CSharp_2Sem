@@ -109,8 +109,8 @@ internal static class Decompressor
                 buffer.CurrentBitCount = 9;
             }
 
-            if(buffer.AddByte(oneByte, i == bytes.Length - 1 && isLast))
-            {     
+            if (buffer.AddByte(oneByte, i == bytes.Length - 1 && isLast))
+            {
                 tableSize++;
             }
         }
