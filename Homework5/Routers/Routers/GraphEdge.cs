@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Routers;
 
-namespace Routers
+internal class GraphEdge
 {
-    internal class GraphEdge
+    public static readonly GraphEdge MinGraphEdge = new GraphEdge(-1, -1, -1);
+    public int Weight { get; }
+    public int FirstVertex { get; }
+    public int SecondVertex { get; }
+    
+    public GraphEdge( int weight, int firstVertex, int secondVertex)
     {
+        Weight = weight;
+        FirstVertex = firstVertex;
+        SecondVertex = secondVertex;
     }
 }
