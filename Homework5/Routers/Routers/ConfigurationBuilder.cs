@@ -1,84 +1,99 @@
 ﻿using System.Text;
 
-namespace Routers
+namespace Routers;
+
+internal static class ConfigurationBuilder
 {
-    internal static class ConfigurationBuilder
+    private class GraphEdge
     {
-        public static string BuildConfiguration(string topology)
+        public int Weight { get; }
+        public int FirstVertex { get; }
+        public int SecondVertex { get; }
+
+        public GraphEdge(int weight, int firstVertex, int secondVertex)
         {
-            (var edges, var vertexCount) = Parse(topology);
+            Weight = weight;
+            FirstVertex = firstVertex;
+            SecondVertex = secondVertex;
+        }
+    }
 
-            var configuration = new List<GraphEdge>();
-            var connectedVertexes = new HashSet<int> { 1 };
-            while (connectedVertexes.Count < vertexCount)
-            {
-                GraphEdge maxCurrentEdge = FindMaxCurrentEdge(edges, connectedVertexes);
-                if (maxCurrentEdge.Weight == -1) { break; }
+    public static string BuildConfiguration(string topology)
+    {
+        (var edges, var vertexCount) = Parse(topology);
 
-                configuration.Add(maxCurrentEdge);
-                connectedVertexes.Add(maxCurrentEdge.FirstVertex);
-                connectedVertexes.Add(maxCurrentEdge.SecondVertex);
+        var configuration = new List<GraphEdge>();
+        var connectedVertexes = new HashSet<int> { 1 };
+        while (connectedVertexes.Count < vertexCount)
+        {
+            GraphEdge maxCurrentEdge = FindMaxCurrentEdge(edges, connectedVertexes);
+            if (maxCurrentEdge.Weight == int.MinValue) 
+            { 
+                break; 
             }
 
-            if (connectedVertexes.Count != vertexCount)
-            {
-                throw new TopologyNotConnectedException("");
-            }
-            return CreateConfigurationString(configuration);          
+            configuration.Add(maxCurrentEdge);
+            connectedVertexes.Add(maxCurrentEdge.FirstVertex);
+            connectedVertexes.Add(maxCurrentEdge.SecondVertex);
         }
 
-        private static (GraphEdge[],int) Parse(string topology)
+        if (connectedVertexes.Count != vertexCount)
         {
-            var vertexes = new HashSet<int>();
-            var result = new List<GraphEdge> { GraphEdge.MinGraphEdge };
+            throw new TopologyNotConnectedException("");
+        }
+        return CreateConfigurationString(configuration);          
+    }
 
-            var components = topology.Split("\n");
-            foreach (var component in components)
+    private static (GraphEdge[],int) Parse(string topology)
+    {
+        var vertexes = new HashSet<int>();
+        var result = new List<GraphEdge>();
+
+        foreach (var component in topology.Split("\n"))
+        {
+            var data = component.Split(":");
+            var firstVertex = int.Parse(data[0]);
+            foreach (var edgeInfo in data[1].Split(',')) 
             {
-                var data = component.Split(":");
-                var firstVertex = int.Parse(data[0]);
-                foreach (var edgeInfo in data[1].Split(',')) 
+                var temp = edgeInfo.Replace("(","").Replace(")","").Split(" ");
+                var secondVertex = int.Parse(temp[1]);
+                var edgeWeight = int.Parse(temp[2]);
+
+                result.Add(new GraphEdge(edgeWeight, firstVertex, secondVertex));
+                vertexes.Add(secondVertex);
+            }
+            vertexes.Add(firstVertex);
+        }
+
+        return (result.ToArray(), vertexes.Count);
+    }
+
+
+    private static GraphEdge FindMaxCurrentEdge(GraphEdge[] edges, HashSet<int> connectedVertexes)
+    {
+        var result = new GraphEdge(int.MinValue, 0, 0);
+        foreach (var edge in edges)
+        {
+            if ((connectedVertexes.Contains(edge.FirstVertex) || connectedVertexes.Contains(edge.SecondVertex))
+                && (!(connectedVertexes.Contains(edge.FirstVertex) && connectedVertexes.Contains(edge.SecondVertex))))
+            {
+                if (result.Weight < edge.Weight)
                 {
-                    var temp = edgeInfo.Replace("(","").Replace(")","").Split(" ");
-                    var secondVertex = int.Parse(temp[1]);
-                    var edgeWeight = int.Parse(temp[2]);
-
-                    result.Add(new GraphEdge(edgeWeight, firstVertex, secondVertex));
-                    vertexes.Add(secondVertex);
-                }
-                vertexes.Add(firstVertex);
-            }
-
-            return (result.ToArray(), vertexes.Count);
-        }
-
-
-        private static GraphEdge FindMaxCurrentEdge(GraphEdge[] edges, HashSet<int> connectedVertexes)
-        {
-            GraphEdge result = GraphEdge.MinGraphEdge;
-            foreach (var edge in edges)
-            {
-                if ((connectedVertexes.Contains(edge.FirstVertex) || connectedVertexes.Contains(edge.SecondVertex))
-                    && (!(connectedVertexes.Contains(edge.FirstVertex) && connectedVertexes.Contains(edge.SecondVertex))))
-                {
-                    if (result.Weight < edge.Weight)
-                    {
-                        result = edge;
-                    }
+                    result = edge;
                 }
             }
-            return result;
         }
+        return result;
+    }
 
-        private static string CreateConfigurationString(List<GraphEdge> edges) 
+    private static string CreateConfigurationString(List<GraphEdge> edges) 
+    {
+        var builder = new StringBuilder();
+        foreach(var edge in edges)
         {
-            var builder = new StringBuilder();
-            foreach(var edge in edges)
-            {
-                var edgeRepresentation = $"{edge.FirstVertex}: {edge.SecondVertex} ({edge.Weight})";
-                builder.Append(edgeRepresentation + '\n');
-            }
-            return builder.ToString();
+            var edgeRepresentation = $"{edge.FirstVertex}: {edge.SecondVertex} ({edge.Weight})";
+            builder.Append(edgeRepresentation + '\n');
         }
+        return builder.ToString();
     }
 }
