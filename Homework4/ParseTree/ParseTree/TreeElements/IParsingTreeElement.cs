@@ -3,7 +3,7 @@
 /// <summary>
 /// Class representing element of parsing tree
 /// </summary>
-internal interface IParsingTreeElement
+public interface IParsingTreeElement
 {
     /// <summary>
     /// Calculate value of element in parsing tree.

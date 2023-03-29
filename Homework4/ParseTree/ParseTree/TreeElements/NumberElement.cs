@@ -4,7 +4,7 @@
 /// <summary>
 /// Element of parsing tree, only with integer value.
 /// </summary>
-internal class NumberElement : IParsingTreeElement
+public class NumberElement : IParsingTreeElement
 {
     public int Value { get; private set; }
 

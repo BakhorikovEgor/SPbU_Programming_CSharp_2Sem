@@ -1,16 +1,12 @@
 ﻿using ParsingTree.Utils;
-using System.Linq.Expressions;
-using System.Reflection;
-
 
 namespace ParsingTree;
-
 
 /// <summary>
 /// Data structure for storing, representing,
 /// and evaluating an expression in prefix notation.
 /// </summary>
-internal class Tree
+public class Tree
 {
     private readonly IParsingTreeElement top;
 

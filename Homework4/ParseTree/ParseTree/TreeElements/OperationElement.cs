@@ -4,7 +4,7 @@
 /// <summary>
 /// Element of parsing tree representing binary operation.
 /// </summary>
-internal class OperationElement : IParsingTreeElement
+public class OperationElement : IParsingTreeElement
 {
     /// <summary>
     /// Type of binary operation.
@@ -16,7 +16,7 @@ internal class OperationElement : IParsingTreeElement
 
 
     /// <exception cref="ArgumentException"> Type is not an able binary operator. </exception>
-    public OperationElement(string type) => Type = "+-*/".Contains(type)
+    public OperationElement(string type) => Type = "+-*/".Contains(type) && type != String.Empty
                                                  ? type
                                                  : throw new ArgumentException("Wrong type");
 
@@ -27,7 +27,7 @@ internal class OperationElement : IParsingTreeElement
         {
             throw new InvalidDataException("Tree expression is not formatted correctly.");
         }
-        return BinaryOperation.Solve(Type, FirstOperand.Calculate(), SecondOperand.Calculate());
+        return BinaryOperationSolver.Solve(Type, FirstOperand.Calculate(), SecondOperand.Calculate());
     }
 
     public override string ToString() => $"( {Type} {FirstOperand} {SecondOperand} )";

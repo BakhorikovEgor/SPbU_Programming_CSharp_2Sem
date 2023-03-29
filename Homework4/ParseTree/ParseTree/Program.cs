@@ -34,8 +34,7 @@ while (processing)
         WriteLine($"\nRepresentation: {parsingTree}");
         WriteLine($"\nExpression value: {parsingTree.Calculate()}");
     }
-    catch (Exception ex) when (ex is InvalidDataException ||
-                               ex is ArgumentException ||
+    catch (Exception ex) when (ex is WrongExpressionException ||
                                ex is DivideByZeroException)
     {
         WriteLine(ex.Message);

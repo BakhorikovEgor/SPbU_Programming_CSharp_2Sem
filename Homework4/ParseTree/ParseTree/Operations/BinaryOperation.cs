@@ -4,7 +4,7 @@
 /// <summary>
 /// Class for (+ - * /) operations with two operands.
 /// </summary>
-internal static class BinaryOperation
+internal static class BinaryOperationSolver
 {
     /// <summary>
     /// Binary operation ( + - * /).
