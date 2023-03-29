@@ -31,9 +31,8 @@ if (args.Length < 2)
 
 if (!File.Exists(args[0]) || !File.Exists(args[1]))
 {
-    WriteLine(args[0]);
-    WriteLine(args[1]);
     WriteLine("You entered not existing file.");
+    WriteLine("For help, use the command: dotnet run -help");
     return 0;
 }
 
@@ -56,6 +55,7 @@ catch (Exception ex) when (ex is FormatException ||
                            ex is ArgumentException)
 {
     WriteLine(ex.Message);
+    WriteLine("For help, use the command: dotnet run -help");
 }
 
 return 0;
