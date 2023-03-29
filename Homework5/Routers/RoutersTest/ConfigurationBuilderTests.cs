@@ -13,8 +13,8 @@ public class Tests
         6: 9 (13), 4 (5)
         7: 8 (59), 6 (3), 3 (5)
         8: 9 (5)
-        """ 
-        , new string[] 
+        """
+        , new string[]
 
         {
          "1: 2 (11)",
@@ -31,7 +31,7 @@ public class Tests
         1: 2 (10), 3 (5)
         2: 3 (1)
         """
-        , new string[] 
+        , new string[]
         {"1: 2 (10)",
          "1: 3 (5)"
         })]
@@ -41,7 +41,7 @@ public class Tests
 
         foreach (var element in expectedConfiguration)
         {
-            Assert.That(actualConfiguration.Contains(element),Is.True);
+            Assert.That(actualConfiguration.Contains(element), Is.True);
         }
     }
 
@@ -57,7 +57,7 @@ public class Tests
         1: 1 (5)
         3: 4 (10)
         """)]
-    public void DisconnectedTopology_ShouldThrowException(string topology) 
+    public void DisconnectedTopology_ShouldThrowException(string topology)
         => Assert.Throws<TopologyNotConnectedException>(() => ConfigurationBuilder.BuildConfiguration(topology));
 
     [TestCase(

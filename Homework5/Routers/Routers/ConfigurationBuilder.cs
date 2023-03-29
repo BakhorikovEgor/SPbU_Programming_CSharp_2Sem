@@ -43,7 +43,7 @@ public static class ConfigurationBuilder
             throw new ArgumentException("Topology can not be empty");
         }
 
-       (var edges, var vertexCount) = Parse(topology);
+        (var edges, var vertexCount) = Parse(topology);
 
         var configuration = new List<GraphEdge>();
         var connectedVertices = new HashSet<int> { 1 };
