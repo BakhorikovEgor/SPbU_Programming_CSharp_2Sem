@@ -1,5 +1,3 @@
-using System.Security.Cryptography.X509Certificates;
-
 namespace ParsingTreeTests;
 
 public class TreeTests
@@ -13,7 +11,19 @@ public class TreeTests
     {
         var expected = -3;
         var expression = "(/ (* (- 2 5) (/ (+ 10 5) (* 5 1))) 3)";
-        Tree tree = new Tree(expression);
+        var tree = new Tree(expression);
+
+        var actual = tree.Calculate();
+
+        Assert.That(DoubleEquality(expected, actual), Is.True);
+    }
+
+    [Test]
+    public void CorrectInputWithoutBrackets_ShouldReturnTrueValue()
+    {
+        var expected = 1;
+        var expression = "* / 2 4 / 4 2";
+        var tree = new Tree(expression);
 
         var actual = tree.Calculate();
 
@@ -31,14 +41,14 @@ public class TreeTests
 
     [Test]
     public void EmptyExpression_ShouldThrowException()
-        => Assert.Throws<InvalidDataException>(() => new Tree(string.Empty));
+        => Assert.Throws<WrongExpressionException>(() => new Tree(string.Empty));
 
     [Test]
     public void InvalidInputFormat_ShouldThrowException()
-        => Assert.Throws<InvalidDataException>(() => new Tree("( + 1 )"));
+        => Assert.Throws<WrongExpressionException>(() => new Tree("( + 1 )"));
 
     [Test]
     public void InvalidOperationInExpression_ShouldThrowException()
-        => Assert.Throws<ArgumentException>(() => new Tree("(+ (- 1 1) (^ 2 2))"));
+        => Assert.Throws<WrongExpressionException>(() => new Tree("(+ (- 1 1) (^ 2 2))"));
 
 }

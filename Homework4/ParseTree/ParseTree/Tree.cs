@@ -13,14 +13,13 @@ public class Tree
     /// <summary>
     /// Constructor that converts the prefix expression and populates the tree.
     /// </summary>
-    /// <exception cref="InvalidDataException"> Expression has invalid format. </exception>
-    /// <exception cref="ArgumentException"> Wrong symbol in expression. </exception>
+    /// <exception cref="WrongExpressionException"> Expression has invalid format. </exception>
     /// <exception cref="DivideByZeroException"> Expression contains division by zero. </exception>
     public Tree(string expression)
     {
         if (expression == string.Empty)
         {
-            throw new InvalidDataException("Expression can`t be empty");
+            throw new WrongExpressionException("Expression can`t be empty");
         }
 
         var expressionParts = expression.Replace(")", "").Replace("(", "").Split(" ");
@@ -31,7 +30,7 @@ public class Tree
 
         if (top is NumberElement && expressionParts.Length > 1)
         {
-            throw new InvalidDataException("If the first expression element is number," +
+            throw new WrongExpressionException("If the first expression element is number," +
                                            " then expression must contain one element.");
         }
     }
@@ -63,7 +62,7 @@ public class Tree
     {
         if (pointer > expressionParts.Length)
         {
-            throw new InvalidDataException("This is not a prefix expression");
+            throw new WrongExpressionException("This is not a prefix expression");
         }
 
         if (operand is OperationElement)

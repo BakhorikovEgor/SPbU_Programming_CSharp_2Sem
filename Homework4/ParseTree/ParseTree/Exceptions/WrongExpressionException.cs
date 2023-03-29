@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace ParsingTree;
 
-namespace ParsingTree
+public class WrongExpressionException: Exception
 {
-    internal class WrongExpressionException
-    {
-    }
+    public WrongExpressionException() : base() { }
+    public WrongExpressionException(string message) : base(message) { }
+
 }

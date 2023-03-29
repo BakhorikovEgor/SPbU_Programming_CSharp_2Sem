@@ -16,16 +16,16 @@ public class OperationElement : IParsingTreeElement
 
 
     /// <exception cref="ArgumentException"> Type is not an able binary operator. </exception>
-    public OperationElement(string type) => Type = "+-*/".Contains(type) && type != String.Empty
+    public OperationElement(string type) => Type = "+-*/".Contains(type) && type != string.Empty
                                                  ? type
-                                                 : throw new ArgumentException("Wrong type");
+                                                 : throw new WrongExpressionException("Wrong type");
 
     /// <inheritdoc/>
     public double Calculate()
     {
         if (FirstOperand == null || SecondOperand == null)
         {
-            throw new InvalidDataException("Tree expression is not formatted correctly.");
+            throw new WrongExpressionException("Tree expression is not formatted correctly.");
         }
         return BinaryOperationSolver.Solve(Type, FirstOperand.Calculate(), SecondOperand.Calculate());
     }
