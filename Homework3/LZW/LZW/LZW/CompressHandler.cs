@@ -13,7 +13,7 @@ public static class CompressHandler
     /// </summary>
     /// <param name="path"> File to compress path. </param>
     /// <exception cref="FileNotFoundException"> Throws if file doesn`t exist. </exception>
-    internal static void CompressWithAndWithoutBWT(string path)
+    public static void CompressWithAndWithoutBWT(string path)
     {
         if (!File.Exists(path))
         {
