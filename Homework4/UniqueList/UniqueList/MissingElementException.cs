@@ -3,7 +3,7 @@
 /// <summary>
 /// Indicates the absence of an element in the collection.
 /// </summary>
-public class MissingElementException: Exception
+public class MissingElementException : Exception
 {
     public MissingElementException() { }
 

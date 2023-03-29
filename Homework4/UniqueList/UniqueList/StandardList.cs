@@ -17,7 +17,7 @@ public class StandardList
 
         public int Value { get; set; }
 
-        public ListElement (int value, ListElement? next)
+        public ListElement(int value, ListElement? next)
         {
             Value = value;
             Next = next;
@@ -66,7 +66,7 @@ public class StandardList
 
         return false;
     }
-    
+
     /// <summary>
     /// Replace element in list by position to another value (first found element).
     /// </summary>
@@ -81,7 +81,7 @@ public class StandardList
                 return false;
             }
 
-            if (i == position) 
+            if (i == position)
             {
                 currentElement.Value = value;
                 return true;

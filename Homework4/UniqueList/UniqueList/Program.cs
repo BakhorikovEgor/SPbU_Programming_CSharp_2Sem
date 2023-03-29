@@ -1,5 +1,5 @@
-﻿using static System.Console;
-using Lists;
+﻿using Lists;
+using static System.Console;
 
 UniqueList uniqueList = new UniqueList();
 
@@ -17,17 +17,17 @@ while (processing)
     WriteLine(actionChoosingText);
 
     int action;
-    while (!int.TryParse(ReadLine(), out action) || action > 3 || action  < 0)
+    while (!int.TryParse(ReadLine(), out action) || action > 3 || action < 0)
     {
         WriteLine("Wrong input \n");
         WriteLine(actionChoosingText);
-    } ;
+    };
 
 
     switch (action)
     {
         case 0:
-            processing = false; 
+            processing = false;
             break;
 
         case 1:
@@ -35,18 +35,18 @@ while (processing)
             Write("\nEnter the element value (integer): ");
 
             int value;
-            while (!int.TryParse(ReadLine(),out value))
+            while (!int.TryParse(ReadLine(), out value))
             {
-                WriteLine("Wrong input \n" );
+                WriteLine("Wrong input \n");
                 Write("Enter the element value (integer): ");
             }
-            
+
             try
             {
                 uniqueList.Add(value);
-                WriteLine($"\n{value} now in list. \n" );
+                WriteLine($"\n{value} now in list. \n");
             }
-            catch(ElementAlreadyExistException ex)
+            catch (ElementAlreadyExistException ex)
             {
                 WriteLine("\n" + ex.Message + "\n");
             }
@@ -75,7 +75,7 @@ while (processing)
                 }
 
             }
-            catch(MissingElementException ex)
+            catch (MissingElementException ex)
             {
                 WriteLine("\n" + ex.Message + "\n");
             }

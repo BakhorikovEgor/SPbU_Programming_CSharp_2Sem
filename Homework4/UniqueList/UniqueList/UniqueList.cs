@@ -39,8 +39,8 @@ public class UniqueList : StandardList
 
     ///<inheritdoc/>
     /// <exception cref="MissingElementException"> Collection doesn`t contains element with this value. </exception>
-    public override bool Remove(int value) => base.Remove(value) 
-                                            ? true 
+    public override bool Remove(int value) => base.Remove(value)
+                                            ? true
                                             : throw new MissingElementException("No element with this value in collection.");
 
     /// <inheritdoc/>
@@ -48,7 +48,7 @@ public class UniqueList : StandardList
     {
         var positionOfValue = Contains(value);
         if (positionOfValue == -1)
-        { 
+        {
             return base.Replace(value, position);
         }
 
