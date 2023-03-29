@@ -14,7 +14,7 @@ public static class BinaryOperationSolver
     /// <returns>result of operation </returns>
     /// <exception cref="DivideByZeroException"> second operand can`t be zero</exception>
     /// <exception cref="InvalidOperationException"> operator must be + - * / </exception>
-    public static double Solve(string? operation, double firstOperand, double secondOperand)
+    public static double Solve(string operation, double firstOperand, double secondOperand)
     {
         switch (operation)
         {
