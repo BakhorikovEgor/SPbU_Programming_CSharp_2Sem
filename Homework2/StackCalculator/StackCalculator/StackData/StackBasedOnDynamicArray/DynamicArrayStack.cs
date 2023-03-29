@@ -8,10 +8,8 @@ public class DynamicArrayStack : IStack
     private List<double> array;
     private int count;
 
-    public DynamicArrayStack()
-    {
-        array = new List<double>();
-    }
+    public DynamicArrayStack() 
+        => array = new List<double>();
 
     /// <inheritdoc/>
     public void Push(double value)

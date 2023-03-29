@@ -5,6 +5,24 @@
 /// </summary>
 public class LinkedListStack : IStack
 {
+    private class Node
+    {
+        public double Value { get; }
+        public Node? Next { get; }
+
+        public Node(double value)
+        {
+            Value = value;
+            Next = this;
+        }
+
+        public Node(double value, Node? next)
+        {
+            Value = value;
+            Next = next;
+        }
+    }
+
     private Node? head;
 
     /// <inheritdoc/>
@@ -30,5 +48,4 @@ public class LinkedListStack : IStack
     /// <inheritdoc/>
     public bool IsEmpty()
         => head == null;
-
 }

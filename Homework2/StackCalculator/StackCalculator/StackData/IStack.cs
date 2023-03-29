@@ -14,7 +14,7 @@ public interface IStack
     /// <summary>
     /// Delete element from stack (LIFO rule) if stack isn`t empty.
     /// </summary>
-    /// <returns> Dealeating value. </returns>
+    /// <returns> Deleting value. </returns>
     /// <exception cref="InvalidOperationException"> Try to pop from empty stack. </exception>
     public double Pop();
 
