@@ -3,7 +3,7 @@
 /// <summary>
 /// Binary operations handler.
 /// </summary>
-internal static class BinaryOperationSolver
+public static class BinaryOperationSolver
 {
     /// <summary>
     /// Binary operation ( + - * /).

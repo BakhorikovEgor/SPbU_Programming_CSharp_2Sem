@@ -8,7 +8,7 @@ public class DynamicArrayStack : IStack
     private List<double> array;
     private int count;
 
-    public DynamicArrayStack() 
+    public DynamicArrayStack()
         => array = new List<double>();
 
     /// <inheritdoc/>
