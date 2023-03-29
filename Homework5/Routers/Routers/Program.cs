@@ -1,5 +1,5 @@
-﻿using static System.Console;
-using Routers;
+﻿using Routers;
+using static System.Console;
 
 if (args[0] == "-help")
 {
@@ -43,6 +43,8 @@ try
 {
     var configuration = ConfigurationBuilder.BuildConfiguration(topology);
     File.WriteAllText(args[1], configuration);
+
+    WriteLine("Done");
 }
 catch (TopologyNotConnectedException ex)
 {

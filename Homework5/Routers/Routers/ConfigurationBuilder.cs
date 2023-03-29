@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Metrics;
-using System.Text;
-using static System.Net.Mime.MediaTypeNames;
+﻿using System.Text;
 
 namespace Routers;
 
@@ -8,7 +6,7 @@ namespace Routers;
 /// Using the Prim`s algorithm, based on the given network topology, 
 /// build the optimal configuration of routers, which is the maximum spanning tree.
 /// </summary>
-internal static class ConfigurationBuilder
+public static class ConfigurationBuilder
 {
     private class GraphEdge
     {
@@ -37,69 +35,83 @@ internal static class ConfigurationBuilder
     /// </returns>
     /// <exception cref="TopologyNotConnectedException"> Graph is not connected.</exception>
     /// <exception cref="FormatException"> Input has wrong format. </exception>
+    /// <exception cref="ArgumentException"> Input can not be empty || Throughput can not be negative. </exception>
     public static string BuildConfiguration(string topology)
     {
         if (topology == string.Empty)
         {
-            throw new ArgumentException("Toplogy can not be empty !");
+            throw new ArgumentException("Topology can not be empty");
         }
-        
-        (var edges, var vertexCount) = Parse(topology);
+
+       (var edges, var vertexCount) = Parse(topology);
 
         var configuration = new List<GraphEdge>();
-        var connectedVertexes = new HashSet<int> { 1 };
-        while (connectedVertexes.Count < vertexCount)
+        var connectedVertices = new HashSet<int> { 1 };
+        while (connectedVertices.Count < vertexCount)
         {
-            GraphEdge maxCurrentEdge = FindMaxCurrentEdge(edges, connectedVertexes);
-            if (maxCurrentEdge.Weight == int.MinValue) 
-            { 
-                break; 
+            GraphEdge maxCurrentEdge = FindMaxCurrentEdge(edges, connectedVertices);
+            if (maxCurrentEdge.Weight == int.MinValue)
+            {
+                break;
             }
 
             configuration.Add(maxCurrentEdge);
-            connectedVertexes.Add(maxCurrentEdge.FirstVertex);
-            connectedVertexes.Add(maxCurrentEdge.SecondVertex);
+            connectedVertices.Add(maxCurrentEdge.FirstVertex);
+            connectedVertices.Add(maxCurrentEdge.SecondVertex);
         }
 
-        if (connectedVertexes.Count != vertexCount)
+        if (connectedVertices.Count != vertexCount)
         {
-            throw new TopologyNotConnectedException("\r\nNot every router is reachable..");
+            throw new TopologyNotConnectedException("Not every router is reachable");
         }
-        return CreateConfigurationString(configuration);          
+        return CreateConfigurationString(configuration);
     }
 
-    private static (GraphEdge[],int) Parse(string topology)
+    private static (GraphEdge[], int) Parse(string topology)
     {
-        var vertexes = new HashSet<int>();
+        var vertices = new HashSet<int>();
         var result = new List<GraphEdge>();
 
         foreach (var component in topology.Split("\n"))
         {
             var data = component.Split(":");
             var firstVertex = int.Parse(data[0]);
-            foreach (var edgeInfo in data[1].Split(',')) 
+            foreach (var edgeInfo in data[1].Split(','))
             {
-                var temp = edgeInfo.Replace("(","").Replace(")","").Split(" ");
+                var temp = edgeInfo.Replace("(", "").Replace(")", "").Split(" ");
+
+                if (temp.Length < 3)
+                {
+                    throw new FormatException("Wrong topology format");
+                }
+
                 var secondVertex = int.Parse(temp[1]);
                 var edgeWeight = int.Parse(temp[2]);
 
+                if (edgeWeight < 0)
+                {
+                    throw new ArgumentException("Throughput can not be negative");
+                }
+
                 result.Add(new GraphEdge(edgeWeight, firstVertex, secondVertex));
-                vertexes.Add(secondVertex);
+                vertices.Add(secondVertex);
             }
-            vertexes.Add(firstVertex);
+
+
+            vertices.Add(firstVertex);
         }
 
-        return (result.ToArray(), vertexes.Count);
+        return (result.ToArray(), vertices.Count);
     }
 
 
-    private static GraphEdge FindMaxCurrentEdge(GraphEdge[] edges, HashSet<int> connectedVertexes)
+    private static GraphEdge FindMaxCurrentEdge(GraphEdge[] edges, HashSet<int> connectedVertices)
     {
         var result = new GraphEdge(int.MinValue, 0, 0);
         foreach (var edge in edges)
         {
-            if ((connectedVertexes.Contains(edge.FirstVertex) || connectedVertexes.Contains(edge.SecondVertex))
-                && (!(connectedVertexes.Contains(edge.FirstVertex) && connectedVertexes.Contains(edge.SecondVertex))))
+            if ((connectedVertices.Contains(edge.FirstVertex) || connectedVertices.Contains(edge.SecondVertex))
+                && (!(connectedVertices.Contains(edge.FirstVertex) && connectedVertices.Contains(edge.SecondVertex))))
             {
                 if (result.Weight < edge.Weight)
                 {
@@ -110,10 +122,10 @@ internal static class ConfigurationBuilder
         return result;
     }
 
-    private static string CreateConfigurationString(List<GraphEdge> edges) 
+    private static string CreateConfigurationString(List<GraphEdge> edges)
     {
         var builder = new StringBuilder();
-        foreach(var edge in edges)
+        foreach (var edge in edges)
         {
             var edgeRepresentation = $"{edge.FirstVertex}: {edge.SecondVertex} ({edge.Weight})";
             builder.Append(edgeRepresentation + '\n');
