@@ -1,5 +1,5 @@
 ﻿using static System.Console;
-using List;
+using Lists;
 
 UniqueList uniqueList = new UniqueList();
 

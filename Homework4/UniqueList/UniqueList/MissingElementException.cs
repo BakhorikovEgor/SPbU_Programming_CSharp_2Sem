@@ -1,4 +1,4 @@
-﻿namespace List;
+﻿namespace Lists;
 
 /// <summary>
 /// Indicates the absence of an element in the collection.

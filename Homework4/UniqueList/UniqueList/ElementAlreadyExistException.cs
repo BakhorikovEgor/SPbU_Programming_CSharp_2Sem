@@ -1,4 +1,4 @@
-﻿namespace List;
+﻿namespace Lists;
 
 /// <summary>
 /// Exception for collections with unique elements.

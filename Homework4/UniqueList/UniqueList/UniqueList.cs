@@ -1,9 +1,9 @@
-﻿namespace List;
+﻿namespace Lists;
 
 /// <summary>
 /// Data structure based on a list with no duplicate elements.
 /// </summary>
-public class UniqueList : List
+public class UniqueList : StandardList
 {
     private int Contains(int value)
     {
@@ -39,14 +39,9 @@ public class UniqueList : List
 
     ///<inheritdoc/>
     /// <exception cref="MissingElementException"> Collection doesn`t contains element with this value. </exception>
-    public override bool Remove(int value)
-    {
-        if (!base.Remove(value))
-        {
-            throw new MissingElementException("No element with this value in collection.");
-        };
-        return true;
-    }
+    public override bool Remove(int value) => base.Remove(value) 
+                                            ? true 
+                                            : throw new MissingElementException("No element with this value in collection.");
 
     /// <inheritdoc/>
     public override bool Replace(int value, int position)

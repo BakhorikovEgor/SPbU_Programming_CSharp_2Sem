@@ -1,9 +1,9 @@
-﻿namespace List;
+﻿namespace Lists;
 
 /// <summary>
 /// Collection of elements.
 /// </summary>
-public class List
+public class StandardList
 {
     /// <summary>
     /// A part of list.
