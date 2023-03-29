@@ -1,7 +1,13 @@
-﻿using System.Text;
+﻿using System.Diagnostics.Metrics;
+using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Routers;
 
+/// <summary>
+/// Using the Prim`s algorithm, based on the given network topology, 
+/// build the optimal configuration of routers, which is the maximum spanning tree.
+/// </summary>
 internal static class ConfigurationBuilder
 {
     private class GraphEdge
@@ -18,8 +24,26 @@ internal static class ConfigurationBuilder
         }
     }
 
+    /// <summary>
+    /// Realization of Prim`s algorithm for building optimal routers configuration.
+    /// </summary>
+    /// <param name="topology"> 
+    /// Initial information about the connections of routers in the format: 
+    /// router: connected router (throughput), etc...
+    /// </param>
+    /// <returns> 
+    /// Text from strings in the format: 
+    /// router: connected router(throughput).
+    /// </returns>
+    /// <exception cref="TopologyNotConnectedException"> Graph is not connected.</exception>
+    /// <exception cref="FormatException"> Input has wrong format. </exception>
     public static string BuildConfiguration(string topology)
     {
+        if (topology == string.Empty)
+        {
+            throw new ArgumentException("Toplogy can not be empty !");
+        }
+        
         (var edges, var vertexCount) = Parse(topology);
 
         var configuration = new List<GraphEdge>();
@@ -39,7 +63,7 @@ internal static class ConfigurationBuilder
 
         if (connectedVertexes.Count != vertexCount)
         {
-            throw new TopologyNotConnectedException("");
+            throw new TopologyNotConnectedException("\r\nNot every router is reachable..");
         }
         return CreateConfigurationString(configuration);          
     }
