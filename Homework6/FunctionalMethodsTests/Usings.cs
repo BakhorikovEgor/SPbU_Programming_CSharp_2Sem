@@ -1,2 +1,2 @@
-global using NUnit.Framework;
 global using Func;
+global using NUnit.Framework;

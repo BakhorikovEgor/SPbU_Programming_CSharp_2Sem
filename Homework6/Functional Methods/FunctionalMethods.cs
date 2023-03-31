@@ -9,7 +9,7 @@ public static class FunctionalMethods
     /// <typeparam name="R"> The type of the result after applying the mapping. </typeparam>
     /// <param name="list"> List of elements to transform. </param>
     /// <param name="function"> Element transform function. </param>
-    /// <returns> List of converted elements of type R. </returns>
+    /// <returns> List of converted elements of result type. </returns>
     public static List<R> Map<T, R>(List<T> list, Func<T, R> function)
     {
         var result = new List<R>();
