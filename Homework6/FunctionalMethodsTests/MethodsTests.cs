@@ -1,4 +1,4 @@
-namespace FuncMethodsTests;
+namespace MathodsTest;
 
 public class Tests
 {
