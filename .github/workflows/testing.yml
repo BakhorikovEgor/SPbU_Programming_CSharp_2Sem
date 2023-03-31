@@ -38,10 +38,10 @@ jobs:
           dotnet-version: '8.x'
       
       - name: Lint
-        run: for file in *.sln; do dotnet format "$file"; done
+        run: find . -name "*.sln" -exec dotnet format {} \;
         
       - name: Build Solutions
-        run: for file in *.sln; do dotnet build "$file"; done
+        run: find . -name "*.sln" -exec dotnet build {} \;
         
       - name: Run Tests
-        run: for file in *.sln; do dotnet run "$file"; done
+        run: find . -name "*.sln" -exec dotnet run {} \;
