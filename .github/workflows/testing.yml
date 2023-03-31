@@ -20,13 +20,13 @@ jobs:
           dotnet-version: '8.x'
         
       - name: Lint
-        run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet format $file.FullName}
+        run: Get-ChildItem -Path . -Filter *.sln -Recurse | ForEach-Object { dotnet format $_.FullName }
         
       - name: Build Solutions
-        run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet build $file.FullName}
+        run: Get-ChildItem -Path . -Filter *.sln -Recurse | ForEach-Object { dotnet build $_.FullName }
         
       - name: Run Tests
-        run: $files = Get-ChildItem -Recurse -Filter '*.sln'; foreach ($file in $files) {dotnet test $file.FullName}
+        run: Get-ChildItem -Path . -Filter *.sln -Recurse | ForEach-Object { dotnet test $_.FullName }
   
   test-Ubuntu:
     runs-on: ubuntu-latest
@@ -44,4 +44,4 @@ jobs:
         run: find . -name "*.sln" -exec dotnet build {} \;
         
       - name: Run Tests
-        run: find . -name "*.sln" -exec dotnet run {} \;
+        run: find . -name "*.sln" -exec dotnet test {} \;
