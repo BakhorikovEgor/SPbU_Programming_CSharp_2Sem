@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Functional Methods\FuncMethods.csproj" />
+    <ProjectReference Include="..\Functional Methods\Functional Methods.csproj" />
   </ItemGroup>
 
 </Project>

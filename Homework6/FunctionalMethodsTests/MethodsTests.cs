@@ -1,4 +1,4 @@
-namespace MathodsTest;
+namespace MethodsTest;
 
 public class Tests
 {
