@@ -2,44 +2,51 @@
 
 internal class Field
 {
-    public int[,] Grid { get; private set; }
+    public bool[,] Grid { get; private set; }
+
+    public bool IsMovingBlockExist { get; private set; } = false;
 
     private readonly (int, int) spawningPosition;
 
     private Block? currentBlock;
+   
 
     public Field(int length, int width)
     {
-        Grid = new int[length, width];
+        Grid = new bool[length, width];
         spawningPosition = (width / 2, 0);
     }
 
     public void AddBlock()
     {
-        if (currentBlock == null) throw new Exception();
-
         currentBlock = Block.GenerateBlock();
-        MoveBlock((block, shift) 
-            => block.Components
-                    .Select(component => (component.Item1 + spawningPosition.Item1, component.Item2 + spawningPosition.Item2)));
+        IsMovingBlockExist = true;
+
+        MoveBlock(spawningPosition);
+        
     }
 
-    public void MoveBlock(Action<Block, (int, int)> mover)
+    public void MoveBlock((int, int) shift)
     {
         if (currentBlock == null) throw new Exception();
 
-        mover(currentBlock);
+        Block block = currentBlock.UpdateComponents(shift);
+        currentBlock = block;
+
+        if (IsCurrentBlockValid()) UpdateField();
+        else IsMovingBlockExist = false;
+  
     }
 
-    private bool IsBlockValid(Block block)
+    private bool IsCurrentBlockValid()
     {
-        foreach (var component in block.Components) 
+        foreach (var component in currentBlock!.Components) 
         {
             int x = component.Item1;
             int y = component.Item2;
             if (x < 0 || x > Grid.GetLength(1) - 1 ||
                 y < 0 || y > Grid.GetLength(0) - 1 ||
-                Grid[component.Item1, component.Item2] > 1)
+                Grid[component.Item1, component.Item2])
             {
                 return false;
             }
@@ -48,5 +55,7 @@ internal class Field
         return true;
     }
 
+    private void UpdateField()
+        => Array.ForEach(currentBlock!.Components, component => Grid[component.Item1, component.Item2] = true);
 
 }

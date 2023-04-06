@@ -21,7 +21,7 @@ internal class Block
     public static Block GenerateBlock()
         => BLOCKS[random.Next(0, BLOCKS.Length)];
 
-    public Block updateComponents((int, int) startPosition)
+    public Block UpdateComponents((int, int) startPosition)
         => new(Components.Select(component => (component.Item1 + startPosition.Item1, component.Item2 + startPosition.Item2)).ToArray());
     
 }
