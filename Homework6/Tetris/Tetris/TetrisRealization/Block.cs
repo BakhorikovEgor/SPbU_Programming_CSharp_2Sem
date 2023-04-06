@@ -1,20 +1,28 @@
 ﻿namespace Tetris.Realization;
-internal static class BlockCreator
+internal class Block
 {
-    private static readonly (int, int)[][] BLOCKS = new (int, int)[][]
+    public (int, int) [] Components { get; set; }
+
+    private Block(params (int, int)[] components) => Components = components;
+
+    private static readonly Block[] BLOCKS = new Block[]
     {
-        new(int, int)[] { (0, 0), (0, 1), (0, 2), (-1 ,2) },
-        new(int, int)[] { (0, 0), (0, 1), (0, 2) , (0, 3) },
-        new(int, int)[] { (0, 0), (0, 1), (1, 0), (1 ,1) },
-        new(int, int)[] { (0, 0), (0, 1), (0, 2), (1 ,2) },
-        new(int, int)[] { (0, 0), (0, 1), (1, 1), (2 ,1) },
-        new(int, int)[] { (0, 0), (1, 0), (1, -1), (2 ,-1) },
-        new(int, int)[] { (0, 0), (1, 0), (1, -1), (2, 0)}
+        new Block((0, 0), (0, 1), (0, 2), (-1 ,2)),
+        new Block((0, 0), (0, 1), (0, 2), (0, 3)),
+        new Block((0, 0), (0, 1), (1, 0), (1 ,1)),
+        new Block((0, 0), (0, 1), (0, 2), (1 ,2)),
+        new Block((0, 0), (0, 1), (1, 1), (2 ,1)),
+        new Block((0, 0), (1, 0), (1, -1), (2 ,-1)),
+        new Block((0, 0), (1, 0), (1, -1), (2, 0))
     };
 
     private static readonly Random random = new();
 
-    public static (int, int)[] CreateBlock(int x, int y)
-        => BLOCKS[random.Next(0, BLOCKS.Length)].Select(point => (point.Item1 + x, point.Item2 + y)).ToArray();
+    public static Block GenerateBlock()
+        => BLOCKS[random.Next(0, BLOCKS.Length)];
+
+    public Block updateComponents((int, int) startPosition)
+        => new(Components.Select(component => (component.Item1 + startPosition.Item1, component.Item2 + startPosition.Item2)).ToArray());
+    
 }
 
