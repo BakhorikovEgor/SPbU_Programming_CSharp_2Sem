@@ -23,6 +23,9 @@ internal class Block
 
     public Block UpdateComponents((int, int) startPosition)
         => new(Components.Select(component => (component.Item1 + startPosition.Item1, component.Item2 + startPosition.Item2)).ToArray());
+
+    public Block Rotate()
+        => new(Components.Select(component => (component.Item2, -component.Item1)).ToArray());
     
 }
 

@@ -6,6 +6,8 @@ internal class Field
 
     public bool IsMovingBlockExist { get; private set; } = false;
 
+    public bool IsGridValid { get; private set; } = true;
+
     private readonly (int, int) spawningPosition;
 
     private Block? currentBlock;
@@ -17,35 +19,63 @@ internal class Field
         spawningPosition = (width / 2, 0);
     }
 
-    public void AddBlock()
+    public void AddCurrentBlock()
     {
         currentBlock = Block.GenerateBlock();
         IsMovingBlockExist = true;
 
-        MoveBlock(spawningPosition);
+        MoveCurrentBlock(spawningPosition);
         
     }
 
-    public void MoveBlock((int, int) shift)
+    public void MoveCurrentBlock((int, int) shift)
     {
         if (currentBlock == null) throw new Exception();
 
         Block block = currentBlock.UpdateComponents(shift);
         currentBlock = block;
 
-        if (IsCurrentBlockValid()) UpdateField();
-        else IsMovingBlockExist = false;
-  
+        if (IsBlockValid(currentBlock))
+        {
+            UpdateField();
+        }
+
+        else
+        {
+            IsMovingBlockExist = false;
+            if (currentBlock.Components.Any((x) => x.Item2 < 0))
+            {
+                IsGridValid = false;
+            }
+        }
+
     }
 
-    private bool IsCurrentBlockValid()
+
+    public void RotateCurrentBlock()
     {
-        foreach (var component in currentBlock!.Components) 
+        if (currentBlock == null)
+        {
+            throw new Exception();
+        }
+
+        Block tempBlock = currentBlock.Rotate();
+
+        if (IsBlockValid(tempBlock))
+        {
+            currentBlock = tempBlock;
+        }
+    }
+
+
+    private bool IsBlockValid(Block block)
+    {
+        foreach (var component in block.Components) 
         {
             int x = component.Item1;
             int y = component.Item2;
             if (x < 0 || x > Grid.GetLength(1) - 1 ||
-                y < 0 || y > Grid.GetLength(0) - 1 ||
+                y > Grid.GetLength(0) - 1 ||
                 Grid[component.Item1, component.Item2])
             {
                 return false;
