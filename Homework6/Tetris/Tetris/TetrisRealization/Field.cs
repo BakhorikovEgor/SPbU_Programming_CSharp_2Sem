@@ -4,15 +4,12 @@ internal class Field
 {
     public bool[,] Grid { get; private set; }
 
-    public bool IsMovingBlockExist { get; private set; } = false;
+    public bool IsCurrentBlockMovable { get; private set; } = false;
 
     public bool IsGridValid { get; private set; } = true;
 
-
     private readonly (int, int) spawningPosition;
-
     private Block? currentBlock;
-   
 
     public Field(int length, int width)
     {
@@ -23,40 +20,46 @@ internal class Field
     public void AddCurrentBlock()
     {
         currentBlock = Block.GenerateBlock();
-        IsMovingBlockExist = true;
-
+        
         if (!IsBlockValid(currentBlock))
         {
             throw new Exception();
         }
+
+        IsCurrentBlockMovable = true;
         MoveCurrentBlock(spawningPosition);
         
     }
 
     public void MoveCurrentBlock((int, int) shift)
     {
-        if (currentBlock == null) throw new Exception();
+        if (currentBlock == null)
+        {
+            throw new Exception();
+        }
+
+        if (!IsCurrentBlockMovable)
+        {
+            return;
+        }
 
         UpdateField(false);
 
         currentBlock = currentBlock.UpdateComponents(shift);
-
         if (IsBlockValid(currentBlock))
         {
             UpdateField();
         }
-
         else
         {
-            IsMovingBlockExist = false;
-            if (currentBlock.Components.Any((x) => x.Item2 < 0))
+            IsCurrentBlockMovable = false;
+            if (currentBlock.Components.Any((component) => component.Item2 < 0))
             {
                 IsGridValid = false;
             }
         }
 
     }
-
 
     public void RotateCurrentBlock()
     {
@@ -68,7 +71,6 @@ internal class Field
         UpdateField(false);
 
         Block tempBlock = currentBlock.Rotate();
-
         if (IsBlockValid(tempBlock))
         {
             currentBlock = tempBlock;
@@ -76,17 +78,15 @@ internal class Field
         }
     }
 
-
     private bool IsBlockValid(Block block)
     {
         foreach (var component in block.Components) 
         {
             int x = component.Item1;
             int y = component.Item2;
-            if (y < 0)
-            {
-                continue;
-            }
+
+            if (y < 0) continue;
+
             if (x < 0 || x > Grid.GetLength(1) - 1 ||
                 y > Grid.GetLength(0) - 1 ||
                 Grid[component.Item1, component.Item2])

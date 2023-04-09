@@ -31,7 +31,6 @@ internal class Block
         return new(Components.Select(component => ComponentSum((component.Item2, -component.Item1), shiftVector)).ToArray());
     }
 
-
     private static (int, int) ComponentSum((int,int) firstComponent, (int, int) secondComponent)
         => (firstComponent.Item1 + secondComponent.Item1, firstComponent.Item2 + secondComponent.Item2);
 }
