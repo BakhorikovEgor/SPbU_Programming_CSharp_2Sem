@@ -9,15 +9,10 @@ public class Executor
     {
         Field field = new Field(length, width);
         var processing = true;
-        while (processing)
-        {
-            if (KeyAvailable)
-            {
-
-            }
-            else
-            {
-            }
-        }
+        
+        field.AddCurrentBlock();
+        field.MoveCurrentBlock((0, 1));
+        field.RotateCurrentBlock();
+        field.MoveCurrentBlock((0, 1));
     }
 }

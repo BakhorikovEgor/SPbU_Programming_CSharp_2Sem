@@ -7,7 +7,6 @@ internal class Block
 
     private static readonly Block[] BLOCKS = new Block[]
     {
-        new Block((0, 0), (0, 1), (0, 2), (-1 ,2)),
         new Block((0, 0), (0, 1), (0, 2), (0, 3)),
         new Block((0, 0), (0, 1), (1, 0), (1 ,1)),
         new Block((0, 0), (0, 1), (0, 2), (1 ,2)),
@@ -21,11 +20,19 @@ internal class Block
     public static Block GenerateBlock()
         => BLOCKS[random.Next(0, BLOCKS.Length)];
 
-    public Block UpdateComponents((int, int) startPosition)
-        => new(Components.Select(component => (component.Item1 + startPosition.Item1, component.Item2 + startPosition.Item2)).ToArray());
+    public Block UpdateComponents((int, int) shift)
+        => new(Components.Select(component => ComponentSum(component, shift)).ToArray());
 
     public Block Rotate()
-        => new(Components.Select(component => (component.Item2, -component.Item1)).ToArray());
-    
+    {
+        (int, int) shiftVector = (Components[0].Item1 - Components[0].Item2, Components[0].Item2 + Components[0].Item1);
+
+
+        return new(Components.Select(component => ComponentSum((component.Item2, -component.Item1), shiftVector)).ToArray());
+    }
+
+
+    private static (int, int) ComponentSum((int,int) firstComponent, (int, int) secondComponent)
+        => (firstComponent.Item1 + secondComponent.Item1, firstComponent.Item2 + secondComponent.Item2);
 }
 

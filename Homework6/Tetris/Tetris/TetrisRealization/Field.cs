@@ -8,6 +8,7 @@ internal class Field
 
     public bool IsGridValid { get; private set; } = true;
 
+
     private readonly (int, int) spawningPosition;
 
     private Block? currentBlock;
@@ -24,6 +25,10 @@ internal class Field
         currentBlock = Block.GenerateBlock();
         IsMovingBlockExist = true;
 
+        if (!IsBlockValid(currentBlock))
+        {
+            throw new Exception();
+        }
         MoveCurrentBlock(spawningPosition);
         
     }
@@ -32,8 +37,9 @@ internal class Field
     {
         if (currentBlock == null) throw new Exception();
 
-        Block block = currentBlock.UpdateComponents(shift);
-        currentBlock = block;
+        UpdateField(false);
+
+        currentBlock = currentBlock.UpdateComponents(shift);
 
         if (IsBlockValid(currentBlock))
         {
@@ -59,11 +65,14 @@ internal class Field
             throw new Exception();
         }
 
+        UpdateField(false);
+
         Block tempBlock = currentBlock.Rotate();
 
         if (IsBlockValid(tempBlock))
         {
             currentBlock = tempBlock;
+            UpdateField();
         }
     }
 
@@ -74,6 +83,10 @@ internal class Field
         {
             int x = component.Item1;
             int y = component.Item2;
+            if (y < 0)
+            {
+                continue;
+            }
             if (x < 0 || x > Grid.GetLength(1) - 1 ||
                 y > Grid.GetLength(0) - 1 ||
                 Grid[component.Item1, component.Item2])
@@ -85,7 +98,14 @@ internal class Field
         return true;
     }
 
-    private void UpdateField()
-        => Array.ForEach(currentBlock!.Components, component => Grid[component.Item1, component.Item2] = true);
+    private void UpdateField(bool value = true)
+    {
+        var validParts = currentBlock!.Components.Where((component) => component.Item2 >= 0);
+        foreach (var part in validParts)
+        {
+            Grid[part.Item1, part.Item2] = value;
+        }
+    }
+
 
 }
