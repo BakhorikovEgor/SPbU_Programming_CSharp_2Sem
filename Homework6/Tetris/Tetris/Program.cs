@@ -3,5 +3,3 @@ using Tetris.Realization;
 
 Console.WriteLine("Hello, World!");
 
-Executor executor = new Executor();
-executor.Run(10,10);

@@ -1,6 +1,6 @@
 ﻿namespace Tetris.Realization;
 
-public class Tetris
+public class Game
 {
     public bool[,] Grid { get; private set; }
 
@@ -9,7 +9,7 @@ public class Tetris
     private readonly (int, int) spawningPosition;
     private Block currentBlock;
 
-    public Tetris(int length, int width)
+    public Game(int length, int width)
     {
         Grid = new bool[length, width];
         spawningPosition = (width / 2, 0);
@@ -109,5 +109,5 @@ public class Tetris
         }
     }
 
-    private void 
+
 }

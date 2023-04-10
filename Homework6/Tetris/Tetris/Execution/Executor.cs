@@ -7,7 +7,7 @@ public class Executor
 
     private EventLoop eventLoop = new EventLoop();
 
-    private readonly Field field;
+    private readonly Game game;
 
     private const int StandardFieldLength = 30;
     private const int StandardFieldWidth = 30;
@@ -15,22 +15,22 @@ public class Executor
     public Executor() : this(StandardFieldLength, StandardFieldWidth) { }
     public Executor(int length, int width)
     {
-        field = AreFieldSizeValid(length, width) 
-            ? new Field(length, width) 
-            : new Field(StandardFieldLength, StandardFieldWidth);
+        game = AreFieldSizeValid(length, width) 
+            ? new Game(length, width) 
+            : new Game(StandardFieldLength, StandardFieldWidth);
 
     }
 
 
     public void Execute()
     {
-        eventLoop.RotateHandler += field.RotateBlock;
+        eventLoop.RotateHandler += game.RotateBlock;
 
-        eventLoop.LeftHandler += field.MoveLeft;
+        eventLoop.LeftHandler += game.MoveLeft;
 
-        eventLoop.RightHandler += field.MoveRight;
+        eventLoop.RightHandler += game.MoveRight;
 
-        eventLoop.DownHandler += field.MoveDown;
+        eventLoop.DownHandler += game.MoveDown;
 
         eventLoop.Run();
     }
