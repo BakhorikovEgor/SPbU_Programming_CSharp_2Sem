@@ -22,10 +22,6 @@ public class EventLoop
                 var key = ReadKey().Key;         
                 switch (key)
                 {
-                    case ConsoleKey.Escape:
-                        GameEndingHandler(this, EventArgs.Empty);
-                        break;
-
                     case ConsoleKey.W:
                         RotateHandler(this, EventArgs.Empty);
                         break;
@@ -42,6 +38,10 @@ public class EventLoop
                         LeftHandler(this, EventArgs.Empty);
                         break;
                 }
+            }
+            else
+            {
+                DownHandler(this, EventArgs.Empty);
             }
         }
     }
