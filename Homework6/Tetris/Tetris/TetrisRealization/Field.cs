@@ -1,6 +1,6 @@
 ﻿namespace Tetris.Realization;
 
-internal class Field
+public class Field
 {
     public bool[,] Grid { get; private set; }
 
@@ -15,24 +15,53 @@ internal class Field
     {
         Grid = new bool[length, width];
         spawningPosition = (width / 2, 0);
+
+        AddBlock();
     }
 
-    public void AddCurrentBlock()
+    public void Clear()
     {
-        currentBlock = Block.GenerateBlock();
         
-        if (!IsBlockValid(currentBlock))
+    }
+
+
+    public void RotateBlock(object? sender, EventArgs args)
+    {
+        if (!IsGridValid)
+        {
+            throw new Exception();
+        }
+        if (currentBlock == null)
         {
             throw new Exception();
         }
 
-        IsCurrentBlockMovable = true;
-        MoveCurrentBlock(spawningPosition);
-        
+        UpdateField(false);
+
+        Block tempBlock = currentBlock.Rotate();
+        if (IsBlockValid(tempBlock))
+        {
+            currentBlock = tempBlock;
+            UpdateField();
+        }
     }
 
-    public void MoveCurrentBlock((int, int) shift)
+    public void MoveDown(object? sender, EventArgs args)
+        => MoveBlock((0, 1));
+
+    public void MoveRight(object? sender, EventArgs args)
+        => MoveBlock((1, 0));
+
+    public void MoveLeft(object? sender, EventArgs args)
+        => MoveBlock((-1, 0));
+
+    private void MoveBlock((int, int) shift)
     {
+        if (!IsGridValid)
+        {
+            throw new Exception();
+        }
+
         if (currentBlock == null)
         {
             throw new Exception();
@@ -57,25 +86,30 @@ internal class Field
             {
                 IsGridValid = false;
             }
+            else
+            {
+                AddBlock();
+            }
         }
 
     }
 
-    public void RotateCurrentBlock()
+    private void AddBlock()
     {
-        if (currentBlock == null)
+        if (!IsGridValid)
+        {
+            throw new Exception();
+        }
+        currentBlock = Block.GenerateBlock();
+
+        if (!IsBlockValid(currentBlock))
         {
             throw new Exception();
         }
 
-        UpdateField(false);
+        IsCurrentBlockMovable = true;
+        MoveBlock(spawningPosition);
 
-        Block tempBlock = currentBlock.Rotate();
-        if (IsBlockValid(tempBlock))
-        {
-            currentBlock = tempBlock;
-            UpdateField();
-        }
     }
 
     private bool IsBlockValid(Block block)
@@ -85,11 +119,14 @@ internal class Field
             int x = component.Item1;
             int y = component.Item2;
 
+            if (x < 0 || x > Grid.GetLength(1) - 1 || y > Grid.GetLength(0) - 1)
+            {
+                return false;
+            }
+
             if (y < 0) continue;
 
-            if (x < 0 || x > Grid.GetLength(1) - 1 ||
-                y > Grid.GetLength(0) - 1 ||
-                Grid[component.Item1, component.Item2])
+            if (Grid[component.Item1, component.Item2])
             {
                 return false;
             }

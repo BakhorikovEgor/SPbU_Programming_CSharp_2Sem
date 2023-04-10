@@ -5,18 +5,13 @@ namespace Tetris.Execution;
 
 public class EventLoop
 {
-
-    public event EventHandler<EventArgs> GameEndingHandler = (sender, eventArgs) => { };
-
-    public event EventHandler<EventArgs> LandingHandler = (sender, eventArgs) => { };
-
     public event EventHandler<EventArgs> RotateHandler = (sender, eventArgs) => { };
 
-    public event EventHandler<EventArgs> RightShiftHandler = (sender, eventArgs) => { };
+    public event EventHandler<EventArgs> RightHandler = (sender, eventArgs) => { };
 
-    public event EventHandler<EventArgs> LeftShiftHandler = (sender, eventArgs) => { };
+    public event EventHandler<EventArgs> LeftHandler = (sender, eventArgs) => { };
 
-    public event EventHandler<EventArgs> DownShiftHandler = (sender, eventArgs) => { };
+    public event EventHandler<EventArgs> DownHandler = (sender, eventArgs) => { };
 
     public void Run()
     {
@@ -36,15 +31,15 @@ public class EventLoop
                         break;
 
                     case ConsoleKey.S:
-                        DownShiftHandler(this, EventArgs.Empty);
+                        DownHandler(this, EventArgs.Empty);
                         break;
 
                     case ConsoleKey.D:
-                        RightShiftHandler(this, EventArgs.Empty);
+                        RightHandler(this, EventArgs.Empty);
                         break;
 
                     case ConsoleKey.A:
-                        LeftShiftHandler(this, EventArgs.Empty);
+                        LeftHandler(this, EventArgs.Empty);
                         break;
                 }
             }
