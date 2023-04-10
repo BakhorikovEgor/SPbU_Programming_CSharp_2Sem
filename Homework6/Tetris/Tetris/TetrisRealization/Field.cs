@@ -1,137 +1,87 @@
 ﻿namespace Tetris.Realization;
 
-public class Field
+public class Tetris
 {
     public bool[,] Grid { get; private set; }
 
-    public bool IsCurrentBlockMovable { get; private set; } = false;
-
-    public bool IsGridValid { get; private set; } = true;
+    public bool IsGameOver { get; private set; } = false;
 
     private readonly (int, int) spawningPosition;
-    private Block? currentBlock;
+    private Block currentBlock;
 
-    public Field(int length, int width)
+    public Tetris(int length, int width)
     {
         Grid = new bool[length, width];
         spawningPosition = (width / 2, 0);
 
-        AddBlock();
+        currentBlock = CreateCurrentBlock();
     }
-
-    public void Clear()
-    {
-        
-    }
-
-
+    
     public void RotateBlock(object? sender, EventArgs args)
     {
-        if (!IsGridValid)
-        {
-            throw new Exception();
-        }
-        if (currentBlock == null)
-        {
-            throw new Exception();
-        }
-
         UpdateField(false);
 
         Block tempBlock = currentBlock.Rotate();
-        if (IsBlockValid(tempBlock))
+        if (IsBlockBetween(tempBlock))
         {
             currentBlock = tempBlock;
             UpdateField();
+            UpdateGameSituation();
         }
     }
 
     public void MoveDown(object? sender, EventArgs args)
-        => MoveBlock((0, 1));
+        => MoveCurrentBlock((0, 1));
 
     public void MoveRight(object? sender, EventArgs args)
-        => MoveBlock((1, 0));
+        => MoveCurrentBlock((1, 0));
 
     public void MoveLeft(object? sender, EventArgs args)
-        => MoveBlock((-1, 0));
+        => MoveCurrentBlock((-1, 0));
 
-    private void MoveBlock((int, int) shift)
+    private void MoveCurrentBlock((int, int) shift)
     {
-        if (!IsGridValid)
-        {
-            throw new Exception();
-        }
-
-        if (currentBlock == null)
-        {
-            throw new Exception();
-        }
-
-        if (!IsCurrentBlockMovable)
-        {
-            return;
-        }
-
         UpdateField(false);
 
-        currentBlock = currentBlock.UpdateComponents(shift);
-        if (IsBlockValid(currentBlock))
+        Block tempBlock = currentBlock.UpdateComponents(shift);
+        if (IsBlockBetween(tempBlock))
         {
+            currentBlock = tempBlock;
             UpdateField();
+            UpdateGameSituation();
         }
-        else
-        {
-            IsCurrentBlockMovable = false;
-            if (currentBlock.Components.Any((component) => component.Item2 < 0))
-            {
-                IsGridValid = false;
-            }
-            else
-            {
-                AddBlock();
-            }
-        }
-
     }
 
-    private void AddBlock()
-    {
-        if (!IsGridValid)
-        {
-            throw new Exception();
-        }
-        currentBlock = Block.GenerateBlock();
 
-        if (!IsBlockValid(currentBlock))
+    private Block CreateCurrentBlock()
+    {
+        Block tempBlock = Block.GenerateBlock().UpdateComponents(spawningPosition);
+        if (!IsBlockBetween(tempBlock))
         {
             throw new Exception();
         }
 
-        IsCurrentBlockMovable = true;
-        MoveBlock(spawningPosition);
-
+        return tempBlock;
     }
 
-    private bool IsBlockValid(Block block)
+    private bool IsBlockBetween(Block block)
+        => block.Components.All(component => component.Item1 >= 0 && component.Item1 < Grid.GetLength(0));
+
+    private bool IsBlockAbove(Block block)
+        => block.Components.Any(component => component.Item2 < 0);
+
+    private bool IsFreeSpaceUnderCurrentBlock(Block block)
     {
-        foreach (var component in block.Components) 
+        foreach (var component in block.Components)
         {
             int x = component.Item1;
             int y = component.Item2;
 
-            if (x < 0 || x > Grid.GetLength(1) - 1 || y > Grid.GetLength(0) - 1)
-            {
-                return false;
-            }
-
-            if (y < 0) continue;
-
-            if (Grid[component.Item1, component.Item2])
+            if (y + 1 >= 0 && Grid[x, y + 1])
             {
                 return false;
             }
         }
-
         return true;
     }
 
@@ -144,5 +94,20 @@ public class Field
         }
     }
 
+    private void UpdateGameSituation()
+    {
+        if (!IsFreeSpaceUnderCurrentBlock(currentBlock))
+        {
+            if (IsBlockAbove(currentBlock))
+            {
+                IsGameOver = true;
+            }
+            else
+            {
+                currentBlock = CreateCurrentBlock();
+            }
+        }
+    }
 
+    private void 
 }

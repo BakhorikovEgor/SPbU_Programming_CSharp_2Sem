@@ -11,8 +11,6 @@ internal class Block
         new Block((0, 0), (0, 1), (1, 0), (1 ,1)),
         new Block((0, 0), (0, 1), (0, 2), (1 ,2)),
         new Block((0, 0), (0, 1), (1, 1), (2 ,1)),
-        new Block((0, 0), (1, 0), (1, -1), (2 ,-1)),
-        new Block((0, 0), (1, 0), (1, -1), (2, 0))
     };
 
     private static readonly Random random = new();
