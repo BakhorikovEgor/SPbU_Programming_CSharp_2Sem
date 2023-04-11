@@ -1,5 +1,5 @@
-﻿using static System.Console;
-
+﻿using System.Windows.Markup;
+using static System.Console;
 
 namespace Tetris.Execution;
 
@@ -13,13 +13,19 @@ public class EventLoop
 
     public event EventHandler<EventArgs> DownHandler = (sender, eventArgs) => { };
 
+    public event EventHandler<EventArgs> EnterHandler = (sender, eventArgs) => { };
+
+    public event EventHandler<EventArgs> GameFieldChangeHandler = (sender, eventArgs) => { };
+
     public void Run()
     {
         while(true) 
         {
+            GameFieldChangeHandler(this, EventArgs.Empty);
+
             if (KeyAvailable)
             {
-                var key = ReadKey().Key;         
+                var key = ReadKey(true).Key;
                 switch (key)
                 {
                     case ConsoleKey.W:
@@ -37,12 +43,21 @@ public class EventLoop
                     case ConsoleKey.A:
                         LeftHandler(this, EventArgs.Empty);
                         break;
+
+                    case ConsoleKey.Enter:
+                        EnterHandler(this, EventArgs.Empty);
+                        break;
+                }
+
+                while (KeyAvailable)
+                {
+                    ReadKey(true);
                 }
             }
-            else
-            {
-                DownHandler(this, EventArgs.Empty);
-            }
+
+            DownHandler(this, EventArgs.Empty);
+
+            Thread.Sleep(370);
         }
     }
 }

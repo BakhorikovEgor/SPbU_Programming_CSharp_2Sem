@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using Tetris.Realization;
+using Tetris.Execution;
 
-Console.WriteLine("Hello, World!");
 
+Console.CursorVisible = false;
+Executor executor = new Executor();
+executor.Execute();
