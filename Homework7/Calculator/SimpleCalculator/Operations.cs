@@ -20,11 +20,8 @@ internal static class BinaryOperation
             Operation.Divide => rightOperand == 0
                                 ? throw new DivideByZeroException()
                                 : leftOperand / rightOperand,
-
             _ => throw new NotImplementedException()
         };
     }
 
-
-    
 }

@@ -1,5 +1,4 @@
-﻿
-namespace SimpleCalculator;
+﻿namespace SimpleCalculator;
 
 public class Calculator
 {
@@ -10,8 +9,8 @@ public class Calculator
 
     public void Calculate(string item)
     {
-        if (int.TryParse(item, out int digit)) 
-        { 
+        if (int.TryParse(item, out int digit))
+        {
             currentOperand = currentOperand * 10 + digit;
         }
 
@@ -27,7 +26,7 @@ public class Calculator
             "-" => BinaryOperation.Operation.Minus,
             "*" => BinaryOperation.Operation.Multiply,
             "/" => BinaryOperation.Operation.Divide,
-            _ => throw new NotImplementedException(),
+            _ => throw new NotImplementedException()
         };
     }
 

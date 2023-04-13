@@ -1,30 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+namespace CalculatorForm;
 
-namespace Calculator
+public partial class CalculatorForm : Form
 {
-    public partial class Form1 : Form
+    private readonly Calculator calculator = new();
+
+    public CalculatorForm()
     {
-        public Form1()
+        InitializeComponent();
+    }
+
+    private void OnOperationButtonClick(object sender, EventArgs e)
+    {
+        if (sender is Button)
         {
-            InitializeComponent();
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
+            var button = (Button)sender;
+            calculator.Calculate(button.Text);
         }
     }
 }
