@@ -1,12 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace SimpleCalculator;
 
-namespace SimpleCalculator
+internal static class BinaryOperation
 {
-    internal class Operaions
+    public enum Operation
     {
+        Plus,
+        Minus,
+        Multiply,
+        Divide
     }
+
+    public static double Calculate(Operation operation, double leftOperand, int rightOperand)
+    {
+        return operation switch
+        {
+            Operation.Plus => leftOperand + rightOperand,
+            Operation.Minus => leftOperand - rightOperand,
+            Operation.Multiply => leftOperand * rightOperand,
+            Operation.Divide => rightOperand == 0
+                                ? throw new DivideByZeroException()
+                                : leftOperand / rightOperand,
+
+            _ => throw new NotImplementedException()
+        };
+    }
+
+
+    
 }
