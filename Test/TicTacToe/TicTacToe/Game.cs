@@ -4,11 +4,14 @@ internal class Game
 {
     public bool IsGameOver { get; private set; } = false;
 
-    private bool[,] field = new bool[3, 3];
+    public bool Draw { get; private set; } = false;
+
+    private int[,] field = new int[3, 3];
 
     public Player movedPlayer = Player.Second;
 
     private int freeCells = 9;
+
     public void Move((uint, uint) position)
     {
         if(!IsPositionValid(position))
@@ -16,17 +19,16 @@ internal class Game
             throw new ArgumentException();
         }
 
-        if (field[position.Item1, position.Item2]) return;
+        if (IsGameOver || field[position.Item1, position.Item2] != 0) return;
 
-        field[position.Item1, position.Item2] = true;
+        movedPlayer = movedPlayer == Player.First ? Player.Second : Player.First;
+        field[position.Item1, position.Item2] = movedPlayer.Number;
         freeCells--;
+
 
         ChangeGameState();
 
-        if (!IsGameOver)
-        {
-            movedPlayer = movedPlayer == Player.First ? Player.Second : Player.First;
-        }
+
     }
 
     private void ChangeGameState()
@@ -34,20 +36,21 @@ internal class Game
         if (freeCells <= 0)
         {
             IsGameOver = true;
+            Draw = true;
         }
         else
         {
             for (var i = 0; i < 3; ++i)
             {
-                if (field[i, 0] && field[i, 1] && field[i, 2] ||
-                   (field[0, i] && field[1, i] && field[2, i]))
+                if (field[i, 0] != 0 && field[i, 0] == field[i, 1] && field[i, 1] == field[i, 2] ||
+                   (field[0, i] != 0 && field[0, i] == field[1, i] &&  field[1, i] == field[2, i]))
                 {
                     IsGameOver = true;
                 }
             }
 
-            if (field[0, 0] && field[1, 1] && field[2, 2] ||
-                field[0, 2] && field[1, 1] && field[2, 0])
+            if (field[0,0] != 0 && field[0, 0] == field[1, 1] && field[1, 1] == field[2, 2] ||
+                field[0,2] != 0 && field[0, 2] == field[1, 1] && field[1, 1] == field[2, 0])
             {
                 IsGameOver = true;
             }

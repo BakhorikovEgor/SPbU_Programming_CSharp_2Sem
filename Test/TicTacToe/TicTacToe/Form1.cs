@@ -12,20 +12,21 @@ public partial class Form1 : Form
     {
         var button = (Button)sender;
 
-        if (game.IsGameOver && !button.Text.Equals(string.Empty)) return;
+        if (game.IsGameOver || !button.Text.Equals(string.Empty)) return;
 
         var index = button.TabIndex;
 
-        var row = (uint) index / 3;
-        var column = (uint) index % 3;
+        var row = (uint)index / 3;
+        var column = (uint)index % 3;
 
         game.Move((row, column));
-
-        button.Text = game.movedPlayer.Sign;
         
+        button.Text = game.movedPlayer.Sign;
+
         if (game.IsGameOver)
         {
-
+            GameInfoTextBox.Text = "Game Over !\n" + (game.Draw ? "    Draw !" : $"Player {game.movedPlayer.Number} won !");
         }
+
     }
 }
