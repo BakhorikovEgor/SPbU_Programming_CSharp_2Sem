@@ -6,7 +6,11 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-	<EnableWindowsTargeting>true</EnableWindowsTargeting>
+	  <EnableWindowsTargeting>true</EnableWindowsTargeting>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TicTacToeGame\TicTacToeGame.csproj" />
+  </ItemGroup>
 
 </Project>
