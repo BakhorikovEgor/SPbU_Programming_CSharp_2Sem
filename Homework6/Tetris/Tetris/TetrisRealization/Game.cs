@@ -6,6 +6,8 @@ public class Game
 
     public bool IsGameOver { get; private set; } = false;
 
+    public int Score { get; private set; } = 0;
+
     private readonly (int, int) spawningPosition;
     private Block? currentBlock;
 
@@ -127,6 +129,7 @@ public class Game
             if (sum == Field.GetLength(1))
             {
                 DeleteRow(row);
+                Score++;
             }
         }
     }

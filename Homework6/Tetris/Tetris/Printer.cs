@@ -13,12 +13,16 @@ public class GamePrinter
         drawingGame = game;
         xPosition = x;
         yPosition = y;
-
     }
 
     public void Print(object? sender, EventArgs args)
     {
+        Clear();
+
+        PrintWalls();
+
         PrintField();
+
         if (drawingGame.IsGameOver)
         {
             PrintGameOver();
@@ -39,7 +43,6 @@ public class GamePrinter
 
             SetCursorPosition(i, yPosition + drawingGame.Field.GetLength(0));
             Write("—");
-
         }
 
         for (int i = yPosition; i < drawingGame.Field.GetLength(0) + yPosition; ++i)
@@ -78,6 +81,11 @@ public class GamePrinter
         WriteLine("Game Over !");
         WriteLine("Press Enter to play again !");
 
+    }
+
+    private void PrintScore()
+    {
+        
     }
     
 }
