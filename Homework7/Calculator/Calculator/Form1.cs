@@ -9,12 +9,13 @@ public partial class CalculatorForm : Form
         InitializeComponent();
     }
 
-    private void OnOperationButtonClick(object sender, EventArgs e)
+    private void OnOperationOrDigitButtonClick(object sender, EventArgs e)
     {
         if (sender is Button)
         {
             var button = (Button)sender;
-            calculator.Calculate(button.Text);
+            calculator.AddOperandOrOperation(button.Text);
         }
     }
+
 }

@@ -7,7 +7,7 @@ internal static class BinaryOperation
         Plus,
         Minus,
         Multiply,
-        Divide
+        Divide,
     }
 
     public static double Calculate(Operation operation, double leftOperand, int rightOperand)
@@ -23,5 +23,4 @@ internal static class BinaryOperation
             _ => throw new NotImplementedException()
         };
     }
-
 }

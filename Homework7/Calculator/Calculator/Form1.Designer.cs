@@ -28,24 +28,28 @@ partial class CalculatorForm
     /// </summary>
     private void InitializeComponent()
     {
+        components = new System.ComponentModel.Container();
         tableLayoutPanel1 = new TableLayoutPanel();
         button15 = new Button();
         button14 = new Button();
-        button13 = new Button();
-        button12 = new Button();
-        button11 = new Button();
-        button10 = new Button();
-        button9 = new Button();
-        button8 = new Button();
-        button7 = new Button();
-        button6 = new Button();
-        button5 = new Button();
-        button4 = new Button();
-        button3 = new Button();
-        button2 = new Button();
-        button1 = new Button();
+        NineDigitButton = new Button();
+        EightDigitButton = new Button();
+        SevenDigitButton = new Button();
+        SixDigitButton = new Button();
+        FiveDigitButton = new Button();
+        FourDigitButton = new Button();
+        ThreeDigitButton = new Button();
+        TwoDigitButton = new Button();
+        OneDigitButton = new Button();
+        ZeroDigitButton = new Button();
+        DivideOperationButton = new Button();
+        MultiplyOperationButton = new Button();
+        MinusOperationButton = new Button();
         PlusOperationButton = new Button();
+        textBox1 = new TextBox();
+        calculatorBindingSource = new BindingSource(components);
         tableLayoutPanel1.SuspendLayout();
+        ((System.ComponentModel.ISupportInitialize)calculatorBindingSource).BeginInit();
         SuspendLayout();
         // 
         // tableLayoutPanel1
@@ -57,19 +61,19 @@ partial class CalculatorForm
         tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
         tableLayoutPanel1.Controls.Add(button15, 3, 3);
         tableLayoutPanel1.Controls.Add(button14, 2, 3);
-        tableLayoutPanel1.Controls.Add(button13, 1, 3);
-        tableLayoutPanel1.Controls.Add(button12, 0, 3);
-        tableLayoutPanel1.Controls.Add(button11, 3, 2);
-        tableLayoutPanel1.Controls.Add(button10, 2, 2);
-        tableLayoutPanel1.Controls.Add(button9, 1, 2);
-        tableLayoutPanel1.Controls.Add(button8, 0, 2);
-        tableLayoutPanel1.Controls.Add(button7, 3, 1);
-        tableLayoutPanel1.Controls.Add(button6, 2, 1);
-        tableLayoutPanel1.Controls.Add(button5, 1, 1);
-        tableLayoutPanel1.Controls.Add(button4, 0, 1);
-        tableLayoutPanel1.Controls.Add(button3, 3, 0);
-        tableLayoutPanel1.Controls.Add(button2, 2, 0);
-        tableLayoutPanel1.Controls.Add(button1, 1, 0);
+        tableLayoutPanel1.Controls.Add(NineDigitButton, 1, 3);
+        tableLayoutPanel1.Controls.Add(EightDigitButton, 0, 3);
+        tableLayoutPanel1.Controls.Add(SevenDigitButton, 3, 2);
+        tableLayoutPanel1.Controls.Add(SixDigitButton, 2, 2);
+        tableLayoutPanel1.Controls.Add(FiveDigitButton, 1, 2);
+        tableLayoutPanel1.Controls.Add(FourDigitButton, 0, 2);
+        tableLayoutPanel1.Controls.Add(ThreeDigitButton, 3, 1);
+        tableLayoutPanel1.Controls.Add(TwoDigitButton, 2, 1);
+        tableLayoutPanel1.Controls.Add(OneDigitButton, 1, 1);
+        tableLayoutPanel1.Controls.Add(ZeroDigitButton, 0, 1);
+        tableLayoutPanel1.Controls.Add(DivideOperationButton, 3, 0);
+        tableLayoutPanel1.Controls.Add(MultiplyOperationButton, 2, 0);
+        tableLayoutPanel1.Controls.Add(MinusOperationButton, 1, 0);
         tableLayoutPanel1.Controls.Add(PlusOperationButton, 0, 0);
         tableLayoutPanel1.Dock = DockStyle.Bottom;
         tableLayoutPanel1.Location = new Point(0, 305);
@@ -106,151 +110,161 @@ partial class CalculatorForm
         button14.Text = "+";
         button14.UseVisualStyleBackColor = true;
         // 
-        // button13
+        // NineDigitButton
         // 
-        button13.Dock = DockStyle.Fill;
-        button13.Font = new Font("Tahoma", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        button13.Location = new Point(123, 192);
-        button13.Name = "button13";
-        button13.Size = new Size(114, 60);
-        button13.TabIndex = 13;
-        button13.Text = "+";
-        button13.UseVisualStyleBackColor = true;
+        NineDigitButton.Dock = DockStyle.Fill;
+        NineDigitButton.Font = new Font("Tahoma", 21F, FontStyle.Bold, GraphicsUnit.Point);
+        NineDigitButton.Location = new Point(123, 192);
+        NineDigitButton.Name = "NineDigitButton";
+        NineDigitButton.Size = new Size(114, 60);
+        NineDigitButton.TabIndex = 14;
+        NineDigitButton.Text = "9";
+        NineDigitButton.UseVisualStyleBackColor = true;
+        NineDigitButton.Click += OnOperationOrDigitButtonClick;
         // 
-        // button12
+        // EightDigitButton
         // 
-        button12.Dock = DockStyle.Fill;
-        button12.Font = new Font("Tahoma", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        button12.Location = new Point(3, 192);
-        button12.Name = "button12";
-        button12.Size = new Size(114, 60);
-        button12.TabIndex = 12;
-        button12.Text = "+";
-        button12.UseVisualStyleBackColor = true;
+        EightDigitButton.Dock = DockStyle.Fill;
+        EightDigitButton.Font = new Font("Tahoma", 21F, FontStyle.Bold, GraphicsUnit.Point);
+        EightDigitButton.Location = new Point(3, 192);
+        EightDigitButton.Name = "EightDigitButton";
+        EightDigitButton.Size = new Size(114, 60);
+        EightDigitButton.TabIndex = 13;
+        EightDigitButton.Text = "8";
+        EightDigitButton.UseVisualStyleBackColor = true;
+        EightDigitButton.Click += OnOperationOrDigitButtonClick;
         // 
-        // button11
+        // SevenDigitButton
         // 
-        button11.Dock = DockStyle.Fill;
-        button11.Font = new Font("Tahoma", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        button11.Location = new Point(363, 129);
-        button11.Name = "button11";
-        button11.Size = new Size(116, 57);
-        button11.TabIndex = 11;
-        button11.Text = "+";
-        button11.UseVisualStyleBackColor = true;
+        SevenDigitButton.Dock = DockStyle.Fill;
+        SevenDigitButton.Font = new Font("Tahoma", 21F, FontStyle.Bold, GraphicsUnit.Point);
+        SevenDigitButton.Location = new Point(363, 129);
+        SevenDigitButton.Name = "SevenDigitButton";
+        SevenDigitButton.Size = new Size(116, 57);
+        SevenDigitButton.TabIndex = 12;
+        SevenDigitButton.Text = "7";
+        SevenDigitButton.UseVisualStyleBackColor = true;
+        SevenDigitButton.Click += OnOperationOrDigitButtonClick;
         // 
-        // button10
+        // SixDigitButton
         // 
-        button10.Dock = DockStyle.Fill;
-        button10.Font = new Font("Tahoma", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        button10.Location = new Point(243, 129);
-        button10.Name = "button10";
-        button10.Size = new Size(114, 57);
-        button10.TabIndex = 10;
-        button10.Text = "+";
-        button10.UseVisualStyleBackColor = true;
+        SixDigitButton.Dock = DockStyle.Fill;
+        SixDigitButton.Font = new Font("Tahoma", 21F, FontStyle.Bold, GraphicsUnit.Point);
+        SixDigitButton.Location = new Point(243, 129);
+        SixDigitButton.Name = "SixDigitButton";
+        SixDigitButton.Size = new Size(114, 57);
+        SixDigitButton.TabIndex = 11;
+        SixDigitButton.Text = "6";
+        SixDigitButton.UseVisualStyleBackColor = true;
+        SixDigitButton.Click += OnOperationOrDigitButtonClick;
         // 
-        // button9
+        // FiveDigitButton
         // 
-        button9.Dock = DockStyle.Fill;
-        button9.Font = new Font("Tahoma", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        button9.Location = new Point(123, 129);
-        button9.Name = "button9";
-        button9.Size = new Size(114, 57);
-        button9.TabIndex = 9;
-        button9.Text = "+";
-        button9.UseVisualStyleBackColor = true;
+        FiveDigitButton.Dock = DockStyle.Fill;
+        FiveDigitButton.Font = new Font("Tahoma", 21F, FontStyle.Bold, GraphicsUnit.Point);
+        FiveDigitButton.Location = new Point(123, 129);
+        FiveDigitButton.Name = "FiveDigitButton";
+        FiveDigitButton.Size = new Size(114, 57);
+        FiveDigitButton.TabIndex = 10;
+        FiveDigitButton.Text = "5";
+        FiveDigitButton.UseVisualStyleBackColor = true;
+        FiveDigitButton.Click += OnOperationOrDigitButtonClick;
         // 
-        // button8
+        // FourDigitButton
         // 
-        button8.Dock = DockStyle.Fill;
-        button8.Font = new Font("Tahoma", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        button8.Location = new Point(3, 129);
-        button8.Name = "button8";
-        button8.Size = new Size(114, 57);
-        button8.TabIndex = 8;
-        button8.Text = "+";
-        button8.UseVisualStyleBackColor = true;
+        FourDigitButton.Dock = DockStyle.Fill;
+        FourDigitButton.Font = new Font("Tahoma", 21F, FontStyle.Bold, GraphicsUnit.Point);
+        FourDigitButton.Location = new Point(3, 129);
+        FourDigitButton.Name = "FourDigitButton";
+        FourDigitButton.Size = new Size(114, 57);
+        FourDigitButton.TabIndex = 9;
+        FourDigitButton.Text = "4";
+        FourDigitButton.UseVisualStyleBackColor = true;
+        FourDigitButton.Click += OnOperationOrDigitButtonClick;
         // 
-        // button7
+        // ThreeDigitButton
         // 
-        button7.Dock = DockStyle.Fill;
-        button7.Font = new Font("Tahoma", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        button7.Location = new Point(363, 66);
-        button7.Name = "button7";
-        button7.Size = new Size(116, 57);
-        button7.TabIndex = 7;
-        button7.Text = "+";
-        button7.UseVisualStyleBackColor = true;
+        ThreeDigitButton.Dock = DockStyle.Fill;
+        ThreeDigitButton.Font = new Font("Tahoma", 21F, FontStyle.Bold, GraphicsUnit.Point);
+        ThreeDigitButton.Location = new Point(363, 66);
+        ThreeDigitButton.Name = "ThreeDigitButton";
+        ThreeDigitButton.Size = new Size(116, 57);
+        ThreeDigitButton.TabIndex = 8;
+        ThreeDigitButton.Text = "3";
+        ThreeDigitButton.UseVisualStyleBackColor = true;
+        ThreeDigitButton.Click += OnOperationOrDigitButtonClick;
         // 
-        // button6
+        // TwoDigitButton
         // 
-        button6.Dock = DockStyle.Fill;
-        button6.Font = new Font("Tahoma", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        button6.Location = new Point(243, 66);
-        button6.Name = "button6";
-        button6.Size = new Size(114, 57);
-        button6.TabIndex = 6;
-        button6.Text = "+";
-        button6.UseVisualStyleBackColor = true;
+        TwoDigitButton.Dock = DockStyle.Fill;
+        TwoDigitButton.Font = new Font("Tahoma", 21F, FontStyle.Bold, GraphicsUnit.Point);
+        TwoDigitButton.Location = new Point(243, 66);
+        TwoDigitButton.Name = "TwoDigitButton";
+        TwoDigitButton.Size = new Size(114, 57);
+        TwoDigitButton.TabIndex = 7;
+        TwoDigitButton.Text = "2";
+        TwoDigitButton.UseVisualStyleBackColor = true;
+        TwoDigitButton.Click += OnOperationOrDigitButtonClick;
         // 
-        // button5
+        // OneDigitButton
         // 
-        button5.Dock = DockStyle.Fill;
-        button5.Font = new Font("Tahoma", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        button5.Location = new Point(123, 66);
-        button5.Name = "button5";
-        button5.Size = new Size(114, 57);
-        button5.TabIndex = 5;
-        button5.Text = "+";
-        button5.UseVisualStyleBackColor = true;
+        OneDigitButton.Dock = DockStyle.Fill;
+        OneDigitButton.Font = new Font("Tahoma", 21F, FontStyle.Bold, GraphicsUnit.Point);
+        OneDigitButton.Location = new Point(123, 66);
+        OneDigitButton.Name = "OneDigitButton";
+        OneDigitButton.Size = new Size(114, 57);
+        OneDigitButton.TabIndex = 6;
+        OneDigitButton.Text = "1";
+        OneDigitButton.UseVisualStyleBackColor = true;
+        OneDigitButton.Click += OnOperationOrDigitButtonClick;
         // 
-        // button4
+        // ZeroDigitButton
         // 
-        button4.Dock = DockStyle.Fill;
-        button4.Font = new Font("Tahoma", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        button4.Location = new Point(3, 66);
-        button4.Name = "button4";
-        button4.Size = new Size(114, 57);
-        button4.TabIndex = 4;
-        button4.Text = "+";
-        button4.UseVisualStyleBackColor = true;
+        ZeroDigitButton.Dock = DockStyle.Fill;
+        ZeroDigitButton.Font = new Font("Tahoma", 21F, FontStyle.Bold, GraphicsUnit.Point);
+        ZeroDigitButton.Location = new Point(3, 66);
+        ZeroDigitButton.Name = "ZeroDigitButton";
+        ZeroDigitButton.Size = new Size(114, 57);
+        ZeroDigitButton.TabIndex = 5;
+        ZeroDigitButton.Text = "0";
+        ZeroDigitButton.UseVisualStyleBackColor = true;
+        ZeroDigitButton.Click += OnOperationOrDigitButtonClick;
         // 
-        // button3
+        // DivideOperationButton
         // 
-        button3.Dock = DockStyle.Fill;
-        button3.Font = new Font("Tahoma", 19F, FontStyle.Bold, GraphicsUnit.Point);
-        button3.Location = new Point(363, 3);
-        button3.Name = "button3";
-        button3.Size = new Size(116, 57);
-        button3.TabIndex = 3;
-        button3.Text = "/";
-        button3.UseVisualStyleBackColor = true;
-        button3.Click += OnOperationButtonClick;
+        DivideOperationButton.Dock = DockStyle.Fill;
+        DivideOperationButton.Font = new Font("Tahoma", 19F, FontStyle.Bold, GraphicsUnit.Point);
+        DivideOperationButton.Location = new Point(363, 3);
+        DivideOperationButton.Name = "DivideOperationButton";
+        DivideOperationButton.Size = new Size(116, 57);
+        DivideOperationButton.TabIndex = 4;
+        DivideOperationButton.Text = "/";
+        DivideOperationButton.UseVisualStyleBackColor = true;
+        DivideOperationButton.Click += OnOperationOrDigitButtonClick;
         // 
-        // button2
+        // MultiplyOperationButton
         // 
-        button2.Dock = DockStyle.Fill;
-        button2.Font = new Font("Franklin Gothic Medium", 31.8000011F, FontStyle.Regular, GraphicsUnit.Point);
-        button2.Location = new Point(243, 3);
-        button2.Name = "button2";
-        button2.Size = new Size(114, 57);
-        button2.TabIndex = 2;
-        button2.Text = "*";
-        button2.UseVisualStyleBackColor = true;
-        button2.Click += OnOperationButtonClick;
+        MultiplyOperationButton.Dock = DockStyle.Fill;
+        MultiplyOperationButton.Font = new Font("Franklin Gothic Medium", 31.8000011F, FontStyle.Regular, GraphicsUnit.Point);
+        MultiplyOperationButton.Location = new Point(243, 3);
+        MultiplyOperationButton.Name = "MultiplyOperationButton";
+        MultiplyOperationButton.Size = new Size(114, 57);
+        MultiplyOperationButton.TabIndex = 3;
+        MultiplyOperationButton.Text = "*";
+        MultiplyOperationButton.UseVisualStyleBackColor = true;
+        MultiplyOperationButton.Click += OnOperationOrDigitButtonClick;
         // 
-        // button1
+        // MinusOperationButton
         // 
-        button1.Dock = DockStyle.Fill;
-        button1.Font = new Font("Tahoma", 25.8000011F, FontStyle.Bold, GraphicsUnit.Point);
-        button1.Location = new Point(123, 3);
-        button1.Name = "button1";
-        button1.Size = new Size(114, 57);
-        button1.TabIndex = 2;
-        button1.Text = "-";
-        button1.UseVisualStyleBackColor = true;
-        button1.Click += OnOperationButtonClick;
+        MinusOperationButton.Dock = DockStyle.Fill;
+        MinusOperationButton.Font = new Font("Tahoma", 25.8000011F, FontStyle.Bold, GraphicsUnit.Point);
+        MinusOperationButton.Location = new Point(123, 3);
+        MinusOperationButton.Name = "MinusOperationButton";
+        MinusOperationButton.Size = new Size(114, 57);
+        MinusOperationButton.TabIndex = 2;
+        MinusOperationButton.Text = "-";
+        MinusOperationButton.UseVisualStyleBackColor = true;
+        MinusOperationButton.Click += OnOperationOrDigitButtonClick;
         // 
         // PlusOperationButton
         // 
@@ -262,7 +276,19 @@ partial class CalculatorForm
         PlusOperationButton.TabIndex = 1;
         PlusOperationButton.Text = "+";
         PlusOperationButton.UseVisualStyleBackColor = true;
-        PlusOperationButton.Click += OnOperationButtonClick;
+        PlusOperationButton.Click += OnOperationOrDigitButtonClick;
+        // 
+        // textBox1
+        // 
+        textBox1.DataBindings.Add(new Binding("Text", calculatorBindingSource, "result", true));
+        textBox1.Location = new Point(243, 74);
+        textBox1.Name = "textBox1";
+        textBox1.Size = new Size(227, 25);
+        textBox1.TabIndex = 1;
+        // 
+        // calculatorBindingSource
+        // 
+        calculatorBindingSource.DataSource = typeof(Calculator);
         // 
         // CalculatorForm
         // 
@@ -270,13 +296,16 @@ partial class CalculatorForm
         AutoScaleMode = AutoScaleMode.Font;
         BackColor = SystemColors.Desktop;
         ClientSize = new Size(482, 560);
+        Controls.Add(textBox1);
         Controls.Add(tableLayoutPanel1);
         Font = new Font("Cascadia Code SemiBold", 9F, FontStyle.Regular, GraphicsUnit.Point);
         MinimumSize = new Size(500, 560);
         Name = "CalculatorForm";
         Text = "Calculator";
         tableLayoutPanel1.ResumeLayout(false);
+        ((System.ComponentModel.ISupportInitialize)calculatorBindingSource).EndInit();
         ResumeLayout(false);
+        PerformLayout();
     }
 
     #endregion
@@ -284,18 +313,20 @@ partial class CalculatorForm
     private TableLayoutPanel tableLayoutPanel1;
     private Button button15;
     private Button button14;
-    private Button button13;
-    private Button button12;
-    private Button button11;
-    private Button button10;
-    private Button button9;
-    private Button button8;
-    private Button button7;
-    private Button button6;
-    private Button button5;
-    private Button button4;
-    private Button button3;
-    private Button button2;
-    private Button button1;
+    private Button NineDigitButton;
+    private Button EightDigitButton;
+    private Button SevenDigitButton;
+    private Button SixDigitButton;
+    private Button FiveDigitButton;
+    private Button FourDigitButton;
+    private Button ThreeDigitButton;
+    private Button TwoDigitButton;
+    private Button OneDigitButton;
+    private Button ZeroDigitButton;
+    private Button DivideOperationButton;
+    private Button MultiplyOperationButton;
+    private Button MinusOperationButton;
     private Button PlusOperationButton;
+    private TextBox textBox1;
+    private BindingSource calculatorBindingSource;
 }
