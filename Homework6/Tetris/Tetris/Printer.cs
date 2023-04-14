@@ -85,7 +85,7 @@ public class GamePrinter
 
     private void PrintScore()
     {
-        
+        Set
     }
     
 }
