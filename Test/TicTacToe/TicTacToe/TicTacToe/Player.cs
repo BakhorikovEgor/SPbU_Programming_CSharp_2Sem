@@ -1,5 +1,4 @@
 ﻿namespace TicTacToe;
-
 internal class Player
 {
     public string Sign { get; }

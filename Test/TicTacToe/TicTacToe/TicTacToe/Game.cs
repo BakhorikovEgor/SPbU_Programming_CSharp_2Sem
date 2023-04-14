@@ -1,5 +1,4 @@
 ﻿namespace TicTacToe;
-
 internal class Game
 {
     public bool IsGameOver { get; private set; } = false;
@@ -21,14 +20,13 @@ internal class Game
 
         if (IsGameOver || field[position.Item1, position.Item2] != 0) return;
 
-        movedPlayer = movedPlayer == Player.First ? Player.Second : Player.First;
+        movedPlayer = movedPlayer == Player.First 
+                                  ? Player.Second 
+                                  : Player.First;
         field[position.Item1, position.Item2] = movedPlayer.Number;
         freeCells--;
 
-
         ChangeGameState();
-
-
     }
 
     private void ChangeGameState()
