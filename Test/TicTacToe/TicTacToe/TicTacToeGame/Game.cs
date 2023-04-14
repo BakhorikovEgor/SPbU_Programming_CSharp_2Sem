@@ -1,16 +1,28 @@
-﻿namespace TicTacToe;
-internal class Game
+﻿namespace TicTacToeGame;
+
+/// <summary>
+/// Class representing TicTacToe (3 x 3) game.
+/// </summary>
+public class Game
 {
+    // Found three same value in the row
     public bool IsGameOver { get; private set; } = false;
 
+    // No place to move
     public bool Draw { get; private set; } = false;
+
+    // Who made previous move
+    public Player movedPlayer = Player.Second;
 
     private int[,] field = new int[3, 3];
 
-    public Player movedPlayer = Player.Second;
-
     private int freeCells = 9;
 
+    /// <summary>
+    /// Add user move to field.
+    /// </summary>
+    /// <param name="position"> Position to mark. </param>
+    /// <exception cref="ArgumentException"> Position is valid for current field </exception>
     public void Move((uint, uint) position)
     {
         if(!IsPositionValid(position))

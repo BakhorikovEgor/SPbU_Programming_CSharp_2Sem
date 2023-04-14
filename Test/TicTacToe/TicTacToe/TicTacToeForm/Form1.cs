@@ -1,6 +1,4 @@
-using TicTacToeGame;
-
-namespace TicTacToeForm;
+namespace TicTacToe;
 
 public partial class Form1 : Form
 {
@@ -23,7 +21,6 @@ public partial class Form1 : Form
         if (!button.Text.Equals(string.Empty)) return;
 
         var index = button.TabIndex;
-
         var row = (uint)index / 3;
         var column = (uint)index % 3;
 
@@ -33,7 +30,9 @@ public partial class Form1 : Form
 
         if (game.IsGameOver)
         {
-            GameInfoTextBox.Text = game.Draw ? "Draw !" : $"Player {game.movedPlayer.Number} won !";
+            GameInfoTextBox.Text = game.IsDraw 
+                                            ? "Draw !" 
+                                            : $"Player {game.movedPlayer.Number} won !";
         }
         else
         {
@@ -57,6 +56,4 @@ public partial class Form1 : Form
         EighthGameFieldButton.Text = string.Empty;
         NinthGameFieldButton.Text = string.Empty;
     }
-
-
 }
