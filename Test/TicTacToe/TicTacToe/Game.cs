@@ -16,7 +16,7 @@ internal class Game
     {
         if(!IsPositionValid(position))
         {
-            throw new ArgumentException();
+            throw new ArgumentException("Wrong position for this field !");
         }
 
         if (IsGameOver || field[position.Item1, position.Item2] != 0) return;
@@ -33,27 +33,25 @@ internal class Game
 
     private void ChangeGameState()
     {
+        for (var i = 0; i < 3; ++i)
+        {
+            if (field[i, 0] != 0 && field[i, 0] == field[i, 1] && field[i, 1] == field[i, 2] ||
+                (field[0, i] != 0 && field[0, i] == field[1, i] &&  field[1, i] == field[2, i]))
+            {
+                IsGameOver = true;
+            }
+        }
+
+        if (field[0,0] != 0 && field[0, 0] == field[1, 1] && field[1, 1] == field[2, 2] ||
+            field[0,2] != 0 && field[0, 2] == field[1, 1] && field[1, 1] == field[2, 0])
+        {
+            IsGameOver = true;
+        }
+
         if (freeCells <= 0)
         {
             IsGameOver = true;
             Draw = true;
-        }
-        else
-        {
-            for (var i = 0; i < 3; ++i)
-            {
-                if (field[i, 0] != 0 && field[i, 0] == field[i, 1] && field[i, 1] == field[i, 2] ||
-                   (field[0, i] != 0 && field[0, i] == field[1, i] &&  field[1, i] == field[2, i]))
-                {
-                    IsGameOver = true;
-                }
-            }
-
-            if (field[0,0] != 0 && field[0, 0] == field[1, 1] && field[1, 1] == field[2, 2] ||
-                field[0,2] != 0 && field[0, 2] == field[1, 1] && field[1, 1] == field[2, 0])
-            {
-                IsGameOver = true;
-            }
         }
     }
 
