@@ -2,10 +2,10 @@ using TicTacToeGame;
 
 namespace TicTacToeForm;
 
-public partial class Form1 : Form
+public partial class TicTacToeForm : Form
 {
     private Game game = new Game();
-    public Form1()
+    public TicTacToeForm()
     {
         InitializeComponent();
     }

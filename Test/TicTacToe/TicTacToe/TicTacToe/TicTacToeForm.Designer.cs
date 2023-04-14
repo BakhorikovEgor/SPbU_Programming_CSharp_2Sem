@@ -1,6 +1,6 @@
 ﻿namespace TicTacToeForm;
 
-partial class Form1
+partial class TicTacToeForm
 {
     /// <summary>
     ///  Required designer variable.
