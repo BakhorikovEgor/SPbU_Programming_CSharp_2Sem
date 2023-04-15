@@ -5,6 +5,8 @@
 /// </summary>
 public static class BinaryOperationSolver
 {
+
+    private const double delta = 0.001;
     /// <summary>
     /// Binary operation ( + - * /).
     /// </summary>
@@ -40,6 +42,6 @@ public static class BinaryOperationSolver
     /// </summary>
     /// <param name="number"> number we want to check.</param>
     /// <returns> Zero or not (true / false).</returns>
-    private static bool IsZero(double number) => Math.Abs(number) < 0.00001;
+    private static bool IsZero(double number) => Math.Abs(number) < delta;
 
 }

@@ -6,7 +6,7 @@ class Program
 {
     static void Main()
     {
-        StackCalculator calculator = new StackCalculator(new DynamicArrayStack());
+        var calculator = new StackCalculator(new DynamicArrayStack());
 
         var choosing = true;
         string? stackType;

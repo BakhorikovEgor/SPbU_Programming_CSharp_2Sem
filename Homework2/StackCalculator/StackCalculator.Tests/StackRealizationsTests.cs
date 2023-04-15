@@ -55,5 +55,14 @@ internal class StackRealizationsTests
     public void PopEmptyStack_ShouldThrowException(IStack stack) 
         => Assert.Throws<InvalidOperationException>(() => stack.Pop());
 
+    [TestCaseSource(nameof(TypesOfStack))]
+    public void AddElementAndCheckIsEmpty_ShouldReturnFalse(IStack stack)
+    {
+        stack.Push(1);
+
+        Assert.That(stack.IsEmpty(), Is.False);
+    }
+        
+
 
 }

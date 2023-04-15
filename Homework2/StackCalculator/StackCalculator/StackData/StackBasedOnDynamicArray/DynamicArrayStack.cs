@@ -13,7 +13,17 @@ public class DynamicArrayStack : IStack
 
     /// <inheritdoc/>
     public void Push(double value)
-        => array.Insert(count++, value);
+    {
+        if (count == array.Count)
+        {
+            array.Add(value);
+        }
+        else
+        {
+            array[count] = value;
+        }
+        count++;
+    }
 
     /// <inheritdoc/>
     public double Pop()
@@ -23,7 +33,7 @@ public class DynamicArrayStack : IStack
             throw new InvalidOperationException("Can`t pop from empty stack");
         }
 
-        return array.ElementAt(--count);
+        return array[--count];
     }
 
     /// <inheritdoc/>

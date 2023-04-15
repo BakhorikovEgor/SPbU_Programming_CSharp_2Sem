@@ -35,7 +35,7 @@ public class StackCalculator
             throw new ArgumentException("Expression can`t be empty");
         }
 
-        string[] expressionParts = expression.Split();
+        string[] expressionParts = expression.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         foreach (string part in expressionParts)
         {
             if (int.TryParse(part, out int value))
@@ -44,7 +44,7 @@ public class StackCalculator
             }
             else
             {
-                double calculatedPair = CalculatePair(part);
+                double calculatedPair = CalculateOperation(part);
                 stack.Push(calculatedPair);
             }
         }
@@ -55,7 +55,7 @@ public class StackCalculator
                     : throw new ArgumentException("Expression is unsolvable");
     }
 
-    private double CalculatePair(string operation)
+    private double CalculateOperation(string operation)
     {
         double secondOperand = stack.Pop();
         double firstOperand = stack.Pop();
