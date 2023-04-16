@@ -7,6 +7,9 @@ public partial class CalculatorForm : Form
     public CalculatorForm()
     {
         InitializeComponent();
+
+        var resultBinding = new Binding("Text", calculator, "Result", true, DataSourceUpdateMode.OnPropertyChanged);
+        result.DataBindings.Add(resultBinding);
     }
 
     private void OnOperationOrDigitButtonClick(object sender, EventArgs e)
