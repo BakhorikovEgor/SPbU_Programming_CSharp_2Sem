@@ -4,15 +4,12 @@ namespace Tetris.Execution;
 
 public class Executor
 {
-
     private EventLoop eventLoop = new EventLoop();
 
     private GamePrinter printer;
 
     private readonly Game game;
 
-    private const int StandardFieldXPosition = 3;
-    private const int StandardFieldYPosition = 3;
 
     private const int StandardFieldLength = 20;
     private const int StandardFieldWidth = 10;
@@ -20,11 +17,12 @@ public class Executor
     public Executor() : this(StandardFieldLength, StandardFieldWidth) { }
     public Executor( int fieldLength, int fieldWidth)
     {
+        Console.SetWindowSize(50,50);
         game = AreFieldSizeValid(fieldLength, fieldWidth) 
             ? new Game(fieldLength, fieldWidth) 
             : new Game(StandardFieldLength, StandardFieldWidth);
 
-        printer = new GamePrinter(game, StandardFieldXPosition, StandardFieldYPosition);
+        printer = new GamePrinter(game);
 
     }
 
@@ -34,7 +32,7 @@ public class Executor
 
         eventLoop.GameFieldChangeHandler += printer.Print;
 
-        eventLoop.RotateHandler += game.RotateBlock;
+        eventLoop.RotateHandler += game.Rotate;
 
         eventLoop.LeftHandler += game.MoveLeft;
 

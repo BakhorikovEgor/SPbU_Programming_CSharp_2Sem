@@ -1,5 +1,4 @@
-﻿using System.Windows.Markup;
-using static System.Console;
+﻿using static System.Console;
 
 namespace Tetris.Execution;
 
@@ -16,6 +15,7 @@ public class EventLoop
     public event EventHandler<EventArgs> EnterHandler = (sender, eventArgs) => { };
 
     public event EventHandler<EventArgs> GameFieldChangeHandler = (sender, eventArgs) => { };
+
 
     public void Run()
     {

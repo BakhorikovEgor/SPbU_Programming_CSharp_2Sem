@@ -6,19 +6,17 @@ namespace Tetris;
 public class GamePrinter
 {
     private Game drawingGame;
-    private int xPosition;
-    private int yPosition;
-    public GamePrinter(Game game, int x, int y)
+
+    private const int xIndent = 2;
+    private const int yIndent = 3;
+    public GamePrinter(Game game)
     {
         OutputEncoding = System.Text.Encoding.Unicode;
         drawingGame = game;
-        xPosition = x;
-        yPosition = y;
     }
 
     public void Print(object? sender, EventArgs args)
     {
-
         PrintWalls();
 
         PrintField();
@@ -36,22 +34,23 @@ public class GamePrinter
 
     private void PrintWalls()
     {
-        for (int column = xPosition; column < drawingGame.Field.GetLength(1) + xPosition; ++column)
+        ForegroundColor = ConsoleColor.Red;
+        for (int column = xIndent; column < drawingGame.Field.GetLength(1) + xIndent; ++column)
         {
-            SetCursorPosition(column, yPosition - 1);
-            Write("─");
+            SetCursorPosition(column, yIndent - 1);
+            Write("▢");
 
-            SetCursorPosition(column, yPosition + drawingGame.Field.GetLength(0));
-            Write("─");
+            SetCursorPosition(column, yIndent + drawingGame.Field.GetLength(0));
+            Write("▢");
         }
 
-        for (int row = yPosition; row < drawingGame.Field.GetLength(0) + yPosition; ++row)
+        for (int row = yIndent - 1; row <= drawingGame.Field.GetLength(0) + yIndent; ++row)
         {
-            SetCursorPosition(xPosition - 1, row);
-            Write("│");
+            SetCursorPosition(xIndent - 1, row);
+            Write("▢");
 
-            SetCursorPosition(xPosition + drawingGame.Field.GetLength(1), row);
-            Write("│");
+            SetCursorPosition(xIndent + drawingGame.Field.GetLength(1), row);
+            Write("▢");
         }
     }
 
@@ -61,10 +60,11 @@ public class GamePrinter
         {
             for (int column = 0; column < drawingGame.Field.GetLength(1); ++column)
             {
-                SetCursorPosition(xPosition + column, yPosition + row);
-                if (drawingGame.Field[row, column] == 1)
+                SetCursorPosition(xIndent + column, yIndent + row);
+                ForegroundColor = drawingGame.Field[row, column];
+                if (ForegroundColor != ConsoleColor.White)
                 {
-                    Write("*");
+                    Write("▢");
                 }
                 else
                 {

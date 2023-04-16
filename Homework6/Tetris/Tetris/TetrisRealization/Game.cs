@@ -1,133 +1,138 @@
-﻿namespace Tetris.Realization;
+﻿using System.Drawing;
+
+namespace Tetris.Realization;
 
 public class Game
 {
-    public int[,] Field { get; private set; }
+    public ConsoleColor[,] Field { get; private set; }
 
     public bool IsGameOver { get; private set; } = false;
 
     public int Score { get; private set; } = 0;
 
-    private readonly (int, int) spawningPosition;
-    private Block currentBlock;
+    private enum Moves
+    {
+        Down, 
+        Left, 
+        Right,
+        Rotate
+    }
+
+    private readonly (int, int) _spawningPosition;
+    private Block _currentBlock;
 
     public Game(int length, int width)
     {
-        Field = new int[length, width];
-        spawningPosition = (0, width / 2);
+        Field = new ConsoleColor[length, width];
+        _spawningPosition = (0, width / 2);
 
-        currentBlock = Block.GenerateBlock();
-        MoveCurrentBlock(spawningPosition);
+        _currentBlock = GenerateCurrentBlock();
+
+        InitializeField();
+        UpdateCurrentBlockOnField();
     }
     
+    public void MoveDown(object? sender, EventArgs args)
+        => Move(Moves.Down);
+
+    public void MoveLeft(object? sender, EventArgs args)
+        => Move(Moves.Left);
+
+    public void MoveRight(object? sender, EventArgs args)
+        => Move(Moves.Right);
+
+    public void Rotate(object? sender, EventArgs args)
+        => Move(Moves.Rotate);
+
     public void Reset(object? sender, EventArgs args)
     {
         if (IsGameOver)
         {
-            Field = new int[Field.GetLength(0), Field.GetLength(1)];
+            Field = new ConsoleColor[Field.GetLength(0), Field.GetLength(1)];
+            _currentBlock = GenerateCurrentBlock();
             IsGameOver = false;
-            CreateCurrentBlock();
+
+            InitializeField();
+            UpdateCurrentBlockOnField();
         }
     }
 
-    public void RotateBlock(object? sender, EventArgs args)
-        => TryChangeCurrentBlockTo(currentBlock.Rotate());
-
-    public void MoveDown(object? sender, EventArgs args)
-        => MoveCurrentBlock((1, 0));
-
-    public void MoveRight(object? sender, EventArgs args)
-        => MoveCurrentBlock((0, 1));
-
-    public void MoveLeft(object? sender, EventArgs args)
-        => MoveCurrentBlock((0, -1));
-
-    private void MoveCurrentBlock((int, int) shift) 
-        => TryChangeCurrentBlockTo(currentBlock.UpdateComponents(shift));
-
-
-    private void CreateCurrentBlock()
+    private void Move(Moves move)
     {
-        currentBlock = Block.GenerateBlock();
-        MoveCurrentBlock(spawningPosition);
-    }
+        if (IsGameOver) return;
 
-    private bool IsBlockBetween(Block block)
-        => block.Components.All(component => component.Item2 >= 0 && component.Item2 < Field.GetLength(1));
+        UpdateCurrentBlockOnField(true);
 
-    private bool IsBlockAbove(Block block)
-        => block.Components.Any(component => component.Item1 <= 0);
-
-    private bool IsPlaceEmptyAndInside(Block block)
-    {
-        foreach (var component in block.Components)
+        var tempBlock = move switch
         {
-            int row = component.Item1;
-            int column = component.Item2;
+            Moves.Down => _currentBlock.UpdateComponents((1, 0)),
+            Moves.Left => _currentBlock.UpdateComponents((0, -1)),
+            Moves.Right => _currentBlock.UpdateComponents((0, 1)),
+            Moves.Rotate => _currentBlock.Rotate(),
+        };
 
-            if (row >= Field.GetLength(0) || 
-               (column >= 0 && Field[row, column] > 0))
-            {
-                return false;
-            }
+        if (IsBlockInside(tempBlock) && IsPlaceFree(tempBlock))
+        {
+            _currentBlock = tempBlock;
+            UpdateCurrentBlockOnField();
         }
-        return true;
-    }
-
-    private void UpdateCurrentBlockOnField(bool deleting = false)
-    {
-        var validParts = currentBlock.Components.Where((component) => component.Item1 >= 0);
-        foreach (var part in validParts)
+        else if (move == Moves.Down)
         {
-            if (!deleting && Field[part.Item1, part.Item2] == 0)
+            UpdateCurrentBlockOnField();
+            if (IsBlockAbove(tempBlock))
             {
-                Field[part.Item1, part.Item2]++;
-            }
-            else if (deleting && Field[part.Item1, part.Item2] != 0)
-            {
-                Field[part.Item1, part.Item2]--;
-            }
-        }
-    }
-    private void TryChangeCurrentBlockTo(Block block)
-    {
-        if (!IsGameOver && IsBlockBetween(block))
-        {
-            UpdateCurrentBlockOnField(true);
-            if (IsPlaceEmptyAndInside(block))
-            {
-                currentBlock = block;
-                UpdateCurrentBlockOnField();
-            }
-            else if (IsBlockAbove(block))
-            {
-                currentBlock = block;
-                UpdateCurrentBlockOnField();
-
                 IsGameOver = true;
             }
             else
             {
-                UpdateCurrentBlockOnField();
-
                 DeleteFilledRows();
+                _currentBlock = GenerateCurrentBlock();
+                UpdateCurrentBlockOnField();
+            }
+        }
+    }
 
-                CreateCurrentBlock();
+    private bool IsBlockInside(Block block)
+        => block.Components.All(component => component.Item2 >= 0 && component.Item2 < Field.GetLength(1) &&
+                                             component.Item1 >= 0 && component.Item1 < Field.GetLength(0));
+
+    private bool IsBlockAbove(Block block)
+        => block.Components.Any(component => component.Item1 <= 1);
+
+    private bool IsPlaceFree(Block block)
+        => block.Components.All(component => Field[component.Item1, component.Item2] == ConsoleColor.White);
+
+    private void UpdateCurrentBlockOnField(bool deleting = false)
+    {
+        var validParts = _currentBlock.Components.Where((component) => component.Item1 >= 0);
+        foreach (var part in validParts)
+        {
+            if (!deleting && Field[part.Item1, part.Item2] == ConsoleColor.White)
+            {
+                Field[part.Item1, part.Item2] = _currentBlock.Color;
+            }
+            else if (deleting && Field[part.Item1, part.Item2] != ConsoleColor.White)
+            {
+                Field[part.Item1, part.Item2] = ConsoleColor.White;
             }
         }
     }
 
     private void DeleteFilledRows()
     {
-        for (int row = Field.GetLength(0) - 1; row >= 0; --row)
+        for (var row = Field.GetLength(0) - 1; row >= 0; --row)
         {
-            int sum = 0;
-            for (int column = Field.GetLength(1) - 1; column >= 0; --column)
+            var isFullRow = true;
+            for (var column = Field.GetLength(1) - 1; column >= 0; --column)
             {
-                sum += Field[row, column];
+                if (Field[row, column] == ConsoleColor.White)
+                {
+                    isFullRow = false;
+                    break; 
+                }
             }
 
-            if (sum == Field.GetLength(1))
+            if (isFullRow)
             {
                 DeleteRow(row);
                 Score++;
@@ -137,17 +142,31 @@ public class Game
 
     private void DeleteRow(int deletingRow)
     {
-        for (int row = deletingRow; row > 0; --row)
+        for (var row = deletingRow; row > 0; --row)
         {
-            for (int column = 0; column < Field.GetLength(1); ++column)
+            for (var column = 0; column < Field.GetLength(1); ++column)
             {
                 Field[row, column] = Field[row - 1, column];
             }
         }
 
-        for (int column = 0; column < Field.GetLength(1); ++column)
+        for (var column = 0; column < Field.GetLength(1); ++column)
         {
-            Field[0, column] = 0;
+            Field[0, column] = ConsoleColor.White;
+        }
+    }
+
+    private Block GenerateCurrentBlock()
+        => Block.GenerateBlock().UpdateComponents(_spawningPosition);
+
+    private void InitializeField()
+    {
+        for (var row = 0; row < Field.GetLength(0); ++row)
+        {
+            for (var column = 0; column < Field.GetLength(1); ++column)
+            {
+                Field[row, column] = ConsoleColor.White;
+            }
         }
     }
 }
