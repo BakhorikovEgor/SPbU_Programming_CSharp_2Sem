@@ -315,7 +315,7 @@ partial class CalculatorForm
         result.BackColor = SystemColors.Desktop;
         result.BorderStyle = BorderStyle.None;
         result.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
-        result.ForeColor = Color.FromArgb(224, 224, 224);
+        result.ForeColor = Color.White;
         result.Location = new Point(120, 148);
         result.Name = "result";
         result.Size = new Size(300, 46);

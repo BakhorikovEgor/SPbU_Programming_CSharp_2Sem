@@ -8,7 +8,7 @@ public partial class CalculatorForm : Form
     {
         InitializeComponent();
 
-        var resultBinding = new Binding("Text", calculator, "Result", true, DataSourceUpdateMode.OnPropertyChanged);
+        var resultBinding = new Binding("Text", calculator, "Message", true, DataSourceUpdateMode.OnPropertyChanged);
         result.DataBindings.Add(resultBinding);
     }
 
