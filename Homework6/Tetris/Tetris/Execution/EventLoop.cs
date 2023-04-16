@@ -14,14 +14,15 @@ public class EventLoop
 
     public event EventHandler<EventArgs> EnterHandler = (sender, eventArgs) => { };
 
-    public event EventHandler<EventArgs> GameFieldChangeHandler = (sender, eventArgs) => { };
+    public event EventHandler<EventArgs> GameFieldUpdateHandler = (sender, eventArgs) => { };
 
+    public event EventHandler<EventArgs> GamePauseHadler = (sender, eventArgs) => { };
 
     public void Run()
     {
         while(true) 
         {
-            GameFieldChangeHandler(this, EventArgs.Empty);
+            GameFieldUpdateHandler(this, EventArgs.Empty);
 
             if (KeyAvailable)
             {
@@ -56,8 +57,7 @@ public class EventLoop
             }
 
             DownHandler(this, EventArgs.Empty);
-
-            Thread.Sleep(370);
+            GamePauseHadler(this, EventArgs.Empty);
         }
     }
 }

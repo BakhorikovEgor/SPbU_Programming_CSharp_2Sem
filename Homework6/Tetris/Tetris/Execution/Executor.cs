@@ -29,8 +29,7 @@ public class Executor
 
     public void Execute()
     {
-
-        eventLoop.GameFieldChangeHandler += printer.Print;
+        eventLoop.GameFieldUpdateHandler += printer.Print;
 
         eventLoop.RotateHandler += game.Rotate;
 
@@ -41,6 +40,8 @@ public class Executor
         eventLoop.DownHandler += game.MoveDown;
 
         eventLoop.EnterHandler += game.Reset;
+
+        eventLoop.GamePauseHadler += game.Sleep;
 
         eventLoop.Run();
     }

@@ -1,14 +1,19 @@
-﻿using System.Drawing;
+﻿using System.Reflection;
+using System;
+using System.Runtime;
 
 namespace Tetris.Realization;
 
 public class Game
 {
+    private readonly (int, int) _spawningPosition;
+    private Block _currentBlock;
+
+    public GameInfo Info { get; private set; }
+
     public ConsoleColor[,] Field { get; private set; }
 
     public bool IsGameOver { get; private set; } = false;
-
-    public int Score { get; private set; } = 0;
 
     private enum Moves
     {
@@ -18,14 +23,12 @@ public class Game
         Rotate
     }
 
-    private readonly (int, int) _spawningPosition;
-    private Block _currentBlock;
-
     public Game(int length, int width)
     {
         Field = new ConsoleColor[length, width];
-        _spawningPosition = (0, width / 2);
+        Info = new GameInfo(400 + 10 * ((Field.GetLength(0) - 20 + Field.GetLength(1) - 10) / 5));
 
+        _spawningPosition = (0, width / 2);
         _currentBlock = GenerateCurrentBlock();
 
         InitializeField();
@@ -49,13 +52,19 @@ public class Game
         if (IsGameOver)
         {
             Field = new ConsoleColor[Field.GetLength(0), Field.GetLength(1)];
-            _currentBlock = GenerateCurrentBlock();
+            Info = new GameInfo(400 + 10 * ((Field.GetLength(0) - 20 + Field.GetLength(1) - 10) / 5));
             IsGameOver = false;
+
+            _currentBlock = GenerateCurrentBlock();
 
             InitializeField();
             UpdateCurrentBlockOnField();
         }
     }
+
+    public void Sleep(object? sender, EventArgs eventArgs) 
+        => Thread.Sleep(Info.SleepTime >= 50 ? Info.SleepTime : 50);
+
 
     private void Move(Moves move)
     {
@@ -89,6 +98,9 @@ public class Game
                 _currentBlock = GenerateCurrentBlock();
                 UpdateCurrentBlockOnField();
             }
+
+            Info.Score += GameInfo.StandardBonus;
+            
         }
     }
 
@@ -120,6 +132,7 @@ public class Game
 
     private void DeleteFilledRows()
     {
+        var bonusCoefficient = 1;
         for (var row = Field.GetLength(0) - 1; row >= 0; --row)
         {
             var isFullRow = true;
@@ -135,7 +148,11 @@ public class Game
             if (isFullRow)
             {
                 DeleteRow(row);
-                Score++;
+                Info.Score += GameInfo.LineBonus * bonusCoefficient;
+                Info.Cleans++;
+
+                bonusCoefficient++;
+                row++;
             }
         }
     }
