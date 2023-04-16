@@ -314,6 +314,7 @@ partial class CalculatorForm
         result.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
         result.BackColor = SystemColors.Desktop;
         result.BorderStyle = BorderStyle.None;
+        result.Enabled = false;
         result.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
         result.ForeColor = Color.White;
         result.Location = new Point(114, 140);
