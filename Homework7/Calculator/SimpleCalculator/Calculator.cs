@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Data;
 
 namespace SimpleCalculator;
 
@@ -122,20 +121,13 @@ public class Calculator: INotifyPropertyChanged
     }
 
     /// <summary>
-    /// Calculates current operation, if there is not second operand, use first operand twice.
+    /// Calculates current operation
     /// </summary>
     public void Calculate()
     {
         try
         {
-            if (_state == CalculatorStates.OperationHanding)
-            {
-                _result = CalculatorOperation.Calculate(_operation, _result, _result);
-            }
-            else
-            {
-                _result = CalculatorOperation.Calculate(_operation, _result, _tempValue);
-            }
+            _result = CalculatorOperation.Calculate(_operation, _result, _tempValue);
             Message = _result.ToString() ;
 
             _tempValue = 0;

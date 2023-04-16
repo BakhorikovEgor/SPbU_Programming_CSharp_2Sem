@@ -4,6 +4,9 @@ public partial class CalculatorForm : Form
 {
     private readonly Calculator calculator = new();
 
+    /// <summary>
+    /// Initialize + data binding
+    /// </summary>
     public CalculatorForm()
     {
         InitializeComponent();
@@ -12,21 +15,21 @@ public partial class CalculatorForm : Form
         result.DataBindings.Add(resultBinding);
     }
 
-    public void OnDigitButtonClick(object sender, EventArgs e)
+    private void OnDigitButtonClick(object sender, EventArgs e)
     {
         var digit = ((Button)sender).Text[0];
         calculator.AddDigit(digit);
     }
 
-    public void OnOperationButtonClick(object sender, EventArgs e)
+    private void OnOperationButtonClick(object sender, EventArgs e)
     {
         var operation = ((Button)sender).Text;
         calculator.AddOperation(operation);
     }
 
-    public void OnCalculateButtonClick(object sender, EventArgs e)
+    private void OnCalculateButtonClick(object sender, EventArgs e)
         => calculator.Calculate();
 
-    public void OnClearButtonClick(object sender, EventArgs e)
+    private void OnClearButtonClick(object sender, EventArgs e)
         => calculator.Clear();
 }
