@@ -91,6 +91,15 @@ public class Calculator: INotifyPropertyChanged
         _operation = CalculatorOperation.Operations.Plus;
     }
 
+    public void Clear()
+    {
+        Result = 0;
+        _tempValue = 0;
+
+        _state = CalculatorStates.TempValueHandling;
+        _operation = CalculatorOperation.Operations.Plus;
+    }
+
     private void OnPropertyChanged(string propertyName)
         => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 }

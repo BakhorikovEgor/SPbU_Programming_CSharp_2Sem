@@ -27,5 +27,6 @@ public partial class CalculatorForm : Form
     public void OnCalculateButtonClick(object sender, EventArgs e)
         => calculator.Calculate();
 
-
+    public void OnClearButtonClick(object sender, EventArgs e)
+        => calculator.Clear();
 }

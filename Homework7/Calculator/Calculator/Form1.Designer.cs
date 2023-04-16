@@ -46,6 +46,7 @@ partial class CalculatorForm
         sevenButton = new Button();
         plusButton = new Button();
         result = new TextBox();
+        ClearButton = new Button();
         InputTable.SuspendLayout();
         SuspendLayout();
         // 
@@ -81,223 +82,270 @@ partial class CalculatorForm
         InputTable.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
         InputTable.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
         InputTable.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-        InputTable.Size = new Size(458, 258);
+        InputTable.Size = new Size(408, 256);
         InputTable.TabIndex = 2;
         // 
         // divideButton
         // 
+        divideButton.BackColor = SystemColors.ActiveCaptionText;
         divideButton.Dock = DockStyle.Fill;
         divideButton.Font = new Font("Liberation Sans", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        divideButton.Location = new Point(345, 195);
+        divideButton.ForeColor = Color.Crimson;
+        divideButton.Location = new Point(309, 195);
         divideButton.Name = "divideButton";
-        divideButton.Size = new Size(110, 60);
-        divideButton.TabIndex = 14;
+        divideButton.Size = new Size(96, 58);
+        divideButton.TabIndex = 13;
         divideButton.Text = "/";
-        divideButton.UseVisualStyleBackColor = true;
+        divideButton.UseVisualStyleBackColor = false;
         divideButton.Click += OnOperationButtonClick;
         // 
         // button4
         // 
+        button4.BackColor = SystemColors.ActiveCaptionText;
         button4.Dock = DockStyle.Fill;
         button4.Font = new Font("Liberation Sans", 25.8000011F, FontStyle.Bold, GraphicsUnit.Point);
-        button4.Location = new Point(231, 195);
+        button4.ForeColor = Color.Crimson;
+        button4.Location = new Point(207, 195);
         button4.Name = "button4";
-        button4.Size = new Size(108, 60);
-        button4.TabIndex = 15;
+        button4.Size = new Size(96, 58);
+        button4.TabIndex = 14;
         button4.Text = "=";
-        button4.UseVisualStyleBackColor = true;
+        button4.UseVisualStyleBackColor = false;
         button4.Click += OnCalculateButtonClick;
         // 
         // button3
         // 
+        button3.BackColor = SystemColors.ActiveCaptionText;
         button3.Dock = DockStyle.Fill;
         button3.Font = new Font("Liberation Sans", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        button3.Location = new Point(117, 195);
+        button3.ForeColor = Color.Crimson;
+        button3.Location = new Point(105, 195);
         button3.Name = "button3";
-        button3.Size = new Size(108, 60);
+        button3.Size = new Size(96, 58);
         button3.TabIndex = 0;
         button3.Text = "+/-";
-        button3.UseVisualStyleBackColor = true;
+        button3.UseVisualStyleBackColor = false;
         button3.Click += OnOperationButtonClick;
         // 
         // multiplyButton
         // 
+        multiplyButton.BackColor = SystemColors.ActiveCaptionText;
         multiplyButton.Dock = DockStyle.Fill;
         multiplyButton.Font = new Font("Miriam CLM", 28.2F, FontStyle.Bold, GraphicsUnit.Point);
-        multiplyButton.Location = new Point(345, 131);
+        multiplyButton.ForeColor = Color.Crimson;
+        multiplyButton.Location = new Point(309, 131);
         multiplyButton.Name = "multiplyButton";
-        multiplyButton.Size = new Size(110, 58);
-        multiplyButton.TabIndex = 13;
+        multiplyButton.Size = new Size(96, 58);
+        multiplyButton.TabIndex = 12;
         multiplyButton.Text = "*";
-        multiplyButton.UseVisualStyleBackColor = true;
+        multiplyButton.UseVisualStyleBackColor = false;
         multiplyButton.Click += OnOperationButtonClick;
         // 
         // minusButton
         // 
+        minusButton.BackColor = SystemColors.ActiveCaptionText;
         minusButton.Dock = DockStyle.Fill;
         minusButton.Font = new Font("Liberation Mono", 28.8000011F, FontStyle.Bold, GraphicsUnit.Point);
-        minusButton.Location = new Point(345, 67);
+        minusButton.ForeColor = Color.Crimson;
+        minusButton.Location = new Point(309, 67);
         minusButton.Name = "minusButton";
-        minusButton.Size = new Size(110, 58);
-        minusButton.TabIndex = 12;
+        minusButton.Size = new Size(96, 58);
+        minusButton.TabIndex = 11;
         minusButton.Text = "-";
-        minusButton.UseVisualStyleBackColor = true;
+        minusButton.UseVisualStyleBackColor = false;
         minusButton.Click += OnOperationButtonClick;
         // 
         // zeroButton
         // 
+        zeroButton.BackColor = SystemColors.ActiveCaptionText;
         zeroButton.Dock = DockStyle.Fill;
         zeroButton.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
+        zeroButton.ForeColor = SystemColors.Info;
         zeroButton.Location = new Point(3, 195);
         zeroButton.Name = "zeroButton";
-        zeroButton.Size = new Size(108, 60);
+        zeroButton.Size = new Size(96, 58);
         zeroButton.TabIndex = 1;
         zeroButton.Text = "0";
-        zeroButton.UseVisualStyleBackColor = true;
+        zeroButton.UseVisualStyleBackColor = false;
         zeroButton.Click += OnDigitButtonClick;
         // 
         // oneButton
         // 
+        oneButton.BackColor = SystemColors.ActiveCaptionText;
         oneButton.Dock = DockStyle.Fill;
         oneButton.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
+        oneButton.ForeColor = SystemColors.Info;
         oneButton.Location = new Point(3, 131);
         oneButton.Name = "oneButton";
-        oneButton.Size = new Size(108, 58);
+        oneButton.Size = new Size(96, 58);
         oneButton.TabIndex = 2;
         oneButton.Text = "1";
-        oneButton.UseVisualStyleBackColor = true;
+        oneButton.UseVisualStyleBackColor = false;
         oneButton.Click += OnDigitButtonClick;
         // 
         // twoButton
         // 
+        twoButton.BackColor = SystemColors.ActiveCaptionText;
         twoButton.Dock = DockStyle.Fill;
         twoButton.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
-        twoButton.Location = new Point(117, 131);
+        twoButton.ForeColor = SystemColors.Info;
+        twoButton.Location = new Point(105, 131);
         twoButton.Name = "twoButton";
-        twoButton.Size = new Size(108, 58);
+        twoButton.Size = new Size(96, 58);
         twoButton.TabIndex = 2;
         twoButton.Text = "2";
-        twoButton.UseVisualStyleBackColor = true;
+        twoButton.UseVisualStyleBackColor = false;
         twoButton.Click += OnDigitButtonClick;
         // 
         // threeButton
         // 
+        threeButton.BackColor = SystemColors.ActiveCaptionText;
         threeButton.Dock = DockStyle.Fill;
         threeButton.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
-        threeButton.Location = new Point(231, 131);
+        threeButton.ForeColor = SystemColors.Info;
+        threeButton.Location = new Point(207, 131);
         threeButton.Name = "threeButton";
-        threeButton.Size = new Size(108, 58);
+        threeButton.Size = new Size(96, 58);
         threeButton.TabIndex = 3;
         threeButton.Text = "3";
-        threeButton.UseVisualStyleBackColor = true;
+        threeButton.UseVisualStyleBackColor = false;
         threeButton.Click += OnDigitButtonClick;
         // 
         // sixButton
         // 
+        sixButton.BackColor = SystemColors.ActiveCaptionText;
         sixButton.Dock = DockStyle.Fill;
         sixButton.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
-        sixButton.Location = new Point(231, 67);
+        sixButton.ForeColor = SystemColors.Info;
+        sixButton.Location = new Point(207, 67);
         sixButton.Name = "sixButton";
-        sixButton.Size = new Size(108, 58);
+        sixButton.Size = new Size(96, 58);
         sixButton.TabIndex = 6;
         sixButton.Text = "6";
-        sixButton.UseVisualStyleBackColor = true;
+        sixButton.UseVisualStyleBackColor = false;
         sixButton.Click += OnDigitButtonClick;
         // 
         // fiveButton
         // 
+        fiveButton.BackColor = SystemColors.ActiveCaptionText;
         fiveButton.Dock = DockStyle.Fill;
         fiveButton.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
-        fiveButton.Location = new Point(117, 67);
+        fiveButton.ForeColor = SystemColors.Info;
+        fiveButton.Location = new Point(105, 67);
         fiveButton.Name = "fiveButton";
-        fiveButton.Size = new Size(108, 58);
+        fiveButton.Size = new Size(96, 58);
         fiveButton.TabIndex = 5;
         fiveButton.Text = "5";
-        fiveButton.UseVisualStyleBackColor = true;
+        fiveButton.UseVisualStyleBackColor = false;
         fiveButton.Click += OnDigitButtonClick;
         // 
         // fourButton
         // 
+        fourButton.BackColor = SystemColors.ActiveCaptionText;
         fourButton.Dock = DockStyle.Fill;
         fourButton.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
+        fourButton.ForeColor = SystemColors.Info;
         fourButton.Location = new Point(3, 67);
         fourButton.Name = "fourButton";
-        fourButton.Size = new Size(108, 58);
+        fourButton.Size = new Size(96, 58);
         fourButton.TabIndex = 4;
         fourButton.Text = "4";
-        fourButton.UseVisualStyleBackColor = true;
+        fourButton.UseVisualStyleBackColor = false;
         fourButton.Click += OnDigitButtonClick;
         // 
         // nineButton
         // 
+        nineButton.BackColor = SystemColors.ActiveCaptionText;
         nineButton.Dock = DockStyle.Fill;
         nineButton.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
-        nineButton.Location = new Point(231, 3);
+        nineButton.ForeColor = SystemColors.Info;
+        nineButton.Location = new Point(207, 3);
         nineButton.Name = "nineButton";
-        nineButton.Size = new Size(108, 58);
+        nineButton.Size = new Size(96, 58);
         nineButton.TabIndex = 9;
         nineButton.Text = "9";
-        nineButton.UseVisualStyleBackColor = true;
+        nineButton.UseVisualStyleBackColor = false;
         nineButton.Click += OnDigitButtonClick;
         // 
         // eightButton
         // 
+        eightButton.BackColor = SystemColors.ActiveCaptionText;
         eightButton.Dock = DockStyle.Fill;
         eightButton.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
-        eightButton.Location = new Point(117, 3);
+        eightButton.ForeColor = SystemColors.Info;
+        eightButton.Location = new Point(105, 3);
         eightButton.Name = "eightButton";
-        eightButton.Size = new Size(108, 58);
+        eightButton.Size = new Size(96, 58);
         eightButton.TabIndex = 8;
         eightButton.Text = "8";
-        eightButton.UseVisualStyleBackColor = true;
+        eightButton.UseVisualStyleBackColor = false;
         eightButton.Click += OnDigitButtonClick;
         // 
         // sevenButton
         // 
+        sevenButton.BackColor = SystemColors.ActiveCaptionText;
         sevenButton.Dock = DockStyle.Fill;
         sevenButton.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
+        sevenButton.ForeColor = SystemColors.Info;
         sevenButton.Location = new Point(3, 3);
         sevenButton.Name = "sevenButton";
-        sevenButton.Size = new Size(108, 58);
+        sevenButton.Size = new Size(96, 58);
         sevenButton.TabIndex = 7;
         sevenButton.Text = "7";
-        sevenButton.UseVisualStyleBackColor = true;
+        sevenButton.UseVisualStyleBackColor = false;
         sevenButton.Click += OnDigitButtonClick;
         // 
         // plusButton
         // 
+        plusButton.BackColor = SystemColors.ActiveCaptionText;
         plusButton.Dock = DockStyle.Fill;
         plusButton.Font = new Font("Liberation Sans", 28.2F, FontStyle.Bold, GraphicsUnit.Point);
-        plusButton.Location = new Point(345, 3);
+        plusButton.ForeColor = Color.Crimson;
+        plusButton.Location = new Point(309, 3);
         plusButton.Name = "plusButton";
-        plusButton.Size = new Size(110, 58);
-        plusButton.TabIndex = 11;
+        plusButton.Size = new Size(96, 58);
+        plusButton.TabIndex = 10;
         plusButton.Text = "+";
-        plusButton.UseVisualStyleBackColor = true;
+        plusButton.UseVisualStyleBackColor = false;
         plusButton.Click += OnOperationButtonClick;
         // 
         // result
         // 
-        result.BackColor = SystemColors.InfoText;
+        result.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+        result.BackColor = SystemColors.Desktop;
         result.BorderStyle = BorderStyle.None;
-        result.Font = new Font("Cascadia Code SemiBold", 20F, FontStyle.Regular, GraphicsUnit.Point);
-        result.ForeColor = SystemColors.HotTrack;
-        result.Location = new Point(232, 95);
+        result.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
+        result.ForeColor = Color.FromArgb(224, 224, 224);
+        result.Location = new Point(120, 148);
         result.Name = "result";
-        result.Size = new Size(238, 39);
-        result.TabIndex = 3;
+        result.Size = new Size(300, 46);
+        result.TabIndex = 17;
         result.TextAlign = HorizontalAlignment.Right;
+        // 
+        // ClearButton
+        // 
+        ClearButton.BackColor = SystemColors.ActiveCaptionText;
+        ClearButton.Font = new Font("Calibri", 24F, FontStyle.Bold, GraphicsUnit.Point);
+        ClearButton.ForeColor = Color.Lavender;
+        ClearButton.Location = new Point(12, 12);
+        ClearButton.Name = "ClearButton";
+        ClearButton.Size = new Size(96, 58);
+        ClearButton.TabIndex = 15;
+        ClearButton.Text = "C";
+        ClearButton.UseVisualStyleBackColor = false;
+        ClearButton.Click += OnClearButtonClick;
         // 
         // CalculatorForm
         // 
         AutoScaleDimensions = new SizeF(9F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         BackColor = SystemColors.Desktop;
-        ClientSize = new Size(482, 560);
+        ClientSize = new Size(432, 558);
+        Controls.Add(ClearButton);
         Controls.Add(result);
         Controls.Add(InputTable);
         Font = new Font("Cascadia Code SemiBold", 9F, FontStyle.Regular, GraphicsUnit.Point);
-        MinimumSize = new Size(500, 560);
+        MinimumSize = new Size(450, 605);
         Name = "CalculatorForm";
         Text = "Calculator";
         InputTable.ResumeLayout(false);
@@ -325,4 +373,5 @@ partial class CalculatorForm
     private Button multiplyButton;
     private Button minusButton;
     private TextBox result;
+    private Button ClearButton;
 }
