@@ -36,7 +36,7 @@ public static class CalculatorOperation
     /// <returns> Result of operation. </returns>
     /// <exception cref="DivideByZeroException"> Second operand in division can not be zero. </exception>
     /// <exception cref="ArgumentException"> This operation is not a two operands operation. </exception>
-    public static double Calculate(Operations operation, double firstOperand)
+    public static double Calculate(Operations operation, double firstOperand, double secondOperand)
         => operation switch
         {
             Operations.Plus => firstOperand + secondOperand,
