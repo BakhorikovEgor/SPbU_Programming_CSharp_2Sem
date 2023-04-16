@@ -12,17 +12,20 @@ public partial class CalculatorForm : Form
         result.DataBindings.Add(resultBinding);
     }
 
-    private void OnOperationOrDigitButtonClick(object sender, EventArgs e)
+    public void OnDigitButtonClick(object sender, EventArgs e)
     {
-        if (sender is Button)
-        {
-            var button = (Button)sender;
-            calculator.AddOperandOrOperation(button.Text);
-
-            if (calculator.IsResultExist)
-            {
-                result.Text = calculator.result.ToString();
-            }
-        }
+        var digit = ((Button)sender).Text[0];
+        calculator.AddDigit(digit);
     }
+
+    public void OnOperationButtonClick(object sender, EventArgs e)
+    {
+        var operation = ((Button)sender).Text;
+        calculator.AddOperation(operation);
+    }
+
+    public void OnCalculateButtonClick(object sender, EventArgs e)
+        => calculator.Calculate();
+
+
 }

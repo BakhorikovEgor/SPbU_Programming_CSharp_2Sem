@@ -94,7 +94,7 @@ partial class CalculatorForm
         divideButton.TabIndex = 14;
         divideButton.Text = "/";
         divideButton.UseVisualStyleBackColor = true;
-        divideButton.Click += OnOperationOrDigitButtonClick;
+        divideButton.Click += OnOperationButtonClick;
         // 
         // button4
         // 
@@ -106,7 +106,7 @@ partial class CalculatorForm
         button4.TabIndex = 15;
         button4.Text = "=";
         button4.UseVisualStyleBackColor = true;
-        button4.Click += OnOperationOrDigitButtonClick;
+        button4.Click += OnCalculateButtonClick;
         // 
         // button3
         // 
@@ -118,7 +118,7 @@ partial class CalculatorForm
         button3.TabIndex = 0;
         button3.Text = "+/-";
         button3.UseVisualStyleBackColor = true;
-        button3.Click += OnOperationOrDigitButtonClick;
+        button3.Click += OnOperationButtonClick;
         // 
         // multiplyButton
         // 
@@ -130,7 +130,7 @@ partial class CalculatorForm
         multiplyButton.TabIndex = 13;
         multiplyButton.Text = "*";
         multiplyButton.UseVisualStyleBackColor = true;
-        multiplyButton.Click += OnOperationOrDigitButtonClick;
+        multiplyButton.Click += OnOperationButtonClick;
         // 
         // minusButton
         // 
@@ -142,7 +142,7 @@ partial class CalculatorForm
         minusButton.TabIndex = 12;
         minusButton.Text = "-";
         minusButton.UseVisualStyleBackColor = true;
-        minusButton.Click += OnOperationOrDigitButtonClick;
+        minusButton.Click += OnOperationButtonClick;
         // 
         // zeroButton
         // 
@@ -154,7 +154,7 @@ partial class CalculatorForm
         zeroButton.TabIndex = 1;
         zeroButton.Text = "0";
         zeroButton.UseVisualStyleBackColor = true;
-        zeroButton.Click += OnOperationOrDigitButtonClick;
+        zeroButton.Click += OnDigitButtonClick;
         // 
         // oneButton
         // 
@@ -166,7 +166,7 @@ partial class CalculatorForm
         oneButton.TabIndex = 2;
         oneButton.Text = "1";
         oneButton.UseVisualStyleBackColor = true;
-        oneButton.Click += OnOperationOrDigitButtonClick;
+        oneButton.Click += OnDigitButtonClick;
         // 
         // twoButton
         // 
@@ -178,7 +178,7 @@ partial class CalculatorForm
         twoButton.TabIndex = 2;
         twoButton.Text = "2";
         twoButton.UseVisualStyleBackColor = true;
-        twoButton.Click += OnOperationOrDigitButtonClick;
+        twoButton.Click += OnDigitButtonClick;
         // 
         // threeButton
         // 
@@ -190,7 +190,7 @@ partial class CalculatorForm
         threeButton.TabIndex = 3;
         threeButton.Text = "3";
         threeButton.UseVisualStyleBackColor = true;
-        threeButton.Click += OnOperationOrDigitButtonClick;
+        threeButton.Click += OnDigitButtonClick;
         // 
         // sixButton
         // 
@@ -202,7 +202,7 @@ partial class CalculatorForm
         sixButton.TabIndex = 6;
         sixButton.Text = "6";
         sixButton.UseVisualStyleBackColor = true;
-        sixButton.Click += OnOperationOrDigitButtonClick;
+        sixButton.Click += OnDigitButtonClick;
         // 
         // fiveButton
         // 
@@ -214,7 +214,7 @@ partial class CalculatorForm
         fiveButton.TabIndex = 5;
         fiveButton.Text = "5";
         fiveButton.UseVisualStyleBackColor = true;
-        fiveButton.Click += OnOperationOrDigitButtonClick;
+        fiveButton.Click += OnDigitButtonClick;
         // 
         // fourButton
         // 
@@ -226,7 +226,7 @@ partial class CalculatorForm
         fourButton.TabIndex = 4;
         fourButton.Text = "4";
         fourButton.UseVisualStyleBackColor = true;
-        fourButton.Click += OnOperationOrDigitButtonClick;
+        fourButton.Click += OnDigitButtonClick;
         // 
         // nineButton
         // 
@@ -238,7 +238,7 @@ partial class CalculatorForm
         nineButton.TabIndex = 9;
         nineButton.Text = "9";
         nineButton.UseVisualStyleBackColor = true;
-        nineButton.Click += OnOperationOrDigitButtonClick;
+        nineButton.Click += OnDigitButtonClick;
         // 
         // eightButton
         // 
@@ -250,7 +250,7 @@ partial class CalculatorForm
         eightButton.TabIndex = 8;
         eightButton.Text = "8";
         eightButton.UseVisualStyleBackColor = true;
-        eightButton.Click += OnOperationOrDigitButtonClick;
+        eightButton.Click += OnDigitButtonClick;
         // 
         // sevenButton
         // 
@@ -262,7 +262,7 @@ partial class CalculatorForm
         sevenButton.TabIndex = 7;
         sevenButton.Text = "7";
         sevenButton.UseVisualStyleBackColor = true;
-        sevenButton.Click += OnOperationOrDigitButtonClick;
+        sevenButton.Click += OnDigitButtonClick;
         // 
         // plusButton
         // 
@@ -274,7 +274,7 @@ partial class CalculatorForm
         plusButton.TabIndex = 11;
         plusButton.Text = "+";
         plusButton.UseVisualStyleBackColor = true;
-        plusButton.Click += OnOperationOrDigitButtonClick;
+        plusButton.Click += OnOperationButtonClick;
         // 
         // result
         // 

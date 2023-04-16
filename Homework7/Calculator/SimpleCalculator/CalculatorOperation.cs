@@ -2,27 +2,31 @@
 
 internal static class CalculatorOperation
 {
-    public enum Operation
+    private const double delta = 0.0001; 
+    public enum Operations
     {
         Plus,
         Minus,
         Multiply,
         Divide,
-        ChangeSign,
-        Equality,
+        ChangeSign
     }
 
-    public static double Calculate(Operation operation, double firstOperand, int secondOperand = 0)
+    public static double Calculate (Operations operation, double operand)
+        => operation == Operations.ChangeSign ? -operand : throw new NotImplementedException ();
+
+    public static double Calculate(Operations operation, double firstOperand, double secondOperand = 0)
         => operation switch
         {
-            Operation.Plus => firstOperand + secondOperand,
-            Operation.Minus => firstOperand - secondOperand,
-            Operation.Multiply => firstOperand * secondOperand,
-            Operation.ChangeSign => -firstOperand,
-            Operation.Equality => firstOperand,
-            Operation.Divide => secondOperand == 0
+            Operations.Plus => firstOperand + secondOperand,
+            Operations.Minus => firstOperand - secondOperand,
+            Operations.Multiply => firstOperand * secondOperand,
+            Operations.Divide => IsDoubleZero(secondOperand)
                                 ? throw new DivideByZeroException()
                                 : firstOperand / secondOperand,
             _ => throw new InvalidOperationException()
         };
+
+    private static bool IsDoubleZero(double value)
+        => Math.Abs(value) < delta;
 }
