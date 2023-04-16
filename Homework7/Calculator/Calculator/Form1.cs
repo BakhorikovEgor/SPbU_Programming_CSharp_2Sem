@@ -15,7 +15,11 @@ public partial class CalculatorForm : Form
         {
             var button = (Button)sender;
             calculator.AddOperandOrOperation(button.Text);
+
+            if (calculator.IsResultExist)
+            {
+                result.Text = calculator.result.ToString();
+            }
         }
     }
-
 }

@@ -3,9 +3,11 @@
 public class Calculator
 {
     public double result { get; private set; } = 0;
+    public bool IsResultExist { get; private set; } = false;
 
     private int currentOperand = 0;
-    private BinaryOperation.Operation currentOperation = BinaryOperation.Operation.Plus;
+    private bool isCurrentOperandExist = false;
+    private CalculatorOperation.Operation currentOperation = CalculatorOperation.Operation.Equality;
 
     public void AddOperandOrOperation(string item)
     {
@@ -13,21 +15,49 @@ public class Calculator
         {
             foreach (var digit in item)
             {
-                currentOperand = currentOperand * 10 + digit;
+                currentOperand = currentOperand * 10 + digit - '0';
             }
+            isCurrentOperandExist = true;
+
+            if (!IsResultExist)
+            {
+                IsResultExist = true;
+                result = currentOperand;
+
+                isCurrentOperandExist = false;
+                currentOperand = 0;
+            }
+        
         }
         else
         {
-            result = BinaryOperation.Calculate(currentOperation, result, currentOperand);
-            currentOperand = 0;
+            
+            if (currentOperation == CalculatorOperation.Operation.ChangeSign)
+            {
+                if (isCurrentOperandExist)
+                {
+                    currentOperand = (int)CalculatorOperation.Calculate(currentOperation, currentOperand);
+                }
+                else
+                {
+                    result = CalculatorOperation.Calculate(currentOperation, result);
+                }
+            }
+            else
+            {
+                result = CalculatorOperation.Calculate(currentOperation, result, currentOperand);
+                isCurrentOperandExist = false;
+                currentOperand = 0;
+            }
 
             currentOperation = item switch
             {
-                "+" => BinaryOperation.Operation.Plus,
-                "-" => BinaryOperation.Operation.Minus,
-                "*" => BinaryOperation.Operation.Multiply,
-                "/" => BinaryOperation.Operation.Divide,
-                _ => throw new NotImplementedException()
+                "+" => CalculatorOperation.Operation.Plus,
+                "-" => CalculatorOperation.Operation.Minus,
+                "*" => CalculatorOperation.Operation.Multiply,
+                "/" => CalculatorOperation.Operation.Divide,
+                "=" => CalculatorOperation.Operation.Equality,
+                _ => throw new InvalidOperationException()
             };
         }
     }
