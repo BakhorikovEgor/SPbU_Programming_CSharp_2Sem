@@ -6,7 +6,7 @@
 /// </summary>
 public static class CalculatorOperation
 {
-    private const double _delta = 0.0001; 
+    private static readonly double _delta = 0.0001; 
 
     /// <summary>
     /// All available operations.
