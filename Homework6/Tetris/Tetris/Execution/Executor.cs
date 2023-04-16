@@ -14,7 +14,7 @@ public class Executor
     private const int StandardFieldXPosition = 3;
     private const int StandardFieldYPosition = 3;
 
-    private const int StandardFieldLength = 15;
+    private const int StandardFieldLength = 20;
     private const int StandardFieldWidth = 10;
 
     public Executor() : this(StandardFieldLength, StandardFieldWidth) { }
@@ -31,7 +31,6 @@ public class Executor
 
     public void Execute()
     {
-        printer.PrintWalls();
 
         eventLoop.GameFieldChangeHandler += printer.Print;
 

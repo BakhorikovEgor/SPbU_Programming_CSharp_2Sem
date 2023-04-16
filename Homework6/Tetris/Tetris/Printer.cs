@@ -10,6 +10,7 @@ public class GamePrinter
     private int yPosition;
     public GamePrinter(Game game, int x, int y)
     {
+        OutputEncoding = System.Text.Encoding.Unicode;
         drawingGame = game;
         xPosition = x;
         yPosition = y;
@@ -17,7 +18,6 @@ public class GamePrinter
 
     public void Print(object? sender, EventArgs args)
     {
-        Clear();
 
         PrintWalls();
 
@@ -34,24 +34,24 @@ public class GamePrinter
     }
 
 
-    public void PrintWalls()
+    private void PrintWalls()
     {
-        for (int i = xPosition; i < drawingGame.Field.GetLength(1) + xPosition; ++i)
+        for (int column = xPosition; column < drawingGame.Field.GetLength(1) + xPosition; ++column)
         {
-            SetCursorPosition(i, yPosition - 1);
-            Write("-");
+            SetCursorPosition(column, yPosition - 1);
+            Write("─");
 
-            SetCursorPosition(i, yPosition + drawingGame.Field.GetLength(0));
-            Write("—");
+            SetCursorPosition(column, yPosition + drawingGame.Field.GetLength(0));
+            Write("─");
         }
 
-        for (int i = yPosition; i < drawingGame.Field.GetLength(0) + yPosition; ++i)
+        for (int row = yPosition; row < drawingGame.Field.GetLength(0) + yPosition; ++row)
         {
-            SetCursorPosition(xPosition - 1, i);
-            Write("|");
+            SetCursorPosition(xPosition - 1, row);
+            Write("│");
 
-            SetCursorPosition(xPosition + drawingGame.Field.GetLength(1), i);
-            Write("|");
+            SetCursorPosition(xPosition + drawingGame.Field.GetLength(1), row);
+            Write("│");
         }
     }
 
@@ -85,7 +85,7 @@ public class GamePrinter
 
     private void PrintScore()
     {
-        Set
+  
     }
     
 }

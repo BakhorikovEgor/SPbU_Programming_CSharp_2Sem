@@ -9,14 +9,15 @@ public class Game
     public int Score { get; private set; } = 0;
 
     private readonly (int, int) spawningPosition;
-    private Block? currentBlock;
+    private Block currentBlock;
 
     public Game(int length, int width)
     {
         Field = new int[length, width];
-        spawningPosition = (width / 2, 0);
+        spawningPosition = (0, width / 2);
 
-        CreateCurrentBlock();
+        currentBlock = Block.GenerateBlock();
+        MoveCurrentBlock(spawningPosition);
     }
     
     public void Reset(object? sender, EventArgs args)
@@ -33,13 +34,13 @@ public class Game
         => TryChangeCurrentBlockTo(currentBlock.Rotate());
 
     public void MoveDown(object? sender, EventArgs args)
-        => MoveCurrentBlock((0, 1));
-
-    public void MoveRight(object? sender, EventArgs args)
         => MoveCurrentBlock((1, 0));
 
+    public void MoveRight(object? sender, EventArgs args)
+        => MoveCurrentBlock((0, 1));
+
     public void MoveLeft(object? sender, EventArgs args)
-        => MoveCurrentBlock((-1, 0));
+        => MoveCurrentBlock((0, -1));
 
     private void MoveCurrentBlock((int, int) shift) 
         => TryChangeCurrentBlockTo(currentBlock.UpdateComponents(shift));
@@ -52,20 +53,20 @@ public class Game
     }
 
     private bool IsBlockBetween(Block block)
-        => block.Components.All(component => component.Item1 >= 0 && component.Item1 < Field.GetLength(1));
+        => block.Components.All(component => component.Item2 >= 0 && component.Item2 < Field.GetLength(1));
 
     private bool IsBlockAbove(Block block)
-        => block.Components.Any(component => component.Item2 <= 0);
+        => block.Components.Any(component => component.Item1 <= 0);
 
     private bool IsPlaceEmptyAndInside(Block block)
     {
         foreach (var component in block.Components)
         {
-            int x = component.Item1;
-            int y = component.Item2;
+            int row = component.Item1;
+            int column = component.Item2;
 
-            if (y >= Field.GetLength(0) || 
-               (y >= 0 && Field[y, x] > 0))
+            if (row >= Field.GetLength(0) || 
+               (column >= 0 && Field[row, column] > 0))
             {
                 return false;
             }
@@ -75,16 +76,16 @@ public class Game
 
     private void UpdateCurrentBlockOnField(bool deleting = false)
     {
-        var validParts = currentBlock.Components.Where((component) => component.Item2 >= 0);
+        var validParts = currentBlock.Components.Where((component) => component.Item1 >= 0);
         foreach (var part in validParts)
         {
-            if (!deleting && Field[part.Item2, part.Item1] == 0)
+            if (!deleting && Field[part.Item1, part.Item2] == 0)
             {
-                Field[part.Item2, part.Item1]++;
+                Field[part.Item1, part.Item2]++;
             }
-            else if (deleting && Field[part.Item2, part.Item1] != 0)
+            else if (deleting && Field[part.Item1, part.Item2] != 0)
             {
-                Field[part.Item2, part.Item1]--;
+                Field[part.Item1, part.Item2]--;
             }
         }
     }

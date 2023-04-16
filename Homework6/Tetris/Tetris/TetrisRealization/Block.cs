@@ -7,10 +7,10 @@ internal class Block
 
     private static readonly Block[] BLOCKS = new Block[]
     {
-        new Block((0, 0), (0, 1), (0, 2)),
-        new Block((0, 0), (0, 1), (1, 0), (1 ,1)),
-        new Block((0, 0), (0, 1), (0, 2), (1 ,2)),
-        new Block((0, 0), (0, 1), (1, 1), (2 ,1)),
+        new Block((0, 0), (1, 0), (2, 0), (3, 0)),
+        new Block((0, 0), (1, 0), (0, 1), (1 ,1)),
+        new Block((0, 0), (1, 0), (2, 0), (2 ,1)),
+        new Block((0, 0), (1, 0), (1, 1), (1 ,2)),
     };
 
     private static readonly Random random = new();
@@ -23,10 +23,10 @@ internal class Block
 
     public Block Rotate()
     {
-        (int, int) shiftVector = (Components[0].Item1 - Components[0].Item2, Components[0].Item2 + Components[0].Item1);
+        (int, int) shiftVector = (Components[0].Item1 + Components[0].Item2, Components[0].Item2 - Components[0].Item1);
 
 
-        return new(Components.Select(component => ComponentSum((component.Item2, -component.Item1), shiftVector)).ToArray());
+        return new(Components.Select(component => ComponentSum((-component.Item2, component.Item1), shiftVector)).ToArray());
     }
 
     private static (int, int) ComponentSum((int,int) firstComponent, (int, int) secondComponent)
