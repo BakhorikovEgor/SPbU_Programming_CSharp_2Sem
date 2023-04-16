@@ -316,7 +316,7 @@ partial class CalculatorForm
         result.BorderStyle = BorderStyle.None;
         result.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
         result.ForeColor = Color.White;
-        result.Location = new Point(120, 148);
+        result.Location = new Point(114, 140);
         result.Name = "result";
         result.Size = new Size(300, 46);
         result.TabIndex = 17;

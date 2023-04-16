@@ -60,7 +60,9 @@ public class Calculator: INotifyPropertyChanged
             _state = CalculatorStates.TempValueHandling;
         }
 
-        _tempValue = _tempValue * 10 + digit - '0';
+        _tempValue = Math.Sign(_tempValue) >= 0 
+            ? _tempValue * 10 + (digit - '0')
+            : _tempValue * 10 - (digit - '0');
     }
 
     /// <summary>
@@ -70,26 +72,20 @@ public class Calculator: INotifyPropertyChanged
     {
         if (!_availableOperation.Contains(operation))
         {
-            Message = _errorMessage;    
+            Message = _errorMessage;
         }
 
-        if (operation.Equals("+/-"))
+        else if (operation.Equals("+/-"))
         {
-            try
+            if (_state == CalculatorStates.OperationHanding)
             {
-                if (_state == CalculatorStates.OperationHanding)
-                {
-                    _result = CalculatorOperation.Calculate(CalculatorOperation.Operations.ChangeSign, _result);
-                }
-                else
-                {
-                    _tempValue = (int)CalculatorOperation.Calculate(CalculatorOperation.Operations.ChangeSign, _tempValue);
-                }
-                Message = _result.ToString();
+                _result = CalculatorOperation.Calculate(CalculatorOperation.Operations.ChangeSign, _result);
+                Message = Math.Round(_result, 5).ToString();
             }
-            catch (ArgumentException)
+            else
             {
-                Message = _errorMessage;
+                _tempValue = (int)CalculatorOperation.Calculate(CalculatorOperation.Operations.ChangeSign, _tempValue);
+
             }
         }
         else
@@ -102,13 +98,13 @@ public class Calculator: INotifyPropertyChanged
                     _tempValue = 0;
                     Message = _result.ToString();
                 }
-                catch (Exception ex) when (ex is ArgumentException ||
-                                           ex is DivideByZeroException)
+                catch (DivideByZeroException)
                 {
                     Message = _errorMessage;
                 }
             }
 
+            _state = CalculatorStates.OperationHanding;
             _operation = operation switch
             {
                 "+" => CalculatorOperation.Operations.Plus,
@@ -117,6 +113,8 @@ public class Calculator: INotifyPropertyChanged
                 "/" => CalculatorOperation.Operations.Divide,
                 _   => CalculatorOperation.Operations.Plus
             };
+
+
         }
     }
 
@@ -128,7 +126,7 @@ public class Calculator: INotifyPropertyChanged
         try
         {
             _result = CalculatorOperation.Calculate(_operation, _result, _tempValue);
-            Message = _result.ToString() ;
+            Message = Math.Round(_result, 5).ToString();
 
             _tempValue = 0;
             _state = CalculatorStates.OperationHanding;
