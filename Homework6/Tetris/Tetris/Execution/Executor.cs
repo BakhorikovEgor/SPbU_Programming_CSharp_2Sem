@@ -4,11 +4,11 @@ namespace Tetris.Execution;
 
 public class Executor
 {
-    private EventLoop eventLoop = new EventLoop();
+    private EventLoop _eventLoop = new EventLoop();
 
-    private GamePrinter printer;
+    private GamePrinter _printer;
 
-    private readonly Game game;
+    private readonly Game _game;
 
 
     private const int StandardFieldLength = 20;
@@ -18,32 +18,53 @@ public class Executor
     public Executor( int fieldLength, int fieldWidth)
     {
         Console.SetWindowSize(50,50);
-        game = AreFieldSizeValid(fieldLength, fieldWidth) 
+        _game = AreFieldSizeValid(fieldLength, fieldWidth) 
             ? new Game(fieldLength, fieldWidth) 
             : new Game(StandardFieldLength, StandardFieldWidth);
 
-        printer = new GamePrinter(game);
+        _printer = new GamePrinter(_game);
 
     }
 
 
     public void Execute()
     {
-        eventLoop.GameFieldUpdateHandler += printer.Print;
+        _eventLoop.GameFieldUpdateHandler += _printer.Print;
 
-        eventLoop.RotateHandler += game.Rotate;
+        _eventLoop.RotateHandler += _game.Rotate;
 
-        eventLoop.LeftHandler += game.MoveLeft;
+        _eventLoop.LeftHandler += _game.MoveLeft;
 
-        eventLoop.RightHandler += game.MoveRight;
+        _eventLoop.RightHandler += _game.MoveRight;
 
-        eventLoop.DownHandler += game.MoveDown;
+        _eventLoop.DownHandler += _game.MoveDown;
 
-        eventLoop.EnterHandler += game.Reset;
+        _eventLoop.EnterHandler += _game.Reset;
 
-        eventLoop.GamePauseHadler += game.Sleep;
+        _eventLoop.GamePauseHandler += _game.Sleep;
 
-        eventLoop.Run();
+        _eventLoop.FinishHandler += Finish;
+
+        _eventLoop.Run();
+    }
+
+    private void Finish(object? sender, EventArgs eventArgs)
+    {
+        _eventLoop.GameFieldUpdateHandler -= _printer.Print;
+
+        _eventLoop.RotateHandler -= _game.Rotate;
+
+        _eventLoop.LeftHandler -= _game.MoveLeft;
+
+        _eventLoop.RightHandler -= _game.MoveRight;
+
+        _eventLoop.DownHandler -= _game.MoveDown;
+
+        _eventLoop.EnterHandler -= _game.Reset;
+
+        _eventLoop.GamePauseHandler -= _game.Sleep;
+
+        _eventLoop.FinishHandler -= Finish;
     }
 
 

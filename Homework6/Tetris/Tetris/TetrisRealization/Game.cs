@@ -1,8 +1,4 @@
-﻿using System.Reflection;
-using System;
-using System.Runtime;
-
-namespace Tetris.Realization;
+﻿namespace Tetris.Realization;
 
 public class Game
 {

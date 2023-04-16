@@ -20,7 +20,9 @@ public class GamePrinter
         PrintWalls();
         PrintField();
         PrintGameInfo();
-        PrintGameOver();;
+        PrintGameOver();
+
+        SetCursorPosition(0, 2 * XIndent + _game.Field.GetLength(0));
     }
 
     private void PrintGameInfo()

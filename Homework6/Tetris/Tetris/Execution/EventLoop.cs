@@ -16,11 +16,14 @@ public class EventLoop
 
     public event EventHandler<EventArgs> GameFieldUpdateHandler = (sender, eventArgs) => { };
 
-    public event EventHandler<EventArgs> GamePauseHadler = (sender, eventArgs) => { };
+    public event EventHandler<EventArgs> GamePauseHandler = (sender, eventArgs) => { };
+
+    public event EventHandler<EventArgs> FinishHandler = (sender, eventArgs) => { };
 
     public void Run()
     {
-        while(true) 
+        var processing = true;
+        while(processing) 
         {
             GameFieldUpdateHandler(this, EventArgs.Empty);
 
@@ -48,6 +51,11 @@ public class EventLoop
                     case ConsoleKey.Enter:
                         EnterHandler(this, EventArgs.Empty);
                         break;
+
+                    case ConsoleKey.Escape:
+                        FinishHandler(this, EventArgs.Empty);
+                        processing = false;
+                        break;
                 }
 
                 while (KeyAvailable)
@@ -57,7 +65,7 @@ public class EventLoop
             }
 
             DownHandler(this, EventArgs.Empty);
-            GamePauseHadler(this, EventArgs.Empty);
+            GamePauseHandler(this, EventArgs.Empty);
         }
     }
 }
