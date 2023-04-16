@@ -13,7 +13,7 @@ public class Calculator: INotifyPropertyChanged
 
     private enum CalculatorStates
     {
-        OperationHanding,
+        OperationHandling,
         TempValueHandling
     }
 
@@ -55,7 +55,7 @@ public class Calculator: INotifyPropertyChanged
             Message = _errorMessage;
         }
 
-        if (_state == CalculatorStates.OperationHanding)
+        if (_state == CalculatorStates.OperationHandling)
         {
             _state = CalculatorStates.TempValueHandling;
         }
@@ -77,7 +77,7 @@ public class Calculator: INotifyPropertyChanged
 
         else if (operation.Equals("+/-"))
         {
-            if (_state == CalculatorStates.OperationHanding)
+            if (_state == CalculatorStates.OperationHandling)
             {
                 _result = CalculatorOperation.Calculate(CalculatorOperation.Operations.ChangeSign, _result);
                 Message = Math.Round(_result, 5).ToString();
@@ -104,7 +104,7 @@ public class Calculator: INotifyPropertyChanged
                 }
             }
 
-            _state = CalculatorStates.OperationHanding;
+            _state = CalculatorStates.OperationHandling;
             _operation = operation switch
             {
                 "+" => CalculatorOperation.Operations.Plus,
@@ -129,7 +129,7 @@ public class Calculator: INotifyPropertyChanged
             Message = Math.Round(_result, 5).ToString();
 
             _tempValue = 0;
-            _state = CalculatorStates.OperationHanding;
+            _state = CalculatorStates.OperationHandling;
             _operation = CalculatorOperation.Operations.Plus;
         }
         catch (Exception ex) when (ex is ArgumentException ||
