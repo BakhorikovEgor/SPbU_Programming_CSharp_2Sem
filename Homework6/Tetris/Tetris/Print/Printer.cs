@@ -41,22 +41,35 @@ public class GamePrinter
     private void PrintWalls()
     {
         ForegroundColor = ConsoleColor.White;
+
+        SetCursorPosition(XIndent - 1, YIndent - 1);
+        Write("╔");
+
+        SetCursorPosition(XIndent - 1, YIndent + _game.Length);
+        Write("╚");
+
+        SetCursorPosition(XIndent + _game.Width , YIndent - 1);
+        Write("╗");
+
+        SetCursorPosition(XIndent + _game.Width, YIndent + _game.Length);
+        Write("╝");
+
         for (int column = XIndent; column < _game.Width + XIndent; ++column)
         {
             SetCursorPosition(column, YIndent - 1);
-            Write("▢");
+            Write('═');
 
             SetCursorPosition(column, YIndent + _game.Length);
-            Write("▢");
+            Write('═');
         }
 
-        for (int row = YIndent - 1; row <= _game.Length + YIndent; ++row)
+        for (int row = YIndent; row < _game.Length + YIndent; ++row)
         {
             SetCursorPosition(XIndent - 1, row);
-            Write("▢");
+            Write("║");
 
             SetCursorPosition(XIndent + _game.Width, row);
-            Write("▢");
+            Write("║");
         }
         WriteLine();
     }
@@ -71,7 +84,7 @@ public class GamePrinter
                 if (_game.Field[row, column] != Game.EmptyPlaceMark)
                 {
                     ForegroundColor = _game.Field[row, column];
-                    Write("▢");
+                    Write("■");
                 }
                 else
                 {

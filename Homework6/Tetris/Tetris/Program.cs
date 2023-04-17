@@ -34,6 +34,7 @@ WriteLine (
 
     """);
 
+
 ForegroundColor = ConsoleColor.Cyan;
 WriteLine("Press Enter to start the game");
 
