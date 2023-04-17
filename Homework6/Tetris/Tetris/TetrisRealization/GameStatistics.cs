@@ -5,7 +5,7 @@ public class GameStatistics
     public static readonly int StandardBonus = 10;
     public static readonly int LineBonus = 100;
 
-    private int _level = 1;
+    private int _level = 0;
     private int _score = 0;
     private int _newLevelScore = 100;
 
@@ -18,7 +18,7 @@ public class GameStatistics
         get => _level;
         set
         {
-            SleepTime += 40 * (_level - value);
+            SleepTime += 25 * (_level - value);
             _level = value;
         }
     }

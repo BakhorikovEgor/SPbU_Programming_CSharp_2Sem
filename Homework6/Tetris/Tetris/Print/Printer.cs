@@ -20,6 +20,8 @@ public class GamePrinter
         PrintWalls();
         PrintField();
         PrintGameInfo();
+
+        SetCursorPosition(0, _game.Length + YIndent + 1);
     }
 
     private void PrintGameInfo()
@@ -27,13 +29,13 @@ public class GamePrinter
         ForegroundColor = ConsoleColor.Gray;
 
         SetCursorPosition(XIndent + _game.Field.GetLength(1) + 3, YIndent - 1 );
-        WriteLine($"Score: {_game.Statistics.Score.ToString().PadLeft(7, '0')}");
+        WriteLine($"Score: {_game.Statistics.Score.ToString().PadLeft(8, '0')}");
 
         SetCursorPosition(XIndent + _game.Field.GetLength(1) + 3, YIndent + 2);
-        WriteLine($"Level: {_game.Statistics.Level.ToString().PadLeft(2, '0')}");
+        WriteLine($"Level: {_game.Statistics.Level.ToString().PadLeft(3, '0')}");
 
         SetCursorPosition(XIndent + _game.Field.GetLength(1) + 3, YIndent + 5);
-        WriteLine($"Cleans: {_game.Statistics.Cleans.ToString().PadLeft(3, '0')}\n");
+        WriteLine($"Cleans: {_game.Statistics.Cleans.ToString().PadLeft(4, '0')}\n");
     }
 
     private void PrintWalls()
