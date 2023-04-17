@@ -1,20 +1,33 @@
 ﻿namespace Tetris.Realization;
 
+/// <summary>
+/// Statistics of the current Tetris game.
+/// </summary>
 public class GameStatistics
 {
     public static readonly int StandardBonus = 10;
     public static readonly int LineBonus = 100;
-    
+
     private static readonly int _sleepCoefficient = 25;
 
     private int _level = 0;
     private int _score = 0;
     private int _newLevelScore = 100;
 
+    /// <summary>
+    /// How many lines were cleaned in current game.
+    /// </summary>
     public int Cleans { get; set; } = 0;
 
+    /// <summary>
+    /// How long game should pause after action.
+    /// </summary>
     public int SleepTime { get; set; }
 
+    /// <summary>
+    /// Level of current game. 
+    /// SleepTime depends on it.
+    /// </summary>
     public int Level
     {
         get => _level;
@@ -25,6 +38,10 @@ public class GameStatistics
         }
     }
 
+    /// <summary>
+    /// Score of current game.
+    /// Level depends on it.
+    /// </summary>
     public int Score
     {
         get => _score;
@@ -39,5 +56,9 @@ public class GameStatistics
         }
     }
 
+    /// <summary>
+    /// Constructor of game statistics.
+    /// </summary>
+    /// <param name="sleepTime"> Started value of SleepTime.</param>
     public GameStatistics(int sleepTime) => SleepTime = sleepTime;
 }

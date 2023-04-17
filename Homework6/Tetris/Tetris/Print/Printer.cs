@@ -1,20 +1,33 @@
-﻿using static System.Console;
-using Tetris.Realization;
+﻿using Tetris.Realization;
+using static System.Console;
 
 namespace Tetris.Print;
 
+/// <summary>
+/// Сlass that draws a Tetris game on a console.
+/// </summary>
 public class GamePrinter
 {
     private Game _game;
 
     private const int XIndent = 2;
     private const int YIndent = 2;
+
+    /// <summary>
+    /// Constructor of GamePrinter class.
+    /// </summary>
+    /// <param name="game"> Game to be drawn. </param>
     public GamePrinter(Game game)
     {
         OutputEncoding = System.Text.Encoding.Unicode;
         _game = game;
     }
 
+    /// <summary>
+    /// Print game interface, game field, and other information about game to Console.
+    /// </summary>
+    /// <param name="sender"> Who asks to do that. </param>
+    /// <param name="args"> Additional information. </param>
     public void Print(object? sender, EventArgs args)
     {
         PrintWalls();
@@ -28,7 +41,7 @@ public class GamePrinter
     {
         ForegroundColor = ConsoleColor.Gray;
 
-        SetCursorPosition(XIndent + _game.Field.GetLength(1) + 3, YIndent - 1 );
+        SetCursorPosition(XIndent + _game.Field.GetLength(1) + 3, YIndent - 1);
         WriteLine($"Score: {_game.Statistics.Score.ToString().PadLeft(8, '0')}");
 
         SetCursorPosition(XIndent + _game.Field.GetLength(1) + 3, YIndent + 2);
@@ -48,7 +61,7 @@ public class GamePrinter
         SetCursorPosition(XIndent - 1, YIndent + _game.Length);
         Write("╚");
 
-        SetCursorPosition(XIndent + _game.Width , YIndent - 1);
+        SetCursorPosition(XIndent + _game.Width, YIndent - 1);
         Write("╗");
 
         SetCursorPosition(XIndent + _game.Width, YIndent + _game.Length);

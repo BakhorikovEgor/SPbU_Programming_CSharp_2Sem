@@ -1,8 +1,11 @@
-﻿using Tetris.Realization;
-using Tetris.Print;
+﻿using Tetris.Print;
+using Tetris.Realization;
 
 namespace Tetris.Execution;
 
+/// <summary>
+/// Class for executing Tetris game.
+/// </summary>
 public class Executor
 {
     private EventLoop _eventLoop = new EventLoop();
@@ -14,17 +17,21 @@ public class Executor
     private const int StandardFieldLength = 20;
     private const int StandardFieldWidth = 10;
 
+    /// <summary>
+    /// Standard constructor of Executor.
+    /// Creates game and console printer.
+    /// </summary>
     public Executor()
     {
         _game = new Game(StandardFieldLength, StandardFieldWidth);
         _printer = new GamePrinter(_game);
     }
 
-
+    /// <summary>
+    /// Executes game.
+    /// </summary>
     public void Execute()
     {
-        _eventLoop.GameFieldUpdatedHandler += _printer.Print;
-
         _eventLoop.RotateHandler += _game.Rotate;
 
         _eventLoop.LeftHandler += _game.MoveLeft;
@@ -39,14 +46,16 @@ public class Executor
 
         _eventLoop.EscapeHandler += Finish;
 
-        _eventLoop.GameActionDoneHandler += _game.Sleep;
+        _eventLoop.GameUpdateHandler += _printer.Print;
+        _eventLoop.GameUpdateHandler += _game.MoveDown;
+        _eventLoop.GameUpdateHandler += _game.Sleep;
 
         _eventLoop.Run();
     }
 
     private void Finish(object? sender, EventArgs eventArgs)
     {
-        _eventLoop.GameFieldUpdatedHandler -= _printer.Print;
+        _eventLoop.GameUpdateHandler -= _printer.Print;
 
         _eventLoop.RotateHandler -= _game.Rotate;
 
@@ -60,7 +69,8 @@ public class Executor
 
         _eventLoop.EscapeHandler -= Finish;
 
-        _eventLoop.GameActionDoneHandler -= _game.Sleep;
-    
+        _eventLoop.GameUpdateHandler -= _printer.Print;
+        _eventLoop.GameUpdateHandler -= _game.MoveDown;
+        _eventLoop.GameUpdateHandler -= _game.Sleep;
     }
 }

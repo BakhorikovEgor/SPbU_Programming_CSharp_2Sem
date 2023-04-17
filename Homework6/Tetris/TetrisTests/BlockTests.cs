@@ -35,7 +35,7 @@ public class Tests
         var actualBlock = expectedBlock.Rotate().Rotate().Rotate().Rotate();
 
         Assert.That(actualBlock.Components.SequenceEqual(expectedBlock.Components), Is.True);
-               
+
     }
 
 }

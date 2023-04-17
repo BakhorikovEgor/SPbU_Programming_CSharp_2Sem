@@ -6,7 +6,7 @@ ForegroundColor = ConsoleColor.DarkCyan;
 
 var executor = new Executor();
 
-WriteLine (
+WriteLine(
     """
     It's a console game - Tetris!
 

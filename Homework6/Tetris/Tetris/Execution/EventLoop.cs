@@ -2,6 +2,9 @@
 
 namespace Tetris.Execution;
 
+/// <summary>
+/// Keyboard event reader.
+/// </summary>
 public class EventLoop
 {
     public event EventHandler<EventArgs> RotateHandler = (sender, eventArgs) => { };
@@ -18,17 +21,17 @@ public class EventLoop
 
     public event EventHandler<EventArgs> EscapeHandler = (sender, eventArgs) => { };
 
-    public event EventHandler<EventArgs> GameFieldUpdatedHandler = (sender, eventArgs) => { };
+    public event EventHandler<EventArgs> GameUpdateHandler = (sender, eventArgs) => { };
 
-    public event EventHandler<EventArgs> GameActionDoneHandler = (sender, eventArgs) => { };
-
+    /// <summary>
+    /// Main loop.
+    /// Reading pressed keys from keyboard.
+    /// </summary>
     public void Run()
     {
         var processing = true;
-        while(processing) 
+        while (processing)
         {
-            GameFieldUpdatedHandler(this, EventArgs.Empty);
-
             if (KeyAvailable)
             {
                 var key = ReadKey(true).Key;
@@ -69,9 +72,7 @@ public class EventLoop
                     ReadKey(true);
                 }
             }
-
-            DownHandler(this, EventArgs.Empty);
-            GameActionDoneHandler(this, EventArgs.Empty);
+            GameUpdateHandler(this, EventArgs.Empty);
         }
     }
 }
