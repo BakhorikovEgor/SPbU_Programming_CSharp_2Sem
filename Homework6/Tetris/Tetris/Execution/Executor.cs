@@ -63,10 +63,4 @@ public class Executor
         _eventLoop.GameActionDoneHandler -= _game.Sleep;
     
     }
-
-
-    private void PlayMusic()
-    {
-
-    }
 }

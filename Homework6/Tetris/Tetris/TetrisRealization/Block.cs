@@ -1,6 +1,6 @@
 ﻿namespace Tetris.Realization;
 
-internal class Block
+public class Block
 {
     public (int, int) [] Components { get; set; }
 
@@ -24,8 +24,8 @@ internal class Block
     public static Block GenerateBlock()
         => BLOCKS[random.Next(0, BLOCKS.Length)];
 
-    public Block UpdateComponents((int, int) shift)
-        => new(Color, Components.Select(component => ComponentSum(component, shift)).ToArray());
+    public Block UpdateComponents((int, int) vector)
+        => new(Color, Components.Select(component => ComponentSum(component, vector)).ToArray());
 
     public Block Rotate()
     {
