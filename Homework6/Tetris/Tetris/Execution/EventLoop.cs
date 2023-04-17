@@ -14,18 +14,20 @@ public class EventLoop
 
     public event EventHandler<EventArgs> EnterHandler = (sender, eventArgs) => { };
 
-    public event EventHandler<EventArgs> GameFieldUpdateHandler = (sender, eventArgs) => { };
+    public event EventHandler<EventArgs> SpaceHandler = (sender, eventArgs) => { };
 
-    public event EventHandler<EventArgs> GamePauseHandler = (sender, eventArgs) => { };
+    public event EventHandler<EventArgs> EscapeHandler = (sender, eventArgs) => { };
 
-    public event EventHandler<EventArgs> FinishHandler = (sender, eventArgs) => { };
+    public event EventHandler<EventArgs> GameFieldUpdatedHandler = (sender, eventArgs) => { };
+
+    public event EventHandler<EventArgs> GameActionDoneHandler = (sender, eventArgs) => { };
 
     public void Run()
     {
         var processing = true;
         while(processing) 
         {
-            GameFieldUpdateHandler(this, EventArgs.Empty);
+            GameFieldUpdatedHandler(this, EventArgs.Empty);
 
             if (KeyAvailable)
             {
@@ -52,8 +54,12 @@ public class EventLoop
                         EnterHandler(this, EventArgs.Empty);
                         break;
 
+                    case ConsoleKey.Spacebar:
+                        SpaceHandler(this, EventArgs.Empty);
+                        break;
+
                     case ConsoleKey.Escape:
-                        FinishHandler(this, EventArgs.Empty);
+                        EscapeHandler(this, EventArgs.Empty);
                         processing = false;
                         break;
                 }
@@ -65,7 +71,7 @@ public class EventLoop
             }
 
             DownHandler(this, EventArgs.Empty);
-            GamePauseHandler(this, EventArgs.Empty);
+            GameActionDoneHandler(this, EventArgs.Empty);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Tetris.Realization;
+using Tetris.Print;
 
 namespace Tetris.Execution;
 
@@ -10,26 +11,19 @@ public class Executor
 
     private readonly Game _game;
 
-
     private const int StandardFieldLength = 20;
     private const int StandardFieldWidth = 10;
 
-    public Executor() : this(StandardFieldLength, StandardFieldWidth) { }
-    public Executor( int fieldLength, int fieldWidth)
+    public Executor()
     {
-        Console.SetWindowSize(50,50);
-        _game = AreFieldSizeValid(fieldLength, fieldWidth) 
-            ? new Game(fieldLength, fieldWidth) 
-            : new Game(StandardFieldLength, StandardFieldWidth);
-
+        _game = new Game(StandardFieldLength, StandardFieldWidth);
         _printer = new GamePrinter(_game);
-
     }
 
 
     public void Execute()
     {
-        _eventLoop.GameFieldUpdateHandler += _printer.Print;
+        _eventLoop.GameFieldUpdatedHandler += _printer.Print;
 
         _eventLoop.RotateHandler += _game.Rotate;
 
@@ -41,16 +35,18 @@ public class Executor
 
         _eventLoop.EnterHandler += _game.Reset;
 
-        _eventLoop.GamePauseHandler += _game.Sleep;
+        _eventLoop.SpaceHandler += _game.ChangeGamePauseState;
 
-        _eventLoop.FinishHandler += Finish;
+        _eventLoop.EscapeHandler += Finish;
+
+        _eventLoop.GameActionDoneHandler += _game.Sleep;
 
         _eventLoop.Run();
     }
 
     private void Finish(object? sender, EventArgs eventArgs)
     {
-        _eventLoop.GameFieldUpdateHandler -= _printer.Print;
+        _eventLoop.GameFieldUpdatedHandler -= _printer.Print;
 
         _eventLoop.RotateHandler -= _game.Rotate;
 
@@ -62,12 +58,10 @@ public class Executor
 
         _eventLoop.EnterHandler -= _game.Reset;
 
-        _eventLoop.GamePauseHandler -= _game.Sleep;
+        _eventLoop.EscapeHandler -= Finish;
 
-        _eventLoop.FinishHandler -= Finish;
+        _eventLoop.GameActionDoneHandler -= _game.Sleep;
+    
     }
 
-
-    private bool AreFieldSizeValid(int length, int width)
-        => length < 100 && width < 100;
 }

@@ -2,14 +2,10 @@
 
 public class Game
 {
+    public static readonly ConsoleColor EmptyPlaceMark = ConsoleColor.White;
+
     private readonly (int, int) _spawningPosition;
     private Block _currentBlock;
-
-    public GameInfo Info { get; private set; }
-
-    public ConsoleColor[,] Field { get; private set; }
-
-    public bool IsGameOver { get; private set; } = false;
 
     private enum Moves
     {
@@ -19,10 +15,23 @@ public class Game
         Rotate
     }
 
+    public GameStatistics Statistics { get; private set; }
+
+    public ConsoleColor[,] Field { get; private set; }
+
+    public int Length { get; private set; }
+
+    public int Width { get; private set; }
+
+    public bool IsGameOver { get; private set; } = false;
+
+    public bool IsGamePaused { get; private set; } = true;
+
     public Game(int length, int width)
     {
+        (Length, Width) = (length, width);
         Field = new ConsoleColor[length, width];
-        Info = new GameInfo(400 + 10 * ((Field.GetLength(0) - 20 + Field.GetLength(1) - 10) / 5));
+        Statistics = new(400 + 10 * ((length - 20 + width - 10) / 5));
 
         _spawningPosition = (0, width / 2);
         _currentBlock = GenerateCurrentBlock();
@@ -45,26 +54,31 @@ public class Game
 
     public void Reset(object? sender, EventArgs args)
     {
-        if (IsGameOver)
-        {
-            Field = new ConsoleColor[Field.GetLength(0), Field.GetLength(1)];
-            Info = new GameInfo(400 + 10 * ((Field.GetLength(0) - 20 + Field.GetLength(1) - 10) / 5));
-            IsGameOver = false;
+        if (IsGamePaused) return;
 
-            _currentBlock = GenerateCurrentBlock();
+        Field = new ConsoleColor[Length, Width];
+        Statistics = new(400 + 10 * ((Length - 20 + Width - 10) / 5));
+        IsGameOver = false;
+        IsGamePaused = false;
 
-            InitializeField();
-            UpdateCurrentBlockOnField();
-        }
+        _currentBlock = GenerateCurrentBlock();
+
+        InitializeField();
+        UpdateCurrentBlockOnField();
     }
 
     public void Sleep(object? sender, EventArgs eventArgs) 
-        => Thread.Sleep(Info.SleepTime >= 50 ? Info.SleepTime : 50);
-
+        => Thread.Sleep(Statistics.SleepTime >= 50 
+                                            ? Statistics.SleepTime 
+                                            : 50);
+    public void ChangeGamePauseState(object? sender, EventArgs eventArgs)
+        => IsGamePaused = IsGameOver 
+                        ? IsGamePaused 
+                        : !IsGamePaused;
 
     private void Move(Moves move)
     {
-        if (IsGameOver) return;
+        if (IsGamePaused || IsGameOver) return;
 
         UpdateCurrentBlockOnField(true);
 
@@ -95,46 +109,41 @@ public class Game
                 UpdateCurrentBlockOnField();
             }
 
-            Info.Score += GameInfo.StandardBonus;
+            Statistics.Score += GameStatistics.StandardBonus;
             
         }
     }
 
     private bool IsBlockInside(Block block)
-        => block.Components.All(component => component.Item2 >= 0 && component.Item2 < Field.GetLength(1) &&
-                                             component.Item1 >= 0 && component.Item1 < Field.GetLength(0));
+        => block.Components.All(component => component.Item2 >= 0 && component.Item2 < Width &&
+                                             component.Item1 >= 0 && component.Item1 < Length);
 
     private bool IsBlockAbove(Block block)
         => block.Components.Any(component => component.Item1 <= 1);
 
     private bool IsPlaceFree(Block block)
-        => block.Components.All(component => Field[component.Item1, component.Item2] == ConsoleColor.White);
+        => block.Components.All(component => Field[component.Item1, component.Item2] == EmptyPlaceMark);
 
     private void UpdateCurrentBlockOnField(bool deleting = false)
     {
         var validParts = _currentBlock.Components.Where((component) => component.Item1 >= 0);
         foreach (var part in validParts)
         {
-            if (!deleting && Field[part.Item1, part.Item2] == ConsoleColor.White)
-            {
-                Field[part.Item1, part.Item2] = _currentBlock.Color;
-            }
-            else if (deleting && Field[part.Item1, part.Item2] != ConsoleColor.White)
-            {
-                Field[part.Item1, part.Item2] = ConsoleColor.White;
-            }
+            Field[part.Item1, part.Item2] = deleting 
+                                          ? EmptyPlaceMark 
+                                          : _currentBlock.Color;
         }
     }
 
     private void DeleteFilledRows()
     {
         var bonusCoefficient = 1;
-        for (var row = Field.GetLength(0) - 1; row >= 0; --row)
+        for (var row = Length - 1; row >= 0; --row)
         {
             var isFullRow = true;
-            for (var column = Field.GetLength(1) - 1; column >= 0; --column)
+            for (var column = Width - 1; column >= 0; --column)
             {
-                if (Field[row, column] == ConsoleColor.White)
+                if (Field[row, column] == EmptyPlaceMark)
                 {
                     isFullRow = false;
                     break; 
@@ -144,8 +153,9 @@ public class Game
             if (isFullRow)
             {
                 DeleteRow(row);
-                Info.Score += GameInfo.LineBonus * bonusCoefficient;
-                Info.Cleans++;
+
+                Statistics.Score += GameStatistics.LineBonus * bonusCoefficient;
+                Statistics.Cleans++;
 
                 bonusCoefficient++;
                 row++;
@@ -157,15 +167,15 @@ public class Game
     {
         for (var row = deletingRow; row > 0; --row)
         {
-            for (var column = 0; column < Field.GetLength(1); ++column)
+            for (var column = 0; column < Width; ++column)
             {
                 Field[row, column] = Field[row - 1, column];
             }
         }
 
-        for (var column = 0; column < Field.GetLength(1); ++column)
+        for (var column = 0; column < Width; ++column)
         {
-            Field[0, column] = ConsoleColor.White;
+            Field[0, column] = EmptyPlaceMark;
         }
     }
 
@@ -174,11 +184,11 @@ public class Game
 
     private void InitializeField()
     {
-        for (var row = 0; row < Field.GetLength(0); ++row)
+        for (var row = 0; row < Length; ++row)
         {
-            for (var column = 0; column < Field.GetLength(1); ++column)
+            for (var column = 0; column < Width; ++column)
             {
-                Field[row, column] = ConsoleColor.White;
+                Field[row, column] = EmptyPlaceMark;
             }
         }
     }

@@ -1,6 +1,6 @@
 ﻿namespace Tetris.Realization;
 
-public class GameInfo
+public class GameStatistics
 {
     public static readonly int StandardBonus = 10;
     public static readonly int LineBonus = 100;
@@ -37,5 +37,5 @@ public class GameInfo
         }
     }
 
-    public GameInfo (int sleepTime) => SleepTime = sleepTime;
+    public GameStatistics(int sleepTime) => SleepTime = sleepTime;
 }
