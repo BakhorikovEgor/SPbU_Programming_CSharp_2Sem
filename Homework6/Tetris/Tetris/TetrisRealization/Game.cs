@@ -2,7 +2,7 @@
 
 public class Game
 {
-    public static readonly ConsoleColor EmptyPlaceMark = ConsoleColor.White;
+    public static ConsoleColor EmptyPlaceMark { get; } = ConsoleColor.White;
 
     private readonly (int, int) _spawningPosition;
     private Block _currentBlock;
@@ -25,7 +25,7 @@ public class Game
 
     public bool IsGameOver { get; private set; } = false;
 
-    public bool IsGamePaused { get; private set; } = true;
+    public bool IsGamePaused { get; private set; } = false;
 
     public Game(int length, int width)
     {
@@ -71,6 +71,7 @@ public class Game
         => Thread.Sleep(Statistics.SleepTime >= 50 
                                             ? Statistics.SleepTime 
                                             : 50);
+
     public void ChangeGamePauseState(object? sender, EventArgs eventArgs)
         => IsGamePaused = IsGameOver 
                         ? IsGamePaused 
@@ -110,7 +111,11 @@ public class Game
             }
 
             Statistics.Score += GameStatistics.StandardBonus;
-            
+
+        }
+        else
+        {
+            UpdateCurrentBlockOnField();
         }
     }
 
