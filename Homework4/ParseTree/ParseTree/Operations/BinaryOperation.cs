@@ -6,6 +6,7 @@
 /// </summary>
 internal static class BinaryOperationSolver
 {
+    private static readonly double delta = 0.0001;
     /// <summary>
     /// Binary operation ( + - * /).
     /// </summary>
@@ -33,5 +34,5 @@ internal static class BinaryOperationSolver
         }
     }
 
-    private static bool IsZero(double number) => Math.Abs(number) < 0.00001;
+    private static bool IsZero(double number) => Math.Abs(number) < delta;
 }

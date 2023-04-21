@@ -14,11 +14,13 @@ public class OperationElement : IParsingTreeElement
     public IParsingTreeElement? FirstOperand { private get; set; }
     public IParsingTreeElement? SecondOperand { private get; set; }
 
+    private static readonly string operations = "+-*/";
+
 
     /// <exception cref="ArgumentException"> Type is not an able binary operator. </exception>
-    public OperationElement(string type) => Type = "+-*/".Contains(type) && type != string.Empty
+    public OperationElement(string type) => Type = operations.Contains(type) && type != string.Empty
                                                  ? type
-                                                 : throw new WrongExpressionException("Wrong type");
+                                                 : throw new WrongExpressionException("Unexpected character as operation given");
 
     /// <inheritdoc/>
     public double Calculate()
