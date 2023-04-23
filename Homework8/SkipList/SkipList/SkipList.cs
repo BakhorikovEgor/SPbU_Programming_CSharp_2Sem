@@ -38,7 +38,7 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
                 currentNode = currentNode.Next[0];
             }
 
-            return currentNode.Value ?? throw new WrongSkipListElementException("Null is not able.");
+            return currentNode.Value!;
         }
 
         set
@@ -232,7 +232,7 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
     {
         var counter = 0;
         var currentNode = head;
-        while (currentNode.Next != null)
+        while (currentNode.Next[0] != null)
         {
             if (value.CompareTo(currentNode.Next[0].Value) == 0)
             {
@@ -268,7 +268,7 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
         if (arrayIndex >= Count || 
             array.Length < Count - arrayIndex)
         {
-            throw new ArgumentException();
+            throw new ArgumentException("Out of range");
         }
 
         var currentNode = head;
@@ -279,8 +279,7 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
 
         for (var i = 0; i < array.Length; ++i)
         {
-            array[i] = currentNode.Next[0].Value 
-                ?? throw new NullReferenceException();
+            array[i] = currentNode.Next[0].Value!;
             currentNode = currentNode.Next[0];
         }
     }
