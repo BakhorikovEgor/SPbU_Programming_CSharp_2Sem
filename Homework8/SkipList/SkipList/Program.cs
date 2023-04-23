@@ -1,6 +1,8 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿using SkipListRealization;
 
 
-var _rand = new Random();
-Console.WriteLine(_rand.Next() & 1);
+var list = new SkipList<int>();
+list.Add(0);
+Console.WriteLine(list.Contains(0));
+Console.WriteLine(list.Remove(0));
+Console.WriteLine(list.Contains(0));
