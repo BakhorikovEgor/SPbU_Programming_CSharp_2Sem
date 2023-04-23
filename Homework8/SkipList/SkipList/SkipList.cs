@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Microsoft.VisualBasic;
+using System.Collections;
 
 namespace SkipListRealization;
 
@@ -49,7 +50,7 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
     /// <summary>
     /// Skip list element
     /// </summary>
-    public class SkipListNode
+    internal class SkipListNode
     {
         /// <summary>
         /// Links to the following items at different levels.
@@ -73,6 +74,9 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
         }
     }
 
+    /// <summary>
+    /// Enumerator realization
+    /// </summary>
     public struct Enumerator : IEnumerator<T>, IEnumerator
     {
         readonly int _version;
@@ -89,15 +93,17 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
             _currentValue = default;
         }
 
+        ///<inheritdoc/>
         public void Dispose()
         {
         }
 
+        ///<inheritdoc/>
         public bool MoveNext()
         {
             if (_version != _skipList.version)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("Can not modify skip list during iteration.");
             }
             if (_currentNode.Next[0] == null)
             {
@@ -111,6 +117,7 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
             return true;
         }
 
+        ///<inheritdoc/>
         public T Current => _currentValue!;
 
         object? IEnumerator.Current
@@ -119,7 +126,7 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
             {
                 if (_currentNode.Next == null)
                 {
-                    throw new InvalidOperationException();
+                    throw new InvalidOperationException("null is not a valid element.");
                 }
                 return Current;
             }
@@ -129,7 +136,7 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
         {
             if (_version != _skipList.version)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("Can not modify skip list during iteration.");
             }
 
             _currentNode = _skipList.head;
