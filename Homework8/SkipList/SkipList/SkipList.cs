@@ -1,15 +1,34 @@
-﻿using System.Collections;
+﻿using SkipList;
+using System.Collections;
 
 namespace SkipListRealization;
 
+/// <summary>
+/// Skip list data structure implementation
+/// </summary>
+/// <typeparam name="T"> Type of elements in skip list. </typeparam>
 public class SkipList<T> :IList<T> where T : IComparable<T>
 {
+    /// <summary>
+    /// Skip list element
+    /// </summary>
     class SkipListNode
     {
+        /// <summary>
+        /// Links to the following items at different levels.
+        /// </summary>
         public SkipListNode[] Next { get; set; }
 
+        /// <summary>
+        /// Value of current skip list element.
+        /// </summary>
         public T? Value { get; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="value"> Value of current element. </param>
+        /// <param name="level"> Level of current element in skip list. </param>
         public SkipListNode(T? value, int level)
         {
             Value = value;
@@ -24,15 +43,18 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
     int _currentMaxLevel = 1;
     SkipListNode _head = new(default, _maxLevel);
 
+    ///<inheritdoc/>
     public int Count { get; private set; }
 
+    ///<inheritdoc/>
+    ///<exception cref="WrongSkipListElementException"> Null in skip list. </exception>
     public T this[int index]
     {
         get
         {   
             if (index < 0 || index >= Count)
             {
-                throw new ArgumentException();
+                throw new ArgumentOutOfRangeException("Index outside of skip list borders.");
             }
 
             var currentNode = _head;
@@ -41,15 +63,16 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
                 currentNode = currentNode.Next[0];
             }
 
-            return currentNode.Value ?? throw new NullReferenceException();
+            return currentNode.Value ?? throw new WrongSkipListElementException("Null is not able.");
         }
 
         set
         {
-            throw new NotSupportedException();
+            throw new NotSupportedException("Skip list is sorted, you can not put something by index !");
         }
     }
 
+    ///<inheritdoc/>
     public bool Contains(T value)
     {
         var currentNode = _head;
@@ -72,6 +95,7 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
         return false;
     }
 
+    /// <inheritdoc/>
     public void Add(T value)
     {
         var newNodeLevel = RandomLevel();
@@ -95,10 +119,10 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
                 currentNode.Next[level] = newNode;
             }
         }
-
         Count++;
     }
 
+    /// <inheritdoc/>
     public bool Remove(T value)
     {
         var success = false;
@@ -117,7 +141,6 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
                     success = true;
                     break;
                 }
-
                 currentNode = currentNode.Next[level];
             }
         }
@@ -129,6 +152,7 @@ public class SkipList<T> :IList<T> where T : IComparable<T>
         return success ;
     }
 
+    /// <inheritdoc/>
     public int IndexOf(T value)
     {
         var counter = 0;

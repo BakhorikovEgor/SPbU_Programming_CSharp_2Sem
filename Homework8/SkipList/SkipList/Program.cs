@@ -9,7 +9,4 @@ list.Add(10);
 list.Add(5);
 list.Add(12);
 
-foreach (var item in list)
-{
-    Console.WriteLine(item);
-}
+Console.WriteLine(list.IndexOf(10));
