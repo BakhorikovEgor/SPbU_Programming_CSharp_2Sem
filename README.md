@@ -9,7 +9,7 @@ ____
   - [Sorting](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework1/Homework1/InsertionSort)
   - [BWT](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework1/Homework1/BurrowsWheelerTransform)
 ### Homework 2
-  - [Trie](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework2/Homework2/Trie) (Not reviewed yet)
+  - [Trie](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework2/Homework2/Trie)
   - [Stack Calculator](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework2/Homework2/StackCalculator) 
 ### Homework 3
   - [LZW](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework3/Homework3/LZW)
