@@ -1,6 +1,8 @@
-﻿namespace SkipListRealization;
+﻿using System.Collections;
 
-public class SkipList<T>  where T : IComparable<T>
+namespace SkipListRealization;
+
+public class SkipList<T> :IList<T> where T : IComparable<T>
 {
     class SkipListNode
     {
@@ -22,11 +24,35 @@ public class SkipList<T>  where T : IComparable<T>
     int _currentMaxLevel = 1;
     SkipListNode _head = new(default, _maxLevel);
 
-    public int Count { get; }
+    public int Count { get; private set; }
+
+    public T this[int index]
+    {
+        get
+        {   
+            if (index < 0 || index >= Count)
+            {
+                throw new ArgumentException();
+            }
+
+            var currentNode = _head;
+            for (var i = 0; i <= index; ++i)
+            {
+                currentNode = currentNode.Next[0];
+            }
+
+            return currentNode.Value ?? throw new NullReferenceException();
+        }
+
+        set
+        {
+            throw new NotSupportedException();
+        }
+    }
 
     public bool Contains(T value)
     {
-        SkipListNode currentNode = _head;
+        var currentNode = _head;
         for (var level = _currentMaxLevel - 1; level >= 0; level--)
         {
             while (currentNode.Next[level] != null)
@@ -51,7 +77,7 @@ public class SkipList<T>  where T : IComparable<T>
         var newNodeLevel = RandomLevel();
         var newNode = new SkipListNode(value, newNodeLevel);
 
-        SkipListNode currentNode = _head;
+        var currentNode = _head;
         for (var level = _currentMaxLevel - 1; level >= 0; level--)
         {
             while (currentNode.Next[level] != null)
@@ -69,12 +95,14 @@ public class SkipList<T>  where T : IComparable<T>
                 currentNode.Next[level] = newNode;
             }
         }
+
+        Count++;
     }
 
     public bool Remove(T value)
     {
-        var result = false;
-        SkipListNode currentNode = _head;
+        var success = false;
+        var currentNode = _head;
         for (var level = _currentMaxLevel - 1; level >= 0; level--)
         {
             while (currentNode.Next[level] != null)
@@ -86,14 +114,19 @@ public class SkipList<T>  where T : IComparable<T>
                 if (value.CompareTo(currentNode.Next[level].Value) == 0)
                 {
                     currentNode.Next[level] = currentNode.Next[level].Next[level];
-                    result = true;
+                    success = true;
                     break;
                 }
 
                 currentNode = currentNode.Next[level];
             }
         }
-        return result;
+
+        if (success)
+        {
+            Count--;
+        }
+        return success ;
     }
 
     public int IndexOf(T value)
@@ -110,8 +143,54 @@ public class SkipList<T>  where T : IComparable<T>
             currentNode = currentNode.Next[0];
         }
         return -1;
-
     }
+
+    public void Insert(int index, T value)
+        => throw new NotSupportedException();
+
+    public void RemoveAt(int index)
+        => Remove(this[index]);
+
+    public void Clear()
+    {
+        _head = new(default, _maxLevel);
+        _currentMaxLevel = 1;
+        Count = 0;
+    }
+    
+    public void CopyTo(T[] array, int arrayIndex)
+    {
+        if (arrayIndex >= Count || 
+            array.Length < Count - arrayIndex)
+        {
+            throw new ArgumentException();
+        }
+
+        var currentNode = _head;
+        for (var i = 0; i < arrayIndex; ++i)
+        {
+            currentNode = currentNode.Next[0];
+        }
+
+        for (var i = 0; i < array.Length; ++i)
+        {
+            array[i] = currentNode.Next[0].Value 
+                ?? throw new NullReferenceException();
+            currentNode = currentNode.Next[0];
+        }
+    }
+
+    public IEnumerator GetEnumerator()
+    {
+        var array = new T[Count];
+        CopyTo(array, 0);
+
+        return array.GetEnumerator();
+    }
+
+    IEnumerator<T> IEnumerable<T>.GetEnumerator()
+    => (IEnumerator<T>)GetEnumerator();
+
     private int RandomLevel()
     {
         var resultLevel = 1;
@@ -125,5 +204,6 @@ public class SkipList<T>  where T : IComparable<T>
     }
 
 
+    bool ICollection<T>.IsReadOnly => false;
 }
 
