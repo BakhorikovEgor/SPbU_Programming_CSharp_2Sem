@@ -1,9 +1,7 @@
-﻿using System.Collections;
+﻿namespace SkipListRealization;
 
-namespace SkipListRealization;
-
-public class SkipList<T> where T : IComparable<T>
-{ 
+public class SkipList<T>  where T : IComparable<T>
+{
     class SkipListNode
     {
         public SkipListNode[] Next { get; set; }
@@ -12,17 +10,19 @@ public class SkipList<T> where T : IComparable<T>
 
         public SkipListNode(T? value, int level)
         {
-            Value = value;     
+            Value = value;
             Next = new SkipListNode[level];
         }
     }
 
-    static readonly float _newLevelChance = 0.5f;
+    static readonly double _newLevelChance = 0.5;
     static readonly int _maxLevel = 33;
     static readonly Random _rand = new();
 
     int _currentMaxLevel = 1;
     SkipListNode _head = new(default, _maxLevel);
+
+    public int Count { get; }
 
     public bool Contains(T value)
     {
@@ -39,7 +39,7 @@ public class SkipList<T> where T : IComparable<T>
                 {
                     return true;
                 }
-                
+
                 currentNode = currentNode.Next[level];
             }
         }
@@ -60,6 +60,7 @@ public class SkipList<T> where T : IComparable<T>
                 {
                     break;
                 }
+                currentNode = currentNode.Next[level];
             }
 
             if (level < newNodeLevel)
@@ -95,6 +96,22 @@ public class SkipList<T> where T : IComparable<T>
         return result;
     }
 
+    public int IndexOf(T value)
+    {
+        var counter = 0;
+        var currentNode = _head;
+        while (currentNode.Next != null)
+        {
+            if (value.CompareTo(currentNode.Next[0].Value) == 0)
+            {
+                return counter;
+            }
+            counter++;
+            currentNode = currentNode.Next[0];
+        }
+        return -1;
+
+    }
     private int RandomLevel()
     {
         var resultLevel = 1;
@@ -106,6 +123,7 @@ public class SkipList<T> where T : IComparable<T>
         _currentMaxLevel = Math.Max(_currentMaxLevel, resultLevel);
         return resultLevel;
     }
+
 
 }
 
