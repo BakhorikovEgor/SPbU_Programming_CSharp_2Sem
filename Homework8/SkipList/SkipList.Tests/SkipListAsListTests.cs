@@ -106,13 +106,10 @@ public class Tests
         => Assert.Throws<ArgumentException>(() => _skipList.CopyTo(new int[] { 0 }, 1));
 
     [Test]
-    public void CheckUsualInumeration_ShouldGiveCorrectResult()
+    public void CheckUsualIteration_ShouldGiveCorrectResult()
     {
-        _skipList.Add(20);
-        _skipList.Add(-15);
-        _skipList.Add(40);
-        _skipList.Add(-10);
-
+        Array.ForEach(new int[] { 20, -15, 40, -10 }, _skipList.Add);
+        
         var expected = new int[] { -15, -10, 20, 40 };
 
         var actual = new List<int>();
@@ -127,11 +124,8 @@ public class Tests
     [Test]
     public void ModifySkipListDuringIteration_ShouldThrowInvalidOperationException()
     {
-        _skipList.Add(20);
-        _skipList.Add(-15);
-        _skipList.Add(40);
-        _skipList.Add(-10);
-
+        Array.ForEach(new int[] { 20, -15, 40, -10 }, _skipList.Add);
+        
         var iterator = _skipList.GetEnumerator();
 
         _skipList.Remove(20);
