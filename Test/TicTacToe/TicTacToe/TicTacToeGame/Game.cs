@@ -12,7 +12,7 @@ public class Game
     public bool Draw { get; private set; } = false;
 
     // Who made previous move
-    public Player movedPlayer = Player.Second;
+    public Player MovedPlayer { get; set; } = Player.Second;
 
     private int[,] field = new int[3, 3];
 
@@ -23,7 +23,7 @@ public class Game
     /// </summary>
     /// <param name="position"> Position to mark. </param>
     /// <exception cref="ArgumentException"> Position is valid for current field </exception>
-    public void Move((uint, uint) position)
+    public void Move((uint Col, uint Row) position)
     {
         if(!IsPositionValid(position))
         {
