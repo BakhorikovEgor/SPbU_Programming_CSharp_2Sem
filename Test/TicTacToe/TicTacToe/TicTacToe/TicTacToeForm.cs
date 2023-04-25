@@ -29,16 +29,16 @@ public partial class TicTacToeForm : Form
 
         game.Move((row, column));
 
-        button.Text = game.movedPlayer.Sign;
+        button.Text = game.MovedPlayer.Sign;
 
         if (game.IsGameOver)
         {
-            GameInfoTextBox.Text = game.Draw ? "Draw !" : $"Player {game.movedPlayer.Number} won !";
+            GameInfoTextBox.Text = game.Draw ? "Draw !" : $"Player {game.MovedPlayer.Number} won !";
         }
         else
         {
             GameInfoTextBox.Text = $"Player " +
-                                            $"{(game.movedPlayer == Player.First
+                                            $"{(game.MovedPlayer == Player.First
                                             ? Player.Second.Number
                                             : Player.First.Number)} turns";
         }

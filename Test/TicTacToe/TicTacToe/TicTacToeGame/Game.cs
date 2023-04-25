@@ -32,10 +32,10 @@ public class Game
 
         if (IsGameOver || field[position.Item1, position.Item2] != 0) return;
 
-        movedPlayer = movedPlayer == Player.First 
+        MovedPlayer = MovedPlayer == Player.First 
                                   ? Player.Second 
                                   : Player.First;
-        field[position.Item1, position.Item2] = movedPlayer.Number;
+        field[position.Col, position.Row] = MovedPlayer.Number;
         freeCells--;
 
         ChangeGameState();
