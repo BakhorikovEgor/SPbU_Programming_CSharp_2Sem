@@ -13,7 +13,7 @@ ____
   - [Stack Calculator](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework2/StackCalculator) 
 ### Homework 3
   - [Stack Calculator tests](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework2/StackCalculator/StackCalculator.Tests) 
-  - [LZW](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework3/Homework3/LZW)
+  - [LZW](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework3/LZW)
 ### Homework 4
   - [Parsing Tree](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework4/ParseTree)
   - [UniqueList](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework4/UniqueList) 
