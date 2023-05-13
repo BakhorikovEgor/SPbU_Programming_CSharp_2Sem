@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "LZW": {
+      "commandName": "Project",
+      "commandLineArgs": "..\\..\\..\\TestFiles\\WarAndPeace.txt.zipped -u"
+    }
+  }
+}
