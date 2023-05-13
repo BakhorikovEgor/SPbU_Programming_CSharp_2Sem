@@ -6,17 +6,17 @@ ____
 ## Homeworks
 
 ### Homework 1
-  - [Sorting](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework1/Homework1/InsertionSort)
-  - [BWT](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework1/Homework1/BurrowsWheelerTransform)
+  - [Sorting](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework1/InsertionSort)
+  - [BWT](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework1/BurrowsWheelerTransform)
 ### Homework 2
-  - [Trie](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework2/Homework2/Trie)
-  - [Stack Calculator](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework2/Homework2/StackCalculator) 
+  - [Trie](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework2/Trie)
+  - [Stack Calculator](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework2/StackCalculator) 
 ### Homework 3
-  - [LZW](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework3/Homework3/LZW)
-  - [Stack Calculator tests](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework2/Homework2/StackCalculator/StackCalculator.Tests) 
+  - [Stack Calculator tests](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework2/StackCalculator/StackCalculator.Tests) 
+  - [LZW](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework3/LZW)
 ### Homework 4
-  - [Parsing Tree](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework4/Homework4/ParseTree)
-  - [UniqueList](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework4/Homework4/UniqueList) 
+  - [Parsing Tree](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework4/ParseTree)
+  - [UniqueList](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework4/UniqueList) 
 ### Homework 5
   - [Routers](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework5/Homework5/Routers)
 ### Homework 6
