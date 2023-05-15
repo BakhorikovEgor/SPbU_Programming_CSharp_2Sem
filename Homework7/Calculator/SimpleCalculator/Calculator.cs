@@ -41,6 +41,7 @@ public class Calculator: INotifyPropertyChanged
         private set
         {
             _message = _message == "-0" ? "0" : value;
+            OnPropertyChanged("Message");
         }
     }
 

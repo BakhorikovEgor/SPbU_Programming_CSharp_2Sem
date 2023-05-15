@@ -32,4 +32,5 @@ public partial class CalculatorForm : Form
 
     private void OnClearButtonClick(object sender, EventArgs e)
         => calculator.Clear();
+
 }

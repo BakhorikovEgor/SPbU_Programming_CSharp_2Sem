@@ -30,8 +30,8 @@ partial class CalculatorForm
     {
         InputTable = new TableLayoutPanel();
         divideButton = new Button();
-        button4 = new Button();
-        button3 = new Button();
+        calculateButton = new Button();
+        changeSignButton = new Button();
         multiplyButton = new Button();
         minusButton = new Button();
         zeroButton = new Button();
@@ -45,8 +45,8 @@ partial class CalculatorForm
         eightButton = new Button();
         sevenButton = new Button();
         plusButton = new Button();
-        result = new TextBox();
         ClearButton = new Button();
+        result = new Label();
         InputTable.SuspendLayout();
         SuspendLayout();
         // 
@@ -59,8 +59,8 @@ partial class CalculatorForm
         InputTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
         InputTable.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
         InputTable.Controls.Add(divideButton, 3, 3);
-        InputTable.Controls.Add(button4, 2, 3);
-        InputTable.Controls.Add(button3, 1, 3);
+        InputTable.Controls.Add(calculateButton, 2, 3);
+        InputTable.Controls.Add(changeSignButton, 1, 3);
         InputTable.Controls.Add(multiplyButton, 3, 2);
         InputTable.Controls.Add(minusButton, 3, 1);
         InputTable.Controls.Add(zeroButton, 0, 3);
@@ -99,33 +99,33 @@ partial class CalculatorForm
         divideButton.UseVisualStyleBackColor = false;
         divideButton.Click += OnOperationButtonClick;
         // 
-        // button4
+        // calculateButton
         // 
-        button4.BackColor = SystemColors.ActiveCaptionText;
-        button4.Dock = DockStyle.Fill;
-        button4.Font = new Font("Liberation Sans", 25.8000011F, FontStyle.Bold, GraphicsUnit.Point);
-        button4.ForeColor = Color.Crimson;
-        button4.Location = new Point(207, 195);
-        button4.Name = "button4";
-        button4.Size = new Size(96, 58);
-        button4.TabIndex = 14;
-        button4.Text = "=";
-        button4.UseVisualStyleBackColor = false;
-        button4.Click += OnCalculateButtonClick;
+        calculateButton.BackColor = SystemColors.ActiveCaptionText;
+        calculateButton.Dock = DockStyle.Fill;
+        calculateButton.Font = new Font("Liberation Sans", 25.8000011F, FontStyle.Bold, GraphicsUnit.Point);
+        calculateButton.ForeColor = Color.Crimson;
+        calculateButton.Location = new Point(207, 195);
+        calculateButton.Name = "calculateButton";
+        calculateButton.Size = new Size(96, 58);
+        calculateButton.TabIndex = 14;
+        calculateButton.Text = "=";
+        calculateButton.UseVisualStyleBackColor = false;
+        calculateButton.Click += OnCalculateButtonClick;
         // 
-        // button3
+        // changeSignButton
         // 
-        button3.BackColor = SystemColors.ActiveCaptionText;
-        button3.Dock = DockStyle.Fill;
-        button3.Font = new Font("Liberation Sans", 24F, FontStyle.Bold, GraphicsUnit.Point);
-        button3.ForeColor = Color.Crimson;
-        button3.Location = new Point(105, 195);
-        button3.Name = "button3";
-        button3.Size = new Size(96, 58);
-        button3.TabIndex = 0;
-        button3.Text = "+/-";
-        button3.UseVisualStyleBackColor = false;
-        button3.Click += OnOperationButtonClick;
+        changeSignButton.BackColor = SystemColors.ActiveCaptionText;
+        changeSignButton.Dock = DockStyle.Fill;
+        changeSignButton.Font = new Font("Liberation Sans", 24F, FontStyle.Bold, GraphicsUnit.Point);
+        changeSignButton.ForeColor = Color.Crimson;
+        changeSignButton.Location = new Point(105, 195);
+        changeSignButton.Name = "changeSignButton";
+        changeSignButton.Size = new Size(96, 58);
+        changeSignButton.TabIndex = 0;
+        changeSignButton.Text = "+/-";
+        changeSignButton.UseVisualStyleBackColor = false;
+        changeSignButton.Click += OnOperationButtonClick;
         // 
         // multiplyButton
         // 
@@ -309,20 +309,6 @@ partial class CalculatorForm
         plusButton.UseVisualStyleBackColor = false;
         plusButton.Click += OnOperationButtonClick;
         // 
-        // result
-        // 
-        result.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-        result.BackColor = SystemColors.Desktop;
-        result.BorderStyle = BorderStyle.None;
-        result.Enabled = false;
-        result.Font = new Font("Calibri", 22.2F, FontStyle.Bold, GraphicsUnit.Point);
-        result.ForeColor = Color.White;
-        result.Location = new Point(114, 140);
-        result.Name = "result";
-        result.Size = new Size(300, 46);
-        result.TabIndex = 17;
-        result.TextAlign = HorizontalAlignment.Right;
-        // 
         // ClearButton
         // 
         ClearButton.BackColor = SystemColors.ActiveCaptionText;
@@ -336,14 +322,26 @@ partial class CalculatorForm
         ClearButton.UseVisualStyleBackColor = false;
         ClearButton.Click += OnClearButtonClick;
         // 
+        // result
+        // 
+        result.Anchor = AnchorStyles.Right;
+        result.AutoSize = true;
+        result.Font = new Font("Cascadia Code SemiBold", 20F, FontStyle.Regular, GraphicsUnit.Point);
+        result.ForeColor = SystemColors.Control;
+        result.Location = new Point(380, 143);
+        result.Name = "result";
+        result.Size = new Size(40, 45);
+        result.TabIndex = 18;
+        result.Text = "0";
+        // 
         // CalculatorForm
         // 
         AutoScaleDimensions = new SizeF(9F, 20F);
         AutoScaleMode = AutoScaleMode.Font;
         BackColor = SystemColors.Desktop;
         ClientSize = new Size(432, 558);
-        Controls.Add(ClearButton);
         Controls.Add(result);
+        Controls.Add(ClearButton);
         Controls.Add(InputTable);
         Font = new Font("Cascadia Code SemiBold", 9F, FontStyle.Regular, GraphicsUnit.Point);
         MinimumSize = new Size(450, 605);
@@ -369,10 +367,10 @@ partial class CalculatorForm
     private Button fourButton;
     private Button plusButton;
     private Button divideButton;
-    private Button button4;
-    private Button button3;
+    private Button calculateButton;
+    private Button changeSignButton;
     private Button multiplyButton;
     private Button minusButton;
-    private TextBox result;
     private Button ClearButton;
+    private Label result;
 }
