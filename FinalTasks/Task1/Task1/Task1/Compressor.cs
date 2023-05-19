@@ -1,12 +1,23 @@
-﻿using System.Data;
-using System.Security.Cryptography;
+﻿namespace ByteCompressor;
 
-namespace Task1;
-
-internal static class Compressor
-{ 
+/// <summary>
+/// Class with methods for compressing and decompressing byte sequences.
+/// </summary>
+public static class Compressor
+{
+    /// <summary>
+    /// Byte compression method
+    /// </summary>
+    /// <param name="data"> Bytes to compress</param>
+    /// <returns> Compressed bytes and compression ratio. </returns>
+    /// <exception cref="InvalidDataException"> Data must not be empty. </exception>
     public static (byte[],double) Compress(byte[] data)
     {
+        if (data.Length == 0)
+        {
+            throw new InvalidDataException("data can not be empty");
+        }
+
         var result = new List<byte>();
 
         byte previousByte = data[0];
@@ -39,8 +50,20 @@ internal static class Compressor
         return (result.ToArray(), (double)data.Length / result.Count);
     }
 
+    /// <summary>
+    /// Byte decompression method.
+    /// </summary>
+    /// <param name="data"> Bytes to decompress. </param>
+    /// <returns> Decompressed bytes, </returns>
+    /// <exception cref="InvalidDataException"> Data must not be empty. </exception>
     public static byte[] Decompress(byte[] data)
     {
+
+        if (data.Length == 0)
+        {
+            throw new InvalidDataException("data can not be empty");
+        }
+
         var result = new List<byte>();
 
         byte repeats = 0;
