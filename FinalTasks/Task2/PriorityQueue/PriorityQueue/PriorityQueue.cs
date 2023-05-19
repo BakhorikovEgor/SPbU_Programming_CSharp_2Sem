@@ -1,8 +1,13 @@
 ﻿namespace PriorityQueue;
 
+/// <summary>
+/// MaxHeap Realization of priority queue
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class PriorityQueue<T>
 {
     Heap heap = new Heap();
+
     private class Element
     { 
         public T Value { get; }
@@ -14,6 +19,11 @@ public class PriorityQueue<T>
         }
     }
 
+    /// <summary>
+    /// Put element in queue.
+    /// </summary>
+    /// <param name="value"> Element value.</param>
+    /// <param name="priority"> Element priority. </param>
     public void Enqueue(T value, uint priority)
     {
         var element = new Element(value, priority);
@@ -21,11 +31,16 @@ public class PriorityQueue<T>
 
     }
 
+    /// <summary>
+    /// Get max priority element from queue.
+    /// </summary>
+    /// <returns> Max priority element.</returns>
+    /// <exception cref="InvalidOperationException"> Take element from empty queue.</exception>
     public T Dequeue()
     {
         if (heap.Count == 0)
         {
-            throw new InvalidOperationException();
+            throw new InvalidOperationException("can not take element from empty queue.");
         }
 
         return heap.ExtractMax().Value;
@@ -39,27 +54,20 @@ public class PriorityQueue<T>
         public int Count { get; private set; } = 0;
         public void AddElement(Element element)
         {
-            if (Count >= data.Count)
+            if (data.Count > Count)
             {
-                data.Add(element);
-                Count++;
+                data[Count] = element;
             }
             else
             {
-                data[Count++] = element;
-                SiftUp(data.Count - 1);
+                data.Add(element);
             }
-
-            SiftUp(data.Count - 1);
+            Count++;
+            SiftUp(Count - 1);
         }
 
         public Element ExtractMax()
         {
-            if (data.Count == 0)
-            {
-                throw new InvalidOperationException();
-            }
-
             var result = data[0];
 
             data[0] = data[Count - 1];
@@ -72,46 +80,48 @@ public class PriorityQueue<T>
 
         private void SiftUp(int index)
         {
-            if (index == 0)
-            {
-                return;
-            }
-
             var parentIndex = (index - 1) / 2;
             var parent = data[parentIndex];
-
             var current = data[index];
             if (parent.Priority < current.Priority)
             {
                 Swap(index, parentIndex);
+                if (index == Count - 1 && index % 2 == 0 && data[index - 1].Priority == data[index].Priority)
+                {
+                    Swap(index, index - 1);
+                    return;
+                }
                 SiftUp(parentIndex);
             }
         }
 
         private void SiftDown(int index)
         {
-            if (index ==  Count - 1)
+            if (index != 0 && data[index + 1].Priority == data[index].Priority)
             {
+                Swap(index, index + 1);
                 return;
             }
 
             var firstChildIndex = (index * 2) + 1;
             var secondChildIndex = (index + 1) * 2;
 
-            var current = data[index];
-            var firstChild = data[firstChildIndex];
-            var secondChild = data[secondChildIndex];
-
-            if (firstChild.Priority >= secondChild.Priority
-                && current.Priority < firstChild.Priority) 
+            if (firstChildIndex >= Count)
             {
-                Swap(index, firstChildIndex);
-                SiftDown(firstChildIndex);
+                return;
             }
-            else if (current.Priority < secondChild.Priority)
+
+            var current = data[index];
+            var chosenIndex  = firstChildIndex;
+            if (secondChildIndex < Count && data[secondChildIndex].Priority > data[chosenIndex].Priority)
             {
-                Swap(index, secondChildIndex);
-                SiftDown(secondChildIndex);
+                chosenIndex = secondChildIndex;
+            }
+            
+            if (current.Priority <= data[chosenIndex].Priority)
+            {
+                Swap(index, chosenIndex);
+                SiftDown(chosenIndex);
             }
         }
 
