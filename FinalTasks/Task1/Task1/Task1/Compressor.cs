@@ -5,21 +5,19 @@ namespace Task1;
 
 internal static class Compressor
 { 
-    private static readonly byte _maxByte = 255;
     public static (byte[],double) Compress(byte[] data)
     {
-
         var result = new List<byte>();
 
-        byte previousByte = 0;
+        byte previousByte = data[0];
         byte counter = 0;
         foreach (byte b in data)
         {
             if (b == previousByte)
             {
-                if (counter == _maxByte)
+                if (counter == byte.MaxValue)
                 {
-                    result.Add(_maxByte);
+                    result.Add(byte.MaxValue);
                     result.Add(b);
                     counter = 0;
                 }
@@ -27,10 +25,7 @@ internal static class Compressor
             }
             else
             {
-                if (counter > 1)
-                {
-                    result.Add(counter);
-                }
+                result.Add(counter);
                 result.Add(previousByte);
 
                 counter = 1;
@@ -38,6 +33,29 @@ internal static class Compressor
             }
         }
 
+        result.Add(counter);
+        result.Add(previousByte);
+
         return (result.ToArray(), (double)data.Length / result.Count);
+    }
+
+    public static byte[] Decompress(byte[] data)
+    {
+        var result = new List<byte>();
+
+        byte repeats = 0;
+        for (var i = 0; i < data.Length; ++i)
+        {
+            if (i % 2 == 0)
+            {
+                repeats = data[i];
+            }
+            else
+            {
+                result.AddRange(Enumerable.Repeat(data[i], repeats));
+            }
+        }
+
+        return result.ToArray();
     }
 }
