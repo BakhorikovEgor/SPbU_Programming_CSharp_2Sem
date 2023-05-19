@@ -62,7 +62,7 @@ public class PriorityQueue<T>
 
             var result = data[0];
 
-            data[0] = data[data.Count - 1];
+            data[0] = data[Count - 1];
             Count--;
 
             SiftDown(0);
@@ -90,7 +90,7 @@ public class PriorityQueue<T>
 
         private void SiftDown(int index)
         {
-            if (index ==  data.Count - 1)
+            if (index ==  Count - 1)
             {
                 return;
             }
