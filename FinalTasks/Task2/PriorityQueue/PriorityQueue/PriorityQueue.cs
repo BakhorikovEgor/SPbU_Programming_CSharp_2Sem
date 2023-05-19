@@ -3,11 +3,10 @@
 public class PriorityQueue<T>
 {
     Heap heap = new Heap();
-    public class Element
-    {
+    private class Element
+    { 
         public T Value { get; }
         public uint Priority { get; }
-
         public Element(T value, uint priority)
         {
             Value = value;
@@ -24,24 +23,33 @@ public class PriorityQueue<T>
 
     public T Dequeue()
     {
-        if (heap.Count() == 0)
+        if (heap.Count == 0)
         {
             throw new InvalidOperationException();
         }
 
-
-
+        return heap.ExtractMax().Value;
     }
 
 
     private class Heap
     {
-        List<Element> data = new();
+        List<Element> data = new() {  };
 
         public int Count { get; private set; } = 0;
         public void AddElement(Element element)
         {
-            data[Count++] = element;
+            if (Count >= data.Count)
+            {
+                data.Add(element);
+                Count++;
+            }
+            else
+            {
+                data[Count++] = element;
+                SiftUp(data.Count - 1);
+            }
+
             SiftUp(data.Count - 1);
         }
 
