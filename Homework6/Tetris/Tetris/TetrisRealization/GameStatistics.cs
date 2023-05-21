@@ -22,7 +22,7 @@ public class GameStatistics
     /// <summary>
     /// How long game should pause after action.
     /// </summary>
-    public int SleepTime { get; set; }
+    public int SleepTime { get; private set; } = 150;
 
     /// <summary>
     /// Level of current game. 
@@ -55,10 +55,4 @@ public class GameStatistics
             }
         }
     }
-
-    /// <summary>
-    /// Constructor of game statistics.
-    /// </summary>
-    /// <param name="sleepTime"> Started value of SleepTime.</param>
-    public GameStatistics(int sleepTime) => SleepTime = sleepTime;
 }

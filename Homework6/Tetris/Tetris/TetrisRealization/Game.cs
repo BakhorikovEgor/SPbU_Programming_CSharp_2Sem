@@ -52,7 +52,7 @@ public class Game
     {
         (Length, Width) = (length, width);
         Field = new ConsoleColor[length, width];
-        Statistics = new(400 + (10 * ((length - 20 + width - 10) / 5)));
+        Statistics = new();
 
         _spawningPosition = (0, width / 2);
         _currentBlock = GenerateCurrentBlock();
@@ -103,7 +103,7 @@ public class Game
         if (IsGamePaused) return;
 
         Field = new ConsoleColor[Length, Width];
-        Statistics = new(400 + (10 * ((Length - 20 + Width - 10) / 5)));
+        Statistics = new();
         IsGameOver = false;
         IsGamePaused = false;
 
@@ -119,9 +119,7 @@ public class Game
     /// <param name="sender"> Who asks game to do it. </param>
     /// <param name="args"> Additional information. </param>
     public void Sleep(object? sender, EventArgs eventArgs)
-        => Thread.Sleep(Statistics.SleepTime >= 50
-                                            ? Statistics.SleepTime
-                                            : 50);
+        => Thread.Sleep(Statistics.SleepTime);
 
     /// <summary>
     /// Pause/Continue game if it is not over.
@@ -145,6 +143,7 @@ public class Game
             Moves.Left => _currentBlock.UpdateComponents((0, -1)),
             Moves.Right => _currentBlock.UpdateComponents((0, 1)),
             Moves.Rotate => _currentBlock.Rotate(),
+            _ => throw new NotImplementedException()
         };
 
         if (IsBlockInside(tempBlock) && IsPlaceFree(tempBlock))

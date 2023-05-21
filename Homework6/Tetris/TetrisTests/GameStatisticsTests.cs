@@ -2,11 +2,10 @@
 
 internal class GameStatisticsTests
 {
-    private static readonly int sleepTime = 100;
     private GameStatistics _gameStatistics;
 
     [SetUp]
-    public void SetUp() => _gameStatistics = new GameStatistics(sleepTime);
+    public void SetUp() => _gameStatistics = new();
 
     [Test]
     public void LevelUp_ShouldMakeDecreaseSleepTime()
