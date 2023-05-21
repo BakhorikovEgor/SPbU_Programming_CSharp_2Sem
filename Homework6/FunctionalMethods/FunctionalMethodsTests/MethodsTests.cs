@@ -41,8 +41,12 @@ public class Tests
     [Test]
     public void FoldWithEmptyList_ShouldReturnStartedAccumulator()
     {
-        var List = new List<string>();
+        var stringList = new List<string>();
         var startedAccumulator = "test";
+
+        var finalAccumulator = FunctionalMethods.Fold(stringList, startedAccumulator, (x, y) => x + y);
+
+        Assert.That(finalAccumulator.Equals(startedAccumulator), Is.True);
 
     }
 }
