@@ -6,7 +6,7 @@ public class Tests
     public void StandardMapTests_ShouldReturnExpectedList()
     {
         var stringList = new List<string> { "Wubba", "Lubba", "Dub", "Dub" };
-
+        
         var expectedTransformedStringList = new List<int> { 5, 5, 3, 3 };
 
         var actualTransformedStringList = FunctionalMethods.Map(stringList, s => s.Length);
@@ -44,6 +44,5 @@ public class Tests
         var List = new List<string>();
         var startedAccumulator = "test";
 
-        var finalAccumulator = Fo
     }
 }
