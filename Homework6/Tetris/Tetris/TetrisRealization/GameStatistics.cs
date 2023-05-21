@@ -22,7 +22,7 @@ public class GameStatistics
     /// <summary>
     /// How long game should pause after action.
     /// </summary>
-    public int SleepTime { get; private set; } = 150;
+    public int SleepTime { get; private set; } = 170;
 
     /// <summary>
     /// Level of current game. 
