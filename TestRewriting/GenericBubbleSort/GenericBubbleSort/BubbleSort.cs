@@ -1,7 +1,17 @@
 ﻿namespace GenericBubbleSort;
 
+/// <summary>
+/// Class contains method to sort list by bubble sort.
+/// </summary>
+/// <typeparam name="T"> Type of element in list</typeparam>
 public static class BubbleSort<T>
 {
+    /// <summary>
+    /// Classic bubble sort algorithm.
+    /// </summary>
+    /// <param name="data"> Give list. </param>
+    /// <param name="comparer"> How to compare T elements. </param>
+    /// <returns> Sorted list. </returns>
     public static IList<T> Sort(IList<T> data, IComparer<T> comparer)
     {
         bool flag;

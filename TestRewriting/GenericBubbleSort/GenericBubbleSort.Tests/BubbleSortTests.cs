@@ -2,10 +2,6 @@ namespace GenericBubbleSortTests;
 
 public class BubbleSortTests
 {
-    [SetUp]
-    public void Setup()
-    {
-    }
 
     [Test]
     public void SortIntegerList_ShouldReturnSortedList()
