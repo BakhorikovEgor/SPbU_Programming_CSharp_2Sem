@@ -8,9 +8,9 @@ public static class BubbleSort<T>
         for (var i = 0; i < data.Count; ++i)
         {
             flag = false;
-            for (var j = 0; j < data.Count - i; ++j)
+            for (var j = 0; j < data.Count - i - 1; ++j)
             {
-                if (comparer.Compare(data[j], data[j + 1]) < 0)
+                if (comparer.Compare(data[j], data[j + 1]) > 0)
                 {
                     Swap(data, j, j + 1);
                     flag = true;
