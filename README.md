@@ -18,7 +18,7 @@ ____
   - [Parsing Tree](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework4/ParseTree)
   - [UniqueList](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework4/UniqueList) 
 ### Homework 5
-  - [Routers](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework5/Homework5/Routers)
+  - [Routers](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework5/Routers)
 ### Homework 6
   - [Functional Methods](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework6/FunctionalMethods)
   - [Tetris](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework6/Tetris)
