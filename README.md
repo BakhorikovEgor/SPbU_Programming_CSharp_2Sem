@@ -20,12 +20,12 @@ ____
 ### Homework 5
   - [Routers](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework5/Homework5/Routers)
 ### Homework 6
-  - [Functional Methods](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework6/Homework6/FunctionalMethods)
-  - [Tetris](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework6/Homework6/Tetris)
+  - [Functional Methods](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework6/FunctionalMethods)
+  - [Tetris](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework6/Tetris)
 ### Homework 7
-  - [Calculator](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework7/Homework7/Calculator)
+  - [Calculator](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework7/Calculator)
 ### Homework 8
-  - [SkipList](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/Homework8/Homework8/SkipList)
+  - [SkipList](https://github.com/BakhorikovEgor/SPbU_Programming_CSharp_2Sem/tree/main/Homework8/SkipList)
  
 ____
 ## License
