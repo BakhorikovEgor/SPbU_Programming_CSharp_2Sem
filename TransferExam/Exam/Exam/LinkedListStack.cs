@@ -25,11 +25,20 @@ public class LinkedListStack
 
     private Node? head;
 
+    /// <summary>
+    /// Add element to the top of stack.
+    /// </summary>
+    /// <param name="value"></param>
     public void Push(char value)
         => head = head == null
                 ? new Node(value)
                 : new Node(value, head);
 
+    /// <summary>
+    /// Delete element from the top of stack and return it.
+    /// </summary>
+    /// <returns> Element on the top. </returns>
+    /// <exception cref="InvalidOperationException"> Stack is empty. </exception>
     public char Pop()
     {
         if (IsEmpty())
@@ -45,6 +54,9 @@ public class LinkedListStack
         return returnValue;
     }
 
+    /// <summary>
+    /// Check if stack has elements.
+    /// </summary>
     public bool IsEmpty()
         => head == null;
 }

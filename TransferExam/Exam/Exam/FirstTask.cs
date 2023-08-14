@@ -1,13 +1,27 @@
 ﻿namespace Exam;
 
+/// <summary>
+/// Methods for first task of transfer exam
+/// </summary>
 public static class FirstTask
 {
-    public static int FindMostFrequentElement(int[] array)
+    /// <summary>
+    /// Find the most frequent element in given array.
+    /// </summary>
+    /// <typeparam name="T"> Type of elements in array.</typeparam>
+    /// <param name="array"> Given array. </param>
+    /// <returns> The most frequent element in given array. </returns>
+    /// <exception cref="ArgumentException"> Given array can not be empty. </exception>
+    public static T? FindMostFrequentElement<T>(T[] array) where T : IComparable<T>
     {
-        var dict = new Dictionary<int, int>();
+        if (array.Length == 0)
+        {
+            throw new ArgumentException("No elements in given array");
+        }
 
-        var mostFrequentItem = -1;
+        var dict = new Dictionary<T, int>();
         var maxFrequency = -1;
+        T? mostFrequentItem = default;
 
         foreach (var item in array)
         {

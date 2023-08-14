@@ -1,8 +1,14 @@
 ﻿namespace Exam;
 
+/// <summary>
+/// Methods for second task of transfer exam
+/// </summary>
 public static class SecondTask
 {
-
+    /// <summary>
+    /// Check if given string brackets balanced.
+    /// </summary>
+    /// <param name="input"> Given string. </param>
     public static bool IsBalanced(string input)
     {
         var stack = new LinkedListStack();
