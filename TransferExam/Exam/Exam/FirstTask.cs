@@ -6,10 +6,10 @@ public static class FirstTask
     {
         var dict = new Dictionary<int, int>();
 
-        int mostFrequentItem = -1;
-        int maxFrequency = -1;
+        var mostFrequentItem = -1;
+        var maxFrequency = -1;
 
-        foreach (int item in array)
+        foreach (var item in array)
         {
             dict[item] = dict.ContainsKey(item) 
                 ? dict[item]++ 
